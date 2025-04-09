@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Library.Application.InputModels.Users;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
@@ -18,7 +19,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody] UserCreateInputModel model)
         {
             return Created();
         }
@@ -30,7 +31,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id) 
+        public IActionResult Put(int id, [FromBody] UserUpdateInputModel model) 
         {
             return NoContent();
         }

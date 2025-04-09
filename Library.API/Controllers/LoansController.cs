@@ -11,8 +11,8 @@ namespace Library.API.Controllers
             return Created();
         }
 
-        [HttpPut]
-        public IActionResult Return() 
+        [HttpPut("{id:int}/return")]
+        public IActionResult Return(int id) 
         {
             return NoContent();
         }
