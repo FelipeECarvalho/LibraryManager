@@ -13,7 +13,7 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id) 
+        public IActionResult GetById(int id)
         {
             return Ok(new { id });
         }
@@ -25,7 +25,7 @@ namespace Library.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id) 
+        public IActionResult Delete(int id)
         {
             return NoContent();
         }

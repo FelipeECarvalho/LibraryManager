@@ -9,7 +9,7 @@ namespace Library.Infrastructure
     {
         public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<LibraryDbContext>(c 
+            services.AddDbContext<LibraryDbContext>(c
                 => c.UseSqlServer(configuration.GetConnectionString("LibraryDbContextConnection")));
         }
     }

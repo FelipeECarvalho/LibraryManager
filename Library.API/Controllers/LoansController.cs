@@ -19,7 +19,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id:int}/return")]
-        public IActionResult Return(int id) 
+        public IActionResult Return(int id)
         {
             return NoContent();
         }

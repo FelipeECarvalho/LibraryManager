@@ -2,7 +2,7 @@
 {
     public enum ELoanStatus
     {
-         BORROWED = 0,
-         RETURNED = 1
+        BORROWED = 0,
+        RETURNED = 1
     }
 }

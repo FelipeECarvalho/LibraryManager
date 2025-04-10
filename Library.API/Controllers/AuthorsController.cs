@@ -32,7 +32,7 @@ namespace Library.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] UserUpdateInputModel model) 
+        public IActionResult Put(int id, [FromBody] UserUpdateInputModel model)
         {
             return NoContent();
         }
