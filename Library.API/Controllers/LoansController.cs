@@ -7,13 +7,13 @@ namespace Library.API.Controllers
     public class LoansController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Post(LoanCreateInputModel model)
+        public IActionResult Post([FromBody] LoanCreateInputModel model)
         {
             return Created();
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(LoanUpdateInputModel model)
+        public IActionResult Put([FromBody] LoanUpdateInputModel model)
         {
             return Created();
         }
