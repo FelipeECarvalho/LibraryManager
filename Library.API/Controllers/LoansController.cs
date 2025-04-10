@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Library.Application.InputModels.Loans;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
@@ -6,7 +7,13 @@ namespace Library.API.Controllers
     public class LoansController : ControllerBase
     {
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post(LoanCreateInputModel model)
+        {
+            return Created();
+        }
+
+        [HttpPut("{id:int}")]
+        public IActionResult Put(LoanUpdateInputModel model)
         {
             return Created();
         }

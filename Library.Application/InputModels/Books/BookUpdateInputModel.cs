@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.Application.InputModels.Books
+﻿namespace Library.Application.InputModels.Books
 {
-    internal class BookUpdateInputModel
+    public class BookUpdateInputModel
     {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime PublicationDate { get; set; }
     }
 }

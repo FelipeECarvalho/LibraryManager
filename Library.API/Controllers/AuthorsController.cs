@@ -1,10 +1,11 @@
-﻿using Library.Application.InputModels.Books;
+﻿using Library.Application.InputModels.Authors;
+using Library.Application.InputModels.Users;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
-    [Route("api/v1/books")]
-    public class BooksController : ControllerBase
+    [Route("api/v1/authors")]
+    public class AuthorsController : ControllerBase
     {
         [HttpGet]
         public IActionResult GetAll()
@@ -13,25 +14,25 @@ namespace Library.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public IActionResult GetById(int id) 
+        public IActionResult GetById(int id)
         {
-            return Ok(new { id });
+            return Ok();
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] BookCreateInputModel model)
+        public IActionResult Post([FromBody] AuthorCreateInputModel model)
         {
             return Created();
         }
 
         [HttpDelete("{id:int}")]
-        public IActionResult Delete(int id) 
+        public IActionResult Delete(int id)
         {
             return NoContent();
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put(int id, [FromBody] BookUpdateInputModel model)
+        public IActionResult Put(int id, [FromBody] UserUpdateInputModel model) 
         {
             return NoContent();
         }
