@@ -10,7 +10,6 @@ namespace Library.Infrastructure.Persistence.Repositories
         {
             return await _context.Books
                 .Include(x => x.Author)
-                .Where(x => !x.IsDeleted)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -19,7 +18,6 @@ namespace Library.Infrastructure.Persistence.Repositories
         {
             return await _context.Books
                 .Include(x => x.Author)
-                .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
