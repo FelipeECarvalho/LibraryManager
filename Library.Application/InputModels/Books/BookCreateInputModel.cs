@@ -19,6 +19,6 @@ namespace Library.Application.InputModels.Books
         public string ISBN { get; set; }
 
         [Required]
-        public string AuthorId { get; set; }
+        public int AuthorId { get; set; }
     }
 }

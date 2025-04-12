@@ -1,6 +1,8 @@
-﻿namespace Library.Infrastructure.Persistence.Repositories
+﻿using Library.Core.Interfaces.Repositories;
+
+namespace Library.Infrastructure.Persistence.Repositories
 {
-    public class LoanRepository
+    public class LoanRepository : ILoanRepository
     {
     }
 }

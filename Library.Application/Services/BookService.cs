@@ -17,15 +17,41 @@ namespace Library.Application.Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task CreateAsync(BookCreateInputModel model)
+        public async Task<Book> CreateAsync(BookCreateInputModel model)
         {
-            var book = new Book();
+            var book = new Book
+            {
+                ISBN = model.ISBN,
+                Title = model.Title,
+                AuthorId = model.AuthorId,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                Description = model.Description,
+                PublicationDate = model.PublicationDate,
+            };
+
             await _repository.CreateAsync(book);
+            return book;
         }
 
-        public async Task UpdateAsync(BookUpdateInputModel model)
+        public async Task UpdateAsync(int id, BookUpdateInputModel model)
         {
-            var book = new Book();
+            var book = await GetByIdAsync(id);
+
+            book.Title = model.Title;
+            book.UpdateDate = DateTime.Now;
+            book.Description = model.Description;
+            book.PublicationDate = model.PublicationDate;
+
+            await _repository.UpdateAsync(book);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var book = await GetByIdAsync(id);
+            book.IsDeleted = true;
+            book.UpdateDate = DateTime.Now;
+
             await _repository.UpdateAsync(book);
         }
     }
