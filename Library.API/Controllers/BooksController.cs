@@ -1,12 +1,12 @@
 ﻿using Library.Application.InputModels.Books;
-using Library.Application.Services;
 using Library.Core.Entities;
+using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
     [Route("api/v1/books")]
-    public class BooksController(BookService _bookService) : ControllerBase
+    public class BooksController(IBookService _bookService) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -35,7 +35,7 @@ namespace Library.API.Controllers
             };
 
             await _bookService.CreateAsync(book);
-            return CreatedAtAction(nameof(GetById), new { id = book.Id});
+            return CreatedAtAction(nameof(GetById), new { id = book.Id}, book);
         }
 
         [HttpDelete("{id:int}")]
@@ -49,7 +49,6 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] BookUpdateInputModel model)
         {
             var book = await _bookService.GetByIdAsync(id);
-
             book.Update(model.Title, model.Description, model.PublicationDate);
 
             await _bookService.UpdateAsync(book);
