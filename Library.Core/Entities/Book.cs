@@ -13,5 +13,13 @@
         public int AuthorId { get; set; }
 
         public Author Author { get; set; }
+
+        public void Update(string title, string description, DateTime publicationDate)
+        {
+            Title = title;
+            UpdateDate = DateTime.Now;
+            Description = description;
+            PublicationDate = publicationDate;
+        }
     }
 }

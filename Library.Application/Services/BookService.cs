@@ -1,5 +1,4 @@
-﻿using Library.Application.InputModels.Books;
-using Library.Core.Entities;
+﻿using Library.Core.Entities;
 using Library.Core.Interfaces.Repositories;
 using Library.Core.Interfaces.Services;
 
@@ -17,32 +16,14 @@ namespace Library.Application.Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<Book> CreateAsync(BookCreateInputModel model)
+        public async Task<Book> CreateAsync(Book book)
         {
-            var book = new Book
-            {
-                ISBN = model.ISBN,
-                Title = model.Title,
-                AuthorId = model.AuthorId,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                Description = model.Description,
-                PublicationDate = model.PublicationDate,
-            };
-
             await _repository.CreateAsync(book);
             return book;
         }
 
-        public async Task UpdateAsync(int id, BookUpdateInputModel model)
+        public async Task UpdateAsync(Book book)
         {
-            var book = await GetByIdAsync(id);
-
-            book.Title = model.Title;
-            book.UpdateDate = DateTime.Now;
-            book.Description = model.Description;
-            book.PublicationDate = model.PublicationDate;
-
             await _repository.UpdateAsync(book);
         }
 
