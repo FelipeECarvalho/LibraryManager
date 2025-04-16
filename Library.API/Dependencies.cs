@@ -1,14 +1,24 @@
-﻿using Library.Core.Interfaces.Repositories;
-using Library.Infrastructure.Persistence;
+﻿using Library.Application.Services;
+using Library.Core.Interfaces.Repositories;
+using Library.Core.Interfaces.Services;
 using Library.Infrastructure.Persistence.Repositories;
+using Library.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Library.Infrastructure
+namespace Library.API
 {
     public static class Dependencies
     {
+        public static IServiceCollection AddApplication(this IServiceCollection services)
+        {
+            services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILoanService, LoanService>();
+            services.AddScoped<IAuthorService, AuthorService>();
+
+            return services;
+        }
+
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<LibraryDbContext>(c
