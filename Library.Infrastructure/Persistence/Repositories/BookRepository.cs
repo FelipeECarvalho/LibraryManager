@@ -21,6 +21,15 @@ namespace Library.Infrastructure.Persistence.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
+        public async Task<IList<Book>> GetByTitleAsync(string title)
+        {
+            return await _context.Books
+                .Include(x => x.Author)
+                .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task CreateAsync(Book book)
         {
             _context.Books.Add(book);

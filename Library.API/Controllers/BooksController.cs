@@ -20,6 +20,12 @@ namespace Library.API.Controllers
             return Ok(await _bookService.GetByIdAsync(id));
         }
 
+        [HttpGet("{title}")]
+        public async Task<IActionResult> GetByTitle(string title)
+        {
+            return Ok(await _bookService.GetByTitleAsync(title));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookCreateInputModel model)
         {

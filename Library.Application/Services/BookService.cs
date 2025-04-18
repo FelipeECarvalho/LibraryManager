@@ -16,6 +16,11 @@ namespace Library.Application.Services
             return await _repository.GetByIdAsync(id);
         }
 
+        public async Task<IList<Book>> GetByTitleAsync(string title)
+        {
+            return await _repository.GetByTitleAsync(title);
+        }
+
         public async Task<Book> CreateAsync(Book book)
         {
             await _repository.CreateAsync(book);

@@ -16,15 +16,15 @@ namespace Library.Application.Services
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<User> CreateAsync(Book user)
+        public async Task<User> CreateAsync(User user)
         {
-            await _repository.CreateAsync(book);
+            await _repository.CreateAsync(user);
             return user;
         }
 
         public async Task UpdateAsync(User user)
         {
-            await _repository.UpdateAsync(book);
+            await _repository.UpdateAsync(user);
         }
 
         public async Task DeleteAsync(int id)
