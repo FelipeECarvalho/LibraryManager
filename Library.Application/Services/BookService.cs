@@ -32,9 +32,8 @@ namespace Library.Application.Services
             await _repository.UpdateAsync(book);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Book book)
         {
-            var book = await GetByIdAsync(id);
             book.IsDeleted = true;
             book.UpdateDate = DateTime.Now;
 

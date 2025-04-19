@@ -1,4 +1,6 @@
-﻿using Library.Application.InputModels.Books;
+﻿using AutoMapper;
+using Library.Application.DTOs;
+using Library.Application.InputModels.Books;
 using Library.Core.Entities;
 using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -6,39 +8,52 @@ using Microsoft.AspNetCore.Mvc;
 namespace Library.API.Controllers
 {
     [Route("api/v1/books")]
-    public class BooksController(IBookService _bookService) : ControllerBase
+    public class BooksController(IBookService _bookService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _bookService.GetAllAsync());
+            var books = await _bookService.GetAllAsync();
+
+            if (books is null || books.Count == 0)
+                return NoContent();
+
+            var dto = _mapper.Map<IList<BookDto>>(books);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _bookService.GetByIdAsync(id));
+            var book = await _bookService.GetByIdAsync(id);
+
+            if (book is null) 
+                return NotFound();
+
+            var dto = _mapper.Map<BookDto>(book);
+
+            return Ok(dto);
         }
 
         [HttpGet("{title}")]
         public async Task<IActionResult> GetByTitle(string title)
         {
-            return Ok(await _bookService.GetByTitleAsync(title));
+            var books = await _bookService.GetByTitleAsync(title);
+
+            if (books is null || books.Count == 0)
+                return NoContent();
+
+            var dto = _mapper.Map<IList<BookDto>>(books);
+
+            return Ok(dto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookCreateInputModel model)
         {
-            var book = new Book
-            {
-                ISBN = model.ISBN,
-                Title = model.Title,
-                AuthorId = model.AuthorId,
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                Description = model.Description,
-                PublicationDate = model.PublicationDate,
-            };
+
+            var book = _mapper.Map<Book>(model);
 
             await _bookService.CreateAsync(book);
             return CreatedAtAction(nameof(GetById), new { id = book.Id}, book);
@@ -47,7 +62,12 @@ namespace Library.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _bookService.DeleteAsync(id);
+            var book = await _bookService.GetByIdAsync(id);
+
+            if (book is null)
+                return BadRequest();
+
+            await _bookService.DeleteAsync(book);
             return NoContent();
         }
 
@@ -55,7 +75,28 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] BookUpdateInputModel model)
         {
             var book = await _bookService.GetByIdAsync(id);
+
+            if (book is null)
+                return BadRequest();
+
             book.Update(model.Title, model.Description, model.PublicationDate);
+
+            await _bookService.UpdateAsync(book);
+            return NoContent();
+        }
+
+        [HttpPut("{id:int}/update-stock/{stockNumber:int}")]
+        public async Task<IActionResult> Put(int id, int stockNumber)
+        {
+            if (stockNumber < 0)
+                return BadRequest("Stock number cannot be negative.");
+
+            var book = await _bookService.GetByIdAsync(id);
+
+            if (book is null)
+                return BadRequest();
+
+            book.StockNumber = stockNumber;
 
             await _bookService.UpdateAsync(book);
             return NoContent();

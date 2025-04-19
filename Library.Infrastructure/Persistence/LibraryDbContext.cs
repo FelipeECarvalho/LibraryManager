@@ -21,6 +21,9 @@ namespace Library.Infrastructure.Persistence
             modelBuilder.Entity<Book>()
                 .HasQueryFilter(x => !x.IsDeleted);
 
+            modelBuilder.Entity<Loan>()
+                .HasQueryFilter(x => !x.Book.IsDeleted && !x.User.IsDeleted);
+
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -1,4 +1,4 @@
-using Library.Infrastructure;
+using Library.Application.Mappings;
 
 namespace Library.API
 {
@@ -12,6 +12,7 @@ namespace Library.API
                 .AddInfrastructure(builder.Configuration)
                 .AddApplication();
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

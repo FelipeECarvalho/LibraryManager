@@ -10,6 +10,6 @@ namespace Library.Core.Interfaces.Services
 
         Task<Book> CreateAsync(Book book);
         Task UpdateAsync(Book book);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Book book);
     }
 }

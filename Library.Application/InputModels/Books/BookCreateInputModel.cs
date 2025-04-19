@@ -8,9 +8,11 @@ namespace Library.Application.InputModels.Books
         [Length(3, 255)]
         public string Title { get; set; }
 
-        [Required]
         [Length(3, 255)]
         public string Description { get; set; }
+
+        [Required]
+        public int StockNumber { get; set; }
 
         [Required]
         public DateTime PublicationDate { get; set; }
