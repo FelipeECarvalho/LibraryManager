@@ -1,4 +1,6 @@
-﻿using Library.Application.InputModels.Users;
+﻿using AutoMapper;
+using Library.Application.DTOs;
+using Library.Application.InputModels.Users;
 using Library.Core.Entities;
 using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -6,29 +8,38 @@ using Microsoft.AspNetCore.Mvc;
 namespace Library.API.Controllers
 {
     [Route("api/v1/users")]
-    public class UsersController(IUserService _service) : ControllerBase
+    public class UsersController(IUserService _service, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAllAsync());
+            var users = await _service.GetAllAsync();
+
+            if (users is null)
+                return NoContent();
+
+            var dto = _mapper.Map<IList<UserDto>>(users);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _service.GetByIdAsync(id));
+            var user = await _service.GetByIdAsync(id);
+
+            if (user is null)
+                return NotFound();
+
+            var dto = _mapper.Map<UserDto>(user);
+
+            return Ok(dto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] UserCreateInputModel model)
         {
-            var user = new User
-            {
-                Name = model.Name,
-                Document = model.Document,
-                Email = model.Email
-            };
+            var user = _mapper.Map<User>(model);
 
             await _service.CreateAsync(user);
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
@@ -37,7 +48,12 @@ namespace Library.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _service.DeleteAsync(id);
+            var user = await _service.GetByIdAsync(id);
+
+            if (user is null)
+                return NotFound();
+
+            await _service.DeleteAsync(user);
             return NoContent();
         }
 
@@ -45,7 +61,11 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] UserUpdateInputModel model)
         {
             var user = await _service.GetByIdAsync(id);
-            user.Update(model.Name, model.Email);
+
+            if (user is null)
+                return NotFound();
+
+            _mapper.Map(model, user);
 
             await _service.UpdateAsync(user);
             return NoContent();

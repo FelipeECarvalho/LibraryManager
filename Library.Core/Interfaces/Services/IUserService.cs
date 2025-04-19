@@ -9,6 +9,6 @@ namespace Library.Core.Interfaces.Services
 
         Task<User> CreateAsync(User user);
         Task UpdateAsync(User user);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(User user);
     }
 }

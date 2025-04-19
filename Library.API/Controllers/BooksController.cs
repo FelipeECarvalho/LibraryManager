@@ -65,7 +65,7 @@ namespace Library.API.Controllers
             var book = await _bookService.GetByIdAsync(id);
 
             if (book is null)
-                return BadRequest();
+                return NotFound();
 
             await _bookService.DeleteAsync(book);
             return NoContent();
@@ -77,9 +77,9 @@ namespace Library.API.Controllers
             var book = await _bookService.GetByIdAsync(id);
 
             if (book is null)
-                return BadRequest();
+                return NotFound();
 
-            book.Update(model.Title, model.Description, model.PublicationDate);
+            _mapper.Map(model, book);
 
             await _bookService.UpdateAsync(book);
             return NoContent();

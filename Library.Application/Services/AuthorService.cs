@@ -12,15 +12,6 @@ namespace Library.Application.Services
             return author;
         }
 
-        public async Task DeleteAsync(int id)
-        {
-            var author = await GetByIdAsync(id);
-            author.IsDeleted = true;
-            author.UpdateDate = DateTime.Now;
-
-            await _repository.UpdateAsync(author);
-        }
-
         public async Task<IList<Author>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
@@ -29,6 +20,14 @@ namespace Library.Application.Services
         public async Task<Author> GetByIdAsync(int id)
         {
             return await _repository.GetByIdAsync(id);
+        }
+
+        public async Task DeleteAsync(Author author)
+        {
+            author.IsDeleted = true;
+            author.UpdateDate = DateTime.Now;
+
+            await _repository.UpdateAsync(author);
         }
 
         public async Task UpdateAsync(Author author)

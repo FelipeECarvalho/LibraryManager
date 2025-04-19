@@ -9,6 +9,6 @@ namespace Library.Core.Interfaces.Services
         Task<Author> CreateAsync(Author author);
 
         Task UpdateAsync(Author author);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Author author);
     }
 }

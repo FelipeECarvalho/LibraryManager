@@ -1,4 +1,6 @@
-﻿using Library.Application.InputModels.Authors;
+﻿using AutoMapper;
+using Library.Application.DTOs;
+using Library.Application.InputModels.Authors;
 using Library.Core.Entities;
 using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -6,30 +8,38 @@ using Microsoft.AspNetCore.Mvc;
 namespace Library.API.Controllers
 {
     [Route("api/v1/authors")]
-    public class AuthorsController(IAuthorService _service) : ControllerBase
+    public class AuthorsController(IAuthorService _service, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAllAsync());
+            var authors = await _service.GetAllAsync();
+
+            if (authors is null)
+                return NoContent();
+
+            var dto = _mapper.Map<IList<AuthorDto>>(authors);
+
+            return Ok(dto);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok(await _service.GetByIdAsync(id));
+            var author = await _service.GetByIdAsync(id);
+
+            if (author is null)
+                return NotFound();
+
+            var dto = _mapper.Map<AuthorDto>(author);
+
+            return Ok(dto);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AuthorCreateInputModel model)
         {
-            var author = new Author
-            {
-                CreateDate = DateTime.Now,
-                UpdateDate = DateTime.Now,
-                Description = model.Description,
-                Name = model.Name
-            };
+            var author = _mapper.Map<Author>(model);
 
             await _service.CreateAsync(author);
             return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
@@ -38,7 +48,12 @@ namespace Library.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _service.DeleteAsync(id);
+            var author = await _service.GetByIdAsync(id);
+
+            if (author is null)
+                return NotFound();
+
+            await _service.DeleteAsync(author);
             return NoContent();
         }
 
@@ -46,7 +61,11 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] AuthorUpdateInputModel model)
         {
             var author = await _service.GetByIdAsync(id);
-            author.Update(model.Name, model.Description);
+
+            if (author is null)
+                return NotFound();
+
+            _mapper.Map(model, author);
 
             await _service.UpdateAsync(author);
             return NoContent();
