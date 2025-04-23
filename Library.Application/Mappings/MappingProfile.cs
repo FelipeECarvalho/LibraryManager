@@ -2,6 +2,7 @@
 using Library.Application.DTOs;
 using Library.Application.InputModels.Authors;
 using Library.Application.InputModels.Books;
+using Library.Application.InputModels.Loans;
 using Library.Application.InputModels.Users;
 using Library.Core.Entities;
 
@@ -14,8 +15,13 @@ namespace Library.Application.Mappings
             CreateMap<Book, BookDto>();
             CreateMap<User, UserDto>();
             CreateMap<Author, AuthorDto>();
+            CreateMap<Loan, LoanDto>();
 
-            // Create
+            CreateMap<AuthorCreateInputModel, Author>()
+                .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
+
             CreateMap<BookCreateInputModel, Book>()
                 .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
@@ -26,20 +32,8 @@ namespace Library.Application.Mappings
                 .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 
-            CreateMap<AuthorCreateInputModel, Author>()
+            CreateMap<LoanCreateInputModel, Loan>()
                 .ForMember(dest => dest.CreateDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now));
-
-            // Update
-            CreateMap<BookUpdateInputModel, Book>()
-                .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-
-            CreateMap<UserUpdateInputModel, User>()
-                .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
-                .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
-
-            CreateMap<AuthorUpdateInputModel, Author>()
                 .ForMember(dest => dest.UpdateDate, opt => opt.MapFrom(src => DateTime.Now))
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
         }

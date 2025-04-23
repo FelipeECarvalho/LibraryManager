@@ -1,26 +1,78 @@
-﻿using Library.Application.InputModels.Loans;
+﻿using AutoMapper;
+using Library.Application.DTOs;
+using Library.Application.InputModels.Loans;
+using Library.Core.Entities;
+using Library.Core.Enums;
+using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
 {
     [Route("api/v1/loans")]
-    public class LoansController : ControllerBase
+    public class LoansController(ILoanService _loanService, IMapper _mapper) : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Post([FromBody] LoanCreateInputModel model)
+        [HttpGet]
+        public async Task<IActionResult> GetAll() 
         {
-            return Created();
+            var loans = await _loanService.GetAllAsync();
+
+            if (loans is null)
+                return NoContent();
+
+            var dto = _mapper.Map<IList<LoanDto>>(loans);
+
+            return Ok(dto);
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var loan = await _loanService.GetByIdAsync(id);
+
+            if (loan is null)
+                return NotFound();
+
+            var dto = _mapper.Map<LoanDto>(loan);
+
+            return Ok(dto);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] LoanCreateInputModel model)
+        {
+            var loan = _mapper.Map<Loan>(model);
+
+            await _loanService.CreateAsync(loan);
+            return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult Put([FromBody] LoanUpdateInputModel model)
+        public async Task<IActionResult> Put(int id, [FromBody] LoanUpdateInputModel model)
         {
-            return Created();
+            var loan = await _loanService.GetByIdAsync(id);
+
+            if (loan is null)
+                return NotFound();
+
+            _mapper.Map(model, loan);
+
+            await _loanService.UpdateAsync(loan);
+
+            return NoContent();
         }
 
-        [HttpPut("{id:int}/return")]
-        public IActionResult Return(int id)
+        [HttpPatch("{id:int}/return")]
+        public async Task<IActionResult> Return(int id)
         {
+            var loan = await _loanService.GetByIdAsync(id);
+
+            if (loan is null)
+                return NotFound();
+
+            loan.Status = ELoanStatus.RETURNED;
+
+            await _loanService.UpdateAsync(loan);
+
             return NoContent();
         }
     }
