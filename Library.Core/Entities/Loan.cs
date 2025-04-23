@@ -1,6 +1,4 @@
-﻿using Library.Core.Enums;
-
-namespace Library.Core.Entities
+﻿namespace Library.Core.Entities
 {
     public class Loan : BaseEntity
     {
@@ -12,6 +10,6 @@ namespace Library.Core.Entities
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public ELoanStatus Status { get; set; }
+        public bool IsReturned { get; set; }
     }
 }

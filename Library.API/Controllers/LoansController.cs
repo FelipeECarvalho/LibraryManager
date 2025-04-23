@@ -69,7 +69,7 @@ namespace Library.API.Controllers
             if (loan is null)
                 return NotFound();
 
-            loan.Status = ELoanStatus.RETURNED;
+            loan.IsReturned = true;
 
             await _loanService.UpdateAsync(loan);
 
