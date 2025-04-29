@@ -2,7 +2,6 @@
 using Library.Application.DTOs;
 using Library.Application.InputModels.Loans;
 using Library.Core.Entities;
-using Library.Core.Enums;
 using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,11 +68,13 @@ namespace Library.API.Controllers
             if (loan is null)
                 return NotFound();
 
-            loan.IsReturned = true;
+            await _loanService.ReturnAsync(loan);
 
-            await _loanService.UpdateAsync(loan);
+            var message = DateTime.Now > loan.EndDate
+                ? "Book returned but delayed"
+                : "Book returned on time";
 
-            return NoContent();
+            return Ok(message);
         }
     }
 }

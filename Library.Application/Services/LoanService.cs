@@ -1,33 +1,37 @@
 ﻿using Library.Core.Entities;
+using Library.Core.Interfaces.Repositories;
 using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class LoanService : ILoanService
+    public class LoanService(ILoanRepository _repository) : ILoanService
     {
         public Task<Loan> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return _repository.GetByIdAsync(id);
         }
 
         public Task<IList<Loan>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return _repository.GetAllAsync();
         }
 
-        Task ILoanService.CreateAsync(Loan loan)
+        public Task CreateAsync(Loan loan)
         {
-            throw new NotImplementedException();
+            return _repository.CreateAsync(loan);
         }
 
-        Task ILoanService.UpdateAsync(Loan loan)
+        public Task UpdateAsync(Loan loan)
         {
-            throw new NotImplementedException();
+            return _repository.UpdateAsync(loan);
         }
 
-        Task ILoanService.ReturnAsync(Loan loan)
+        public Task ReturnAsync(Loan loan)
         {
-            throw new NotImplementedException();
+            loan.IsReturned = true;
+            loan.UpdateDate = DateTime.Now;
+
+            return _repository.UpdateAsync(loan);
         }
     }
 }
