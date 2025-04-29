@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class LoanService(ILoanRepository _repository) : ILoanService
+    public class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
     {
         public Task<Loan> GetByIdAsync(int id)
         {
@@ -18,11 +18,27 @@ namespace Library.Application.Services
 
         public Task CreateAsync(Loan loan)
         {
+            var book = _bookService.GetByIdAsync(loan.BookId);
+
+            if (book == null)
+                throw new Exception("Book not found");
+
+            var user = _userService.GetByIdAsync(loan.UserId);
+
+            if (user == null)
+                throw new Exception("User not found");
+
+            if (loan.EndDate < DateTime.Now)
+                throw new Exception("The loan end date cannot be smaller than today date");
+
             return _repository.CreateAsync(loan);
         }
 
         public Task UpdateAsync(Loan loan)
         {
+            if (loan.EndDate < DateTime.Now)
+                throw new Exception("The loan end date cannot be smaller than today date");
+
             return _repository.UpdateAsync(loan);
         }
 
