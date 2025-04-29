@@ -15,6 +15,8 @@ namespace Library.Infrastructure.Persistence.Repositories
         public async Task<IList<Loan>> GetAllAsync()
         {
             return await _context.Loans
+                .Include(x => x.Book)
+                .Include(x => x.User)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -22,6 +24,8 @@ namespace Library.Infrastructure.Persistence.Repositories
         public async Task<Loan> GetByIdAsync(int id)
         {
             return await _context.Loans
+                .Include(x => x.Book)
+                .Include(x => x.User)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 

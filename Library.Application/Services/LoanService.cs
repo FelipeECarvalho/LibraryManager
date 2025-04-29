@@ -6,24 +6,24 @@ namespace Library.Application.Services
 {
     public class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
     {
-        public Task<Loan> GetByIdAsync(int id)
+        public async Task<Loan> GetByIdAsync(int id)
         {
-            return _repository.GetByIdAsync(id);
+            return await _repository.GetByIdAsync(id);
         }
 
-        public Task<IList<Loan>> GetAllAsync()
+        public async Task<IList<Loan>> GetAllAsync()
         {
-            return _repository.GetAllAsync();
+            return await _repository.GetAllAsync();
         }
 
-        public Task CreateAsync(Loan loan)
+        public async Task CreateAsync(Loan loan)
         {
-            var book = _bookService.GetByIdAsync(loan.BookId);
+            var book = await _bookService.GetByIdAsync(loan.BookId);
 
             if (book == null)
                 throw new Exception("Book not found");
 
-            var user = _userService.GetByIdAsync(loan.UserId);
+            var user = await _userService.GetByIdAsync(loan.UserId);
 
             if (user == null)
                 throw new Exception("User not found");
@@ -31,23 +31,23 @@ namespace Library.Application.Services
             if (loan.EndDate < DateTime.Now)
                 throw new Exception("The loan end date cannot be smaller than today date");
 
-            return _repository.CreateAsync(loan);
+            await _repository.CreateAsync(loan);
         }
 
-        public Task UpdateAsync(Loan loan)
+        public async Task UpdateAsync(Loan loan)
         {
             if (loan.EndDate < DateTime.Now)
                 throw new Exception("The loan end date cannot be smaller than today date");
 
-            return _repository.UpdateAsync(loan);
+            await _repository.UpdateAsync(loan);
         }
 
-        public Task ReturnAsync(Loan loan)
+        public async Task ReturnAsync(Loan loan)
         {
             loan.IsReturned = true;
             loan.UpdateDate = DateTime.Now;
 
-            return _repository.UpdateAsync(loan);
+            await _repository.UpdateAsync(loan);
         }
     }
 }

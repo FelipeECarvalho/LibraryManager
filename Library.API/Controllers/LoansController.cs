@@ -42,6 +42,7 @@ namespace Library.API.Controllers
             var loan = _mapper.Map<Loan>(model);
 
             await _loanService.CreateAsync(loan);
+
             return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
         }
 
