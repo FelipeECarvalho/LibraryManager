@@ -52,7 +52,6 @@ namespace Library.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] BookCreateInputModel model)
         {
-
             var book = _mapper.Map<Book>(model);
 
             await _bookService.CreateAsync(book);
@@ -89,7 +88,7 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Put(int id, int stockNumber)
         {
             if (stockNumber < 0)
-                return BadRequest("Stock number cannot be negative.");
+                return BadRequest("Stock number cannot be a negative number.");
 
             var book = await _bookService.GetByIdAsync(id);
 

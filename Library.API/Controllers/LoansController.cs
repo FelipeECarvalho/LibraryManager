@@ -72,7 +72,7 @@ namespace Library.API.Controllers
             await _loanService.ReturnAsync(loan);
 
             var message = DateTime.Now > loan.EndDate
-                ? "Book returned but delayed"
+                ? "Book returned past due"
                 : "Book returned on time";
 
             return Ok(message);
