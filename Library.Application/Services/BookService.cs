@@ -34,9 +34,7 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(Book book)
         {
-            book.IsDeleted = true;
-            book.UpdateDate = DateTime.Now;
-
+            book.Delete();
             await _repository.UpdateAsync(book);
         }
     }

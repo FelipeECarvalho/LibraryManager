@@ -18,12 +18,16 @@
             BookId = bookId;
             StartDate = startDate;
             EndDate = endDate;
+
+            Validate();
         }
 
         public void Update(DateTime endDate)
         {
             EndDate = endDate;
             UpdateDate = DateTime.Now;
+
+            Validate();
         }
 
         public void Return()
@@ -35,6 +39,12 @@
 
             UpdateDate = DateTime.Now;
             IsReturned = true;
+        }
+
+        private void Validate() 
+        {
+            if (EndDate < DateTime.Now)
+                throw new Exception("The loan end date cannot be smaller than today date");
         }
     }
 }

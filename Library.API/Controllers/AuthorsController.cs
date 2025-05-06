@@ -70,5 +70,17 @@ namespace Library.API.Controllers
             await _service.UpdateAsync(author);
             return NoContent();
         }
+
+        [HttpPut("{id:int}/add-book/{bookId:int}")]
+        public async Task<IActionResult> AddBook(int id, int bookId)
+        {
+            var author = await _service.GetByIdAsync(id);
+
+            if (author is null)
+                return NotFound();
+
+            await _service.UpdateAsync(author);
+            return NoContent();
+        }
     }
 }

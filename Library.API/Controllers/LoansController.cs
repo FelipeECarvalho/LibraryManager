@@ -54,7 +54,7 @@ namespace Library.API.Controllers
             if (loan is null)
                 return NotFound();
 
-            _mapper.Map(model, loan);
+            loan.Update(model.EndDate);
 
             await _loanService.UpdateAsync(loan);
 

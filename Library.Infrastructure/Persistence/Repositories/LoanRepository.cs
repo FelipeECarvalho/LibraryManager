@@ -21,6 +21,14 @@ namespace Library.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IList<Loan>> GetByBookAsync(int bookId)
+        {
+            return await _context.Loans
+                .AsNoTracking()
+                .Where(x  => x.BookId == bookId)
+                .ToListAsync();
+        }
+
         public async Task<Loan> GetByIdAsync(int id)
         {
             return await _context.Loans

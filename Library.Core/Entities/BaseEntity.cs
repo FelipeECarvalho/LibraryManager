@@ -14,5 +14,11 @@
         public DateTime CreateDate { get; init; }
         public DateTime UpdateDate { get; protected set; }
         public bool IsDeleted { get; protected set; }
+
+        public void Delete() 
+        { 
+            IsDeleted = true;
+            UpdateDate = DateTime.Now;
+        }
     }
 }

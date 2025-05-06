@@ -29,9 +29,7 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(User user)
         {
-            user.IsDeleted = true;
-            user.UpdateDate = DateTime.Now;
-
+            user.Delete();
             await _repository.UpdateAsync(user);
         }
     }

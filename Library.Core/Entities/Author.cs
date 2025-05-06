@@ -14,7 +14,7 @@
             Books = books;
         }
 
-        public string Name { get; init; }
+        public string Name { get; private set; }
         public string Description { get; private set; }
         public IList<Book> Books { get; private set; }
 
@@ -26,10 +26,17 @@
             UpdateDate = DateTime.Now;
         }
 
-        public void Update(string description)
+        public void Update(string name)
         {
+            Name = name;
             UpdateDate = DateTime.Now;
+        }
+
+        public void Update(string name, string description)
+        {
+            Name = name;
             Description = description;
+            UpdateDate = DateTime.Now;
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Library.API.Controllers
             if (book is null)
                 return NotFound();
 
-            _mapper.Map(model, book);
+            book.Update(model.Title, model.Description, model.PublicationDate);
 
             await _bookService.UpdateAsync(book);
             return NoContent();
@@ -95,7 +95,7 @@ namespace Library.API.Controllers
             if (book is null)
                 return BadRequest();
 
-            book.StockNumber = stockNumber;
+            book.UpdateStock(stockNumber);
 
             await _bookService.UpdateAsync(book);
             return NoContent();

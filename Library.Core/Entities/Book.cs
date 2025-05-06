@@ -12,11 +12,11 @@
             AuthorId = authorId;
         }
 
-        public string Title { get; init; }
+        public string Title { get; private set; }
 
         public string Description { get; private set; }
 
-        public DateTime PublicationDate { get; init; }
+        public DateTime PublicationDate { get; private set; }
 
         public string ISBN { get; init; }
 
@@ -26,9 +26,11 @@
 
         public Author Author { get; }
 
-        public void Update(string description)
+        public void Update(string title, string description, DateTime publicationDate)
         {
+            Title = title;
             Description = description;
+            PublicationDate = publicationDate;
             UpdateDate = DateTime.Now;
         }
 

@@ -6,6 +6,7 @@ namespace Library.Core.Interfaces.Repositories
     {
         Task<Loan> GetByIdAsync(int id);
         Task<IList<Loan>> GetAllAsync();
+        Task<IList<Loan>> GetByBookAsync(int bookId);
 
         Task CreateAsync(Loan loan);
         Task UpdateAsync(Loan loan);

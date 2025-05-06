@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
+    public class LoanService(ILoanRepository _repository, Lazy<IBookService> _bookService, Lazy<IUserService> _userService) : ILoanService
     {
         public async Task<Loan> GetByIdAsync(int id)
         {
@@ -16,33 +16,40 @@ namespace Library.Application.Services
             return await _repository.GetAllAsync();
         }
 
+        public async Task<IList<Loan>> GetByBookAsync(int bookId)
+        {
+            return await _repository.GetByBookAsync(bookId);
+        }
+
         public async Task CreateAsync(Loan loan)
         {
-            _ = await _bookService.GetByIdAsync(loan.BookId) 
-                ?? throw new Exception("Book not found");
-
-            _ = await _userService.GetByIdAsync(loan.UserId) 
-                ?? throw new Exception("User not found");
-
-            if (loan.EndDate < DateTime.Now)
-                throw new Exception("The loan end date cannot be smaller than today date");
-
+            await ValidateCreate(loan);
             await _repository.CreateAsync(loan);
         }
 
         public async Task UpdateAsync(Loan loan)
         {
-            if (loan.EndDate < DateTime.Now)
-                throw new Exception("The loan end date cannot be smaller than today date");
-
             await _repository.UpdateAsync(loan);
         }
 
         public async Task ReturnAsync(Loan loan)
         {
             loan.Return();
-
             await _repository.UpdateAsync(loan);
+        }
+
+        private async Task ValidateCreate(Loan loan) 
+        {
+            var book = await _bookService.Value.GetByIdAsync(loan.BookId)
+                ?? throw new ArgumentException("Book not found");
+
+            _ = await _userService.Value.GetByIdAsync(loan.UserId)
+                ?? throw new ArgumentException("User not found");
+
+            var loans = await GetByBookAsync(loan.BookId);
+
+            if (loans.Count(x => !x.IsReturned) >= book.StockNumber)
+                throw new Exception("Book is without stock");
         }
     }
 }

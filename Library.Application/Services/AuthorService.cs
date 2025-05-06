@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class AuthorService(IAuthorRepository _repository) : IAuthorService
+    public class AuthorService(IAuthorRepository _repository, Lazy<IBookRepository> bookRepository) : IAuthorService
     {
         public async Task<Author> CreateAsync(Author author)
         {
@@ -24,14 +24,22 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(Author author)
         {
-            author.IsDeleted = true;
-            author.UpdateDate = DateTime.Now;
-
+            author.Delete();
             await _repository.UpdateAsync(author);
         }
 
         public async Task UpdateAsync(Author author)
         {
+            await _repository.UpdateAsync(author);
+        }
+
+        public async Task AddBookAsync(Author author, int bookId)
+        {
+            var book = await bookRepository.Value.GetByIdAsync(bookId) 
+                ?? throw new ArgumentException("Book not found");
+
+            author.AddBook(book);
+
             await _repository.UpdateAsync(author);
         }
     }

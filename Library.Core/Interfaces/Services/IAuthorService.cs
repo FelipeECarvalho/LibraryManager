@@ -9,6 +9,7 @@ namespace Library.Core.Interfaces.Services
         Task<Author> CreateAsync(Author author);
 
         Task UpdateAsync(Author author);
+        Task AddBookAsync(Author author, int bookId);
         Task DeleteAsync(Author author);
     }
 }
