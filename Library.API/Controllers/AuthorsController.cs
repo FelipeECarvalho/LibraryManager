@@ -79,7 +79,7 @@ namespace Library.API.Controllers
             if (author is null)
                 return NotFound();
 
-            await _service.UpdateAsync(author);
+            await _service.AddBookAsync(author, bookId);
             return NoContent();
         }
     }
