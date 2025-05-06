@@ -18,15 +18,11 @@ namespace Library.Application.Services
 
         public async Task CreateAsync(Loan loan)
         {
-            var book = await _bookService.GetByIdAsync(loan.BookId);
+            _ = await _bookService.GetByIdAsync(loan.BookId) 
+                ?? throw new Exception("Book not found");
 
-            if (book == null)
-                throw new Exception("Book not found");
-
-            var user = await _userService.GetByIdAsync(loan.UserId);
-
-            if (user == null)
-                throw new Exception("User not found");
+            _ = await _userService.GetByIdAsync(loan.UserId) 
+                ?? throw new Exception("User not found");
 
             if (loan.EndDate < DateTime.Now)
                 throw new Exception("The loan end date cannot be smaller than today date");
@@ -44,8 +40,7 @@ namespace Library.Application.Services
 
         public async Task ReturnAsync(Loan loan)
         {
-            loan.IsReturned = true;
-            loan.UpdateDate = DateTime.Now;
+            loan.Return();
 
             await _repository.UpdateAsync(loan);
         }
