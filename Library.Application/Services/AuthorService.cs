@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class AuthorService(IAuthorRepository _repository, Lazy<IBookRepository> bookRepository) : IAuthorService
+    public class AuthorService(IAuthorRepository _repository, IBookRepository bookRepository) : IAuthorService
     {
         public async Task<Author> CreateAsync(Author author)
         {
@@ -35,7 +35,7 @@ namespace Library.Application.Services
 
         public async Task AddBookAsync(Author author, int bookId)
         {
-            var book = await bookRepository.Value.GetByIdAsync(bookId) 
+            var book = await bookRepository.GetByIdAsync(bookId) 
                 ?? throw new ArgumentException("Book not found");
 
             author.AddBook(book);

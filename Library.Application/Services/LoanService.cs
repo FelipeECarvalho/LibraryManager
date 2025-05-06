@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class LoanService(ILoanRepository _repository, Lazy<IBookService> _bookService, Lazy<IUserService> _userService) : ILoanService
+    public class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
     {
         public async Task<Loan> GetByIdAsync(int id)
         {
@@ -40,10 +40,10 @@ namespace Library.Application.Services
 
         private async Task ValidateCreate(Loan loan) 
         {
-            var book = await _bookService.Value.GetByIdAsync(loan.BookId)
+            var book = await _bookService.GetByIdAsync(loan.BookId)
                 ?? throw new ArgumentException("Book not found");
 
-            _ = await _userService.Value.GetByIdAsync(loan.UserId)
+            var user = await _userService.GetByIdAsync(loan.UserId)
                 ?? throw new ArgumentException("User not found");
 
             var loans = await GetByBookAsync(loan.BookId);
