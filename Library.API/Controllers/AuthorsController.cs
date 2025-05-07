@@ -65,7 +65,7 @@ namespace Library.API.Controllers
             if (author is null)
                 return NotFound();
 
-            _mapper.Map(model, author);
+            author.Update(model.Name, model.Description);
 
             await _service.UpdateAsync(author);
             return NoContent();

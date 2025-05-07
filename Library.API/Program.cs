@@ -1,3 +1,4 @@
+using Library.API.Middleware;
 using Library.Application.Mappings;
 
 namespace Library.API
@@ -31,6 +32,8 @@ namespace Library.API
             app.UseAuthorization();
 
             app.MapControllers();
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.Run();
         }
