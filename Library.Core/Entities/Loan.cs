@@ -2,6 +2,20 @@
 {
     public class Loan : BaseEntity
     {
+        public Loan()
+        {
+        }
+
+        public Loan(int userId, int bookId, DateTime startDate, DateTime endDate) : base()
+        {
+            UserId = userId;
+            BookId = bookId;
+            StartDate = startDate;
+            EndDate = endDate;
+
+            Validate();
+        }
+
         public int UserId { get; init; }
         public User User { get; }
 
@@ -11,16 +25,6 @@
         public DateTime StartDate { get; init; }
         public DateTime EndDate { get; private set; }
         public bool IsReturned { get; private set; }
-
-        public Loan(int userId, int bookId, DateTime startDate, DateTime endDate) : base() 
-        {
-            UserId = userId;
-            BookId = bookId;
-            StartDate = startDate;
-            EndDate = endDate;
-
-            Validate();
-        }
 
         public void Update(DateTime endDate)
         {

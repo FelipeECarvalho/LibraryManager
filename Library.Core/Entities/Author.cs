@@ -2,6 +2,10 @@
 {
     public class Author : BaseEntity
     {
+        public Author()
+        {
+        }
+
         public Author(string name) : base()
         {
             Name = name;

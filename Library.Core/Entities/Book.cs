@@ -2,6 +2,10 @@
 {
     public class Book : BaseEntity
     {
+        public Book()
+        {
+        }
+
         public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId) : base()
         {
             Title = title;

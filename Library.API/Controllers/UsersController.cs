@@ -13,6 +13,7 @@ namespace Library.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            throw new ArgumentNullException();
             var users = await _service.GetAllAsync();
 
             if (users is null)
