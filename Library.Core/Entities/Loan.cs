@@ -2,9 +2,7 @@
 {
     public class Loan : BaseEntity
     {
-        public Loan()
-        {
-        }
+        private Loan() { }
 
         public Loan(int userId, int bookId, DateTime startDate, DateTime endDate) : base()
         {

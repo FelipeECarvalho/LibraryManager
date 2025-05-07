@@ -2,9 +2,7 @@
 {
     public class User : BaseEntity
     {
-        public User()
-        {
-        }
+        private User() { }
 
         public User(string name, string document, string email) : base()
         {

@@ -2,9 +2,7 @@
 {
     public class Author : BaseEntity
     {
-        public Author()
-        {
-        }
+        private Author() { }
 
         public Author(string name) : base()
         {
