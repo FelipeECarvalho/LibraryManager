@@ -2,10 +2,10 @@
 {
     public class LoanDto
     {
-        public int Id { get; set; }
-        public BookDto Book { get; set; }
-        public UserDto User { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public int Id { get; }
+        public BookDto Book { get; }
+        public UserDto User { get; }
+        public DateTime StartDate { get; }
+        public DateTime EndDate { get; }
     }
 }

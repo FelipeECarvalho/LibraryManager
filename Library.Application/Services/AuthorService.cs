@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class AuthorService(IAuthorRepository _repository, IBookRepository bookRepository) : IAuthorService
+    public sealed class AuthorService(IAuthorRepository _repository, IBookRepository bookRepository) : IAuthorService
     {
         public async Task<Author> CreateAsync(Author author)
         {

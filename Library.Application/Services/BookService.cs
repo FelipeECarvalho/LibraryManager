@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class BookService(IBookRepository _repository) : IBookService
+    public sealed class BookService(IBookRepository _repository) : IBookService
     {
         public async Task<IList<Book>> GetAllAsync() 
         {

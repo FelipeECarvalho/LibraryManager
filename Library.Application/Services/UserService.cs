@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class UserService(IUserRepository _repository) : IUserService
+    public sealed class UserService(IUserRepository _repository) : IUserService
     {
         public async Task<IList<User>> GetAllAsync()
         {

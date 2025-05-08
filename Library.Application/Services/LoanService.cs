@@ -4,7 +4,7 @@ using Library.Core.Interfaces.Services;
 
 namespace Library.Application.Services
 {
-    public class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
+    public sealed class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
     {
         public async Task<Loan> GetByIdAsync(int id)
         {
