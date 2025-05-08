@@ -4,42 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.Repositories
 {
-    public class BookRepository(LibraryDbContext _context) : IBookRepository
+    public class BookRepository : BaseRepository<Book>, IBookRepository
     {
-        public async Task<IList<Book>> GetAllAsync()
+        public BookRepository(LibraryDbContext context)
+            : base(context)
         {
-            return await _context.Books
-                .Include(x => x.Author)
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public async Task<Book> GetByIdAsync(int id)
-        {
-            return await _context.Books
-                .Include(x => x.Author)
-                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Book>> GetByTitleAsync(string title)
         {
-            return await _context.Books
+            return await base._context.Books
                 .Include(x => x.Author)
                 .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
                 .AsNoTracking()
                 .ToListAsync();
-        }
-
-        public async Task CreateAsync(Book book)
-        {
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateAsync(Book book)
-        {
-            _context.Books.Update(book);
-            await _context.SaveChangesAsync();
         }
     }
 }
