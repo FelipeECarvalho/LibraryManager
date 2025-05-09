@@ -1,7 +1,7 @@
 ﻿using Library.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.Infrastructure.Persistence
+namespace Library.Infrastructure
 {
     public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options)
     {

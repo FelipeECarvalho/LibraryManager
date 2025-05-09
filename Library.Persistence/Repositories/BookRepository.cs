@@ -1,8 +1,9 @@
 ﻿using Library.Core.Entities;
-using Library.Core.Interfaces.Repositories;
+using Library.Core.Repositories;
+using Library.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.Infrastructure.Persistence.Repositories
+namespace Library.Persistence.Repositories
 {
     public sealed class BookRepository : BaseRepository<Book>, IBookRepository
     {
@@ -28,7 +29,7 @@ namespace Library.Infrastructure.Persistence.Repositories
 
         public async Task<IList<Book>> GetByTitleAsync(string title)
         {
-            return await base._context.Books
+            return await _context.Books
                 .Include(x => x.Author)
                 .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
                 .AsNoTracking()

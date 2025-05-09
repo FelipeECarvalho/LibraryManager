@@ -1,9 +1,9 @@
 ﻿using Library.Application.Services;
-using Library.Core.Interfaces.Repositories;
 using Library.Core.Interfaces.Services;
 using Library.Infrastructure.Persistence.Repositories;
-using Library.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Library.Core.Repositories;
+using Library.Infrastructure;
 
 namespace Library.API
 {

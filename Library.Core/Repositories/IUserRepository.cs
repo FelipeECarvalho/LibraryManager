@@ -1,14 +1,13 @@
 ﻿using Library.Core.Entities;
 
-namespace Library.Core.Interfaces.Services
+namespace Library.Core.Repositories
 {
-    public interface IUserService
+    public interface IUserRepository
     {
         Task<IList<User>> GetAllAsync();
         Task<User> GetByIdAsync(int id);
 
-        Task<User> CreateAsync(User user);
+        Task CreateAsync(User user);
         Task UpdateAsync(User user);
-        Task DeleteAsync(User user);
     }
 }

@@ -10,17 +10,13 @@
             BookId = bookId;
             StartDate = startDate;
             EndDate = endDate;
-
-            Validate();
         }
 
-        public int UserId { get; init; }
-        public User User { get; }
-
-        public int BookId { get; init; }
-        public Book Book { get; }
-
-        public DateTime StartDate { get; init; }
+        public int UserId { get; private set; }
+        public User User { get; private set; }
+        public int BookId { get; private set; }
+        public Book Book { get; private set; }
+        public DateTime StartDate { get; private set; }
         public DateTime EndDate { get; private set; }
         public bool IsReturned { get; private set; }
 
@@ -28,8 +24,6 @@
         {
             EndDate = endDate;
             UpdateDate = DateTime.Now;
-
-            Validate();
         }
 
         public void Return()
@@ -41,12 +35,6 @@
 
             UpdateDate = DateTime.Now;
             IsReturned = true;
-        }
-
-        private void Validate() 
-        {
-            if (EndDate < DateTime.Now)
-                throw new Exception("The loan end date cannot be smaller than today date");
         }
     }
 }

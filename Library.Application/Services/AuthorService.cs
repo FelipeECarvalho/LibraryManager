@@ -1,6 +1,6 @@
 ﻿using Library.Core.Entities;
-using Library.Core.Interfaces.Repositories;
 using Library.Core.Interfaces.Services;
+using Library.Core.Repositories;
 
 namespace Library.Application.Services
 {

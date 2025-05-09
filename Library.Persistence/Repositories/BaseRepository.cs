@@ -1,6 +1,7 @@
 ﻿using Library.Core.Entities;
+using Library.Infrastructure;
 
-namespace Library.Infrastructure.Persistence.Repositories
+namespace Library.Persistence.Repositories
 {
     public abstract class BaseRepository<T> where T : BaseEntity
     {

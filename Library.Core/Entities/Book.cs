@@ -20,13 +20,13 @@
 
         public DateTime PublicationDate { get; private set; }
 
-        public string ISBN { get; init; }
+        public string ISBN { get; private set; }
 
         public int StockNumber { get; private set; }
 
-        public int AuthorId { get; init; }
+        public int AuthorId { get; private set; }
 
-        public Author Author { get; }
+        public Author Author { get; private set; }
 
         public void Update(string title, string description, DateTime publicationDate)
         {

@@ -1,8 +1,9 @@
 ﻿using Library.Core.Entities;
-using Library.Core.Interfaces.Repositories;
+using Library.Core.Repositories;
+using Library.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.Infrastructure.Persistence.Repositories
+namespace Library.Persistence.Repositories
 {
     public sealed class AuthorRepository  : BaseRepository<Author>, IAuthorRepository
     {
