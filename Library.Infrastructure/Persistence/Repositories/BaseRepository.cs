@@ -1,5 +1,4 @@
 ﻿using Library.Core.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.Repositories
 {
@@ -10,19 +9,6 @@ namespace Library.Infrastructure.Persistence.Repositories
         protected BaseRepository(LibraryDbContext context)
         {
             _context = context;
-        }
-
-        public virtual async Task<IList<T>> GetAllAsync()
-        {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .ToListAsync();
-        }
-
-        public virtual async Task<T> GetByIdAsync(int id)
-        {
-            return await _context.Set<T>()
-                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public virtual async Task CreateAsync(T model)

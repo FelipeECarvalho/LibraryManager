@@ -4,11 +4,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Infrastructure.Persistence.Repositories
 {
-    public class BookRepository : BaseRepository<Book>, IBookRepository
+    public sealed class BookRepository : BaseRepository<Book>, IBookRepository
     {
         public BookRepository(LibraryDbContext context)
             : base(context)
         {
+        }
+
+        public async Task<IList<Book>> GetAllAsync()
+        {
+            return await _context.Books
+                .Include(x => x.Author)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<Book> GetByIdAsync(int id)
+        {
+            return await _context.Books
+                .Include(x => x.Author)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Book>> GetByTitleAsync(string title)

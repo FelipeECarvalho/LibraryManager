@@ -2,17 +2,17 @@
 {
     public class BookDto
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public int Id { get; init; }
+        public string Title { get; init; }
 
-        public string Description { get; set; }
+        public string Description { get; init; }
 
-        public DateTime PublicationDate { get; set; }
+        public DateTime PublicationDate { get; init; }
 
-        public string ISBN { get; set; }
+        public string ISBN { get; init; }
 
-        public int StockNumber { get; set; }
+        public int StockNumber { get; init; }
 
-        public AuthorDto Author { get; set; }
+        public AuthorDto Author { get; init; }
     }
 }
