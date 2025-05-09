@@ -7,7 +7,7 @@ namespace Library.Core.Repositories
         Task<IList<User>> GetAllAsync();
         Task<User> GetByIdAsync(int id);
 
-        Task CreateAsync(User user);
-        Task UpdateAsync(User user);
+        void Add(User user);
+        void Update(User user);
     }
 }

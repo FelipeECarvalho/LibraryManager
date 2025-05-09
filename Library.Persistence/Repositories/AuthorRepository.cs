@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Persistence.Repositories
 {
-    public sealed class AuthorRepository  : BaseRepository<Author>, IAuthorRepository
+    public sealed class AuthorRepository : IAuthorRepository
     {
-        public AuthorRepository(LibraryDbContext context) 
-            : base(context) 
+        private readonly LibraryDbContext _context;
+
+        public AuthorRepository(LibraryDbContext context)
         {
+            _context = context;
         }
 
         public async Task<IList<Author>> GetAllAsync()
@@ -24,6 +26,16 @@ namespace Library.Persistence.Repositories
             return await _context.Authors
                 .Include(x => x.Books)
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public void Add(Author author) 
+        {
+            _context.Authors.Add(author);
+        }
+
+        public void Update(Author author)
+        {
+            _context.Authors.Update(author);
         }
     }
 }

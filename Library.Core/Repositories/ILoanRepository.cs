@@ -8,7 +8,7 @@ namespace Library.Core.Repositories
         Task<IList<Loan>> GetAllAsync();
         Task<IList<Loan>> GetByBookAsync(int bookId);
 
-        Task CreateAsync(Loan loan);
-        Task UpdateAsync(Loan loan);
+        void Add(Loan loan);
+        void Update(Loan loan);
     }
 }

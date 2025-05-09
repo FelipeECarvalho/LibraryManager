@@ -1,10 +1,9 @@
 ﻿using Library.Core.Entities;
-using Library.Core.Interfaces.Services;
 using Library.Core.Repositories;
 
 namespace Library.Application.Services
 {
-    public sealed class BookService(IBookRepository _repository) : IBookService
+    public sealed class BookService(IBookRepository _repository, IUnitOfWork _unityOfWork)
     {
         public async Task<IList<Book>> GetAllAsync() 
         {
@@ -23,19 +22,25 @@ namespace Library.Application.Services
 
         public async Task<Book> CreateAsync(Book book)
         {
-            await _repository.CreateAsync(book);
+            _repository.Add(book);
+            await _unityOfWork.SaveChangesAsync();
+
             return book;
         }
 
         public async Task UpdateAsync(Book book)
         {
-            await _repository.UpdateAsync(book);
+            _repository.Update(book);
+
+            await _unityOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Book book)
         {
             book.Delete();
-            await _repository.UpdateAsync(book);
+            _repository.Update(book);
+
+            await _unityOfWork.SaveChangesAsync();
         }
     }
 }

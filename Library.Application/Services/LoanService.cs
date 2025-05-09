@@ -1,10 +1,13 @@
 ﻿using Library.Core.Entities;
-using Library.Core.Interfaces.Services;
 using Library.Core.Repositories;
 
 namespace Library.Application.Services
 {
-    public sealed class LoanService(ILoanRepository _repository, IBookService _bookService, IUserService _userService) : ILoanService
+    public sealed class LoanService(
+        ILoanRepository _repository,
+        IBookRepository _bookRepository,
+        IUserRepository _userRepository,
+        IUnitOfWork _unitOfWork)
     {
         public async Task<Loan> GetByIdAsync(int id)
         {
@@ -24,26 +27,32 @@ namespace Library.Application.Services
         public async Task CreateAsync(Loan loan)
         {
             await ValidateCreate(loan);
-            await _repository.CreateAsync(loan);
+             _repository.Add(loan);
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Loan loan)
         {
-            await _repository.UpdateAsync(loan);
+            _repository.Update(loan);
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task ReturnAsync(Loan loan)
         {
             loan.Return();
-            await _repository.UpdateAsync(loan);
+            _repository.Update(loan);
+
+            await _unitOfWork.SaveChangesAsync();
         }
 
         private async Task ValidateCreate(Loan loan) 
         {
-            var book = await _bookService.GetByIdAsync(loan.BookId)
+            var book = await _bookRepository.GetByIdAsync(loan.BookId)
                 ?? throw new ArgumentException("Book not found");
 
-            var user = await _userService.GetByIdAsync(loan.UserId)
+            var user = await _userRepository.GetByIdAsync(loan.UserId)
                 ?? throw new ArgumentException("User not found");
 
             var loans = await GetByBookAsync(loan.BookId);

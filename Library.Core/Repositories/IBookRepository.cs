@@ -8,7 +8,7 @@ namespace Library.Core.Repositories
         Task<Book> GetByIdAsync(int id);
         Task<IList<Book>> GetByTitleAsync(string title);
 
-        Task CreateAsync(Book book);
-        Task UpdateAsync(Book book);
+        void Add(Book book);
+        void Update(Book book);
     }
 }

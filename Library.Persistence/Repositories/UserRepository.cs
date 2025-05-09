@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Persistence.Repositories
 {
-    public sealed class UserRepository : BaseRepository<User>, IUserRepository
+    public sealed class UserRepository : IUserRepository
     {
+        private readonly LibraryDbContext _context;
+
         public UserRepository(LibraryDbContext context)
-            : base(context)
         {
+            _context = context;
         }
 
         public async Task<IList<User>> GetAllAsync()
@@ -23,6 +25,16 @@ namespace Library.Persistence.Repositories
         {
             return await _context.Users
                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public void Add(User user)
+        {
+            _context.Users.Add(user);
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
         }
     }
 }

@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.Persistence.Repositories
 {
-    public sealed class BookRepository : BaseRepository<Book>, IBookRepository
+    public sealed class BookRepository : IBookRepository
     {
+        private readonly LibraryDbContext _context;
+
         public BookRepository(LibraryDbContext context)
-            : base(context)
         {
+            _context = context;
         }
 
         public async Task<IList<Book>> GetAllAsync()
@@ -34,6 +36,16 @@ namespace Library.Persistence.Repositories
                 .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
                 .AsNoTracking()
                 .ToListAsync();
+        }
+
+        public void Add(Book book)
+        {
+            _context.Books.Add(book);
+        }
+
+        public void Update(Book book)
+        {
+            _context.Books.Update(book);
         }
     }
 }
