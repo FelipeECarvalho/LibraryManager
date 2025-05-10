@@ -2,7 +2,6 @@
 using Library.Application.DTOs;
 using Library.Application.InputModels.Loans;
 using Library.Core.Entities;
-using Library.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Library.API.Controllers
