@@ -27,7 +27,7 @@
 
         public string ISBN { get; private set; }
 
-        public int StockNumber { get; private set; }
+        public int? StockNumber { get; private set; }
 
         public int AuthorId { get; private set; }
 
