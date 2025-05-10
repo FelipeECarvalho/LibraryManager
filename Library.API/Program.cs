@@ -11,7 +11,7 @@ namespace Library.API
 
             builder.Services
                 .AddInfrastructure(builder.Configuration)
-                .AddApiVersioning();
+                .AddVersioning();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddControllers();

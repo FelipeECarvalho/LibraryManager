@@ -22,7 +22,7 @@
             return services;
         }
 
-        private static void AddApiVersioning(IServiceCollection services)
+        public static void AddVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(options =>
             {

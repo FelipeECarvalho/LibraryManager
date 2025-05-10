@@ -5,7 +5,6 @@
     using Library.Application.DTOs;
     using Library.Application.InputModels.Users;
     using Library.Core.Entities;
-    using Library.Core.ValueObjects;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
@@ -37,6 +36,12 @@
             var dto = _mapper.Map<UserDto>(user);
 
             return Ok(dto);
+        }
+
+        [HttpGet("{id:int}/loans")]
+        public Task<IActionResult> GetLoans(int id)
+        {
+            throw new NotImplementedException();
         }
 
         [HttpPost]
