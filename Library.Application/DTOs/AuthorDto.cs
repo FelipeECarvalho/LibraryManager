@@ -4,7 +4,7 @@
 
     public class AuthorDto
     {
-        public Guid Guid { get; init; }
+        public Guid Id { get; init; }
 
         public Name Name { get; init; }
 

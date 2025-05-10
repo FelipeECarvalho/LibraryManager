@@ -1,8 +1,8 @@
-using Library.API.Middleware;
-using Library.Application.Mappings;
-
 namespace Library.API
 {
+    using Library.API.Middleware;
+    using Library.Application.Mappings;
+
     public class Program
     {
         public static void Main(string[] args)

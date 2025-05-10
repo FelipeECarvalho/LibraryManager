@@ -1,8 +1,8 @@
-﻿using Library.Core.Entities;
-using Library.Core.Repositories;
-
-namespace Library.Application.Services
+﻿namespace Library.Application.Services
 {
+    using Library.Core.Entities;
+    using Library.Core.Repositories;
+   
     public sealed class BookService(IBookRepository _repository, IUnitOfWork _unityOfWork)
     {
         public async Task<IList<Book>> GetAllAsync()
