@@ -1,7 +1,7 @@
-﻿using System.Text.Json;
-
-namespace Library.API.Models
+﻿namespace Library.API.Models
 {
+    using System.Text.Json;
+
     internal class ErrorDetails
     {
         public int StatusCode { get; set; }

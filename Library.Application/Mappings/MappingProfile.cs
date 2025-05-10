@@ -1,13 +1,13 @@
-﻿using AutoMapper;
-using Library.Application.DTOs;
-using Library.Application.InputModels.Authors;
-using Library.Application.InputModels.Books;
-using Library.Application.InputModels.Loans;
-using Library.Application.InputModels.Users;
-using Library.Core.Entities;
-
-namespace Library.Application.Mappings
+﻿namespace Library.Application.Mappings
 {
+    using AutoMapper;
+    using Library.Application.DTOs;
+    using Library.Application.InputModels.Authors;
+    using Library.Application.InputModels.Books;
+    using Library.Application.InputModels.Loans;
+    using Library.Application.InputModels.Users;
+    using Library.Core.Entities;
+
     public class MappingProfile : Profile
     {
         public MappingProfile()

@@ -1,10 +1,10 @@
-﻿using Library.Core.Entities;
-using Library.Core.Repositories;
-using Library.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-
-namespace Library.Persistence.Repositories
+﻿namespace Library.Persistence.Repositories
 {
+    using Library.Core.Entities;
+    using Library.Core.Repositories;
+    using Library.Infrastructure;
+    using Microsoft.EntityFrameworkCore;
+
     public sealed class BookRepository : IBookRepository
     {
         private readonly LibraryDbContext _context;

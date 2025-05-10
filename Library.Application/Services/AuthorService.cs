@@ -1,5 +1,5 @@
-﻿using Library.Core.Entities;
-using Library.Core.Repositories;
+﻿using Library.Core.Repositories;
+using Library.Core.Entities;
 
 namespace Library.Application.Services
 {

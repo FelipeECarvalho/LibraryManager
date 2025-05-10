@@ -1,8 +1,8 @@
-﻿using Library.API.Models;
-using System.Net;
-
-namespace Library.API.Middleware
+﻿namespace Library.API.Middleware
 {
+    using Library.API.Models;
+    using System.Net;
+
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;

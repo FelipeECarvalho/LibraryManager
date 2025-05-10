@@ -1,7 +1,7 @@
-﻿using Library.Core.Entities;
-
-namespace Library.Core.Repositories
+﻿namespace Library.Core.Repositories
 {
+    using Library.Core.Entities;
+
     public interface IUserRepository
     {
         Task<IList<User>> GetAllAsync();
