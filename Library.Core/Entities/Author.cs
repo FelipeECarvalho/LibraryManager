@@ -5,12 +5,12 @@
     public class Author : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private Author() 
-            : base() 
+        private Author()
+            : base()
         {
         }
 
-        public Author(Name name, string? description) 
+        public Author(Name name, string? description)
             : base()
         {
             Name = name;
@@ -19,7 +19,7 @@
         }
 
         public Author(Name name, string? description, IList<Book> books)
-            :base()
+            : base()
         {
             Name = name;
             Books = books;

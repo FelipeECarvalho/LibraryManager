@@ -6,7 +6,7 @@
     using Library.Application.InputModels.Books;
     using Library.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
-    
+
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -30,7 +30,7 @@
         {
             var book = await _bookService.GetByIdAsync(id);
 
-            if (book is null) 
+            if (book is null)
                 return NotFound();
 
             var dto = _mapper.Map<BookDto>(book);
@@ -57,7 +57,7 @@
             var book = _mapper.Map<Book>(model);
 
             await _bookService.CreateAsync(book);
-            return CreatedAtAction(nameof(GetById), new { id = book.Id}, book);
+            return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }
 
         [HttpDelete("{id:int}")]

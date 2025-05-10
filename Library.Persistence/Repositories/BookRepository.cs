@@ -2,7 +2,7 @@
 {
     using Library.Core.Entities;
     using Library.Core.Repositories;
-    using Library.Infrastructure;
+    using Library.Persistence;
     using Microsoft.EntityFrameworkCore;
 
     public sealed class BookRepository : IBookRepository

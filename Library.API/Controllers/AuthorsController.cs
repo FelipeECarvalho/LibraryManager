@@ -5,7 +5,6 @@
     using Library.Application.DTOs;
     using Library.Application.InputModels.Authors;
     using Library.Core.Entities;
-    using Library.Core.ValueObjects;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]

@@ -13,7 +13,7 @@
     public class LoansController(dynamic _loanService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll() 
+        public async Task<IActionResult> GetAll()
         {
             var loans = await _loanService.GetAllAsync();
 

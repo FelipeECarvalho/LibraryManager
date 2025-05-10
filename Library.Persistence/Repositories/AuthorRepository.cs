@@ -2,7 +2,7 @@
 {
     using Library.Core.Entities;
     using Library.Core.Repositories;
-    using Library.Infrastructure;
+    using Library.Persistence;
     using Microsoft.EntityFrameworkCore;
 
     public sealed class AuthorRepository : IAuthorRepository
@@ -28,7 +28,7 @@
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public void Add(Author author) 
+        public void Add(Author author)
         {
             _context.Authors.Add(author);
         }

@@ -1,7 +1,7 @@
 ﻿namespace Library.Core.Repositories
 {
     using Library.Core.Entities;
-    
+
     public interface IBookRepository
     {
         Task<IList<Book>> GetAllAsync();

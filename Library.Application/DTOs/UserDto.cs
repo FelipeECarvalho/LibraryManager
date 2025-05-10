@@ -6,12 +6,12 @@
     {
         public Guid Guid { get; init; }
 
-        public Name Name{ get; init; }
+        public Name Name { get; init; }
 
         public string Document { get; init; }
 
         public string Email { get; init; }
 
-        public Address Address{ get; set; }
+        public Address Address { get; set; }
     }
 }

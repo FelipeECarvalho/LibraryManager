@@ -1,11 +1,10 @@
 ﻿namespace Library.API
 {
-    using Microsoft.EntityFrameworkCore;
-    using Library.Core.Repositories;
-    using Library.Infrastructure;
-    using Library.Persistence.Repositories;
-    using Microsoft.AspNetCore.Mvc;
     using Asp.Versioning;
+    using Library.Core.Repositories;
+    using Library.Persistence;
+    using Library.Persistence.Repositories;
+    using Microsoft.EntityFrameworkCore;
 
     public static class Dependencies
     {

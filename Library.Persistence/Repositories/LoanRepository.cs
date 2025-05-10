@@ -2,7 +2,7 @@
 {
     using Library.Core.Entities;
     using Library.Core.Repositories;
-    using Library.Infrastructure;
+    using Library.Persistence;
     using Microsoft.EntityFrameworkCore;
 
     public sealed class LoanRepository : ILoanRepository
@@ -35,7 +35,7 @@
         {
             return await _context.Loans
                 .AsNoTracking()
-                .Where(x  => x.BookId == bookId)
+                .Where(x => x.BookId == bookId)
                 .ToListAsync();
         }
 

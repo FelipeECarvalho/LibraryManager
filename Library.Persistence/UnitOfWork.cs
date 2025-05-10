@@ -1,4 +1,4 @@
-﻿namespace Library.Infrastructure
+﻿namespace Library.Persistence
 {
     using Library.Core.Repositories;
 

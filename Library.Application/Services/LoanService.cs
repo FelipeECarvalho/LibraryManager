@@ -27,7 +27,7 @@ namespace Library.Application.Services
         public async Task CreateAsync(Loan loan)
         {
             await ValidateCreate(loan);
-             _repository.Add(loan);
+            _repository.Add(loan);
 
             await _unitOfWork.SaveChangesAsync();
         }
@@ -47,7 +47,7 @@ namespace Library.Application.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        private async Task ValidateCreate(Loan loan) 
+        private async Task ValidateCreate(Loan loan)
         {
             var book = await _bookRepository.GetByIdAsync(loan.BookId)
                 ?? throw new ArgumentException("Book not found");

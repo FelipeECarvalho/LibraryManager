@@ -7,7 +7,7 @@
         {
         }
 
-        public Loan(int userId, int bookId, DateTime startDate, DateTime endDate) 
+        public Loan(int userId, int bookId, DateTime startDate, DateTime endDate)
             : base()
         {
             UserId = userId;
@@ -33,7 +33,6 @@
         public void Update(DateTime endDate)
         {
             EndDate = endDate;
-            UpdateDate = DateTime.Now;
         }
 
         public void Return()
@@ -43,7 +42,6 @@
                 return;
             }
 
-            UpdateDate = DateTime.Now;
             IsReturned = true;
         }
     }

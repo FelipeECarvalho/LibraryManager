@@ -3,12 +3,12 @@
     public class Book : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private Book() 
+        private Book()
             : base()
         {
         }
 
-        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId) 
+        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId)
             : base()
         {
             Title = title;
@@ -38,13 +38,11 @@
             Title = title;
             Description = description;
             PublicationDate = publicationDate;
-            UpdateDate = DateTime.Now;
         }
 
         public void UpdateStock(int stockNumber)
         {
             StockNumber = stockNumber;
-            UpdateDate = DateTime.Now;
         }
     }
 }

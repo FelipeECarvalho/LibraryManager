@@ -7,7 +7,7 @@
     {
         private readonly RequestDelegate _next;
 
-        public ExceptionHandlingMiddleware(RequestDelegate next) 
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
         }

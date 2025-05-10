@@ -1,5 +1,5 @@
-﻿using Library.Core.Repositories;
-using Library.Core.Entities;
+﻿using Library.Core.Entities;
+using Library.Core.Repositories;
 
 namespace Library.Application.Services
 {
@@ -39,7 +39,7 @@ namespace Library.Application.Services
 
         public async Task AddBookAsync(Author author, int bookId)
         {
-            var book = await _bookRepository.GetByIdAsync(bookId) 
+            var book = await _bookRepository.GetByIdAsync(bookId)
                 ?? throw new ArgumentException("Book not found");
 
             author.AddBook(book);

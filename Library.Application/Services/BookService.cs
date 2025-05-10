@@ -5,7 +5,7 @@ namespace Library.Application.Services
 {
     public sealed class BookService(IBookRepository _repository, IUnitOfWork _unityOfWork)
     {
-        public async Task<IList<Book>> GetAllAsync() 
+        public async Task<IList<Book>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }

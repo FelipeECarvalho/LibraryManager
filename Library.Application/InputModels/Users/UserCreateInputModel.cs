@@ -2,7 +2,7 @@
 {
     using Library.Core.ValueObjects;
     using System.ComponentModel.DataAnnotations;
-    
+
     public class UserCreateInputModel
     {
         [Required]

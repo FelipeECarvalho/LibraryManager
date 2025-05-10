@@ -1,8 +1,8 @@
-﻿using Library.Core.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Library.Infrastructure
+﻿namespace Library.Persistence
 {
+    using Library.Core.Entities;
+    using Microsoft.EntityFrameworkCore;
+
     public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options)
     {
         public DbSet<Author> Authors { get; set; }

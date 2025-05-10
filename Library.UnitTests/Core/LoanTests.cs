@@ -1,12 +1,10 @@
-﻿using Library.Core.Entities;
-
-namespace Library.UnitTests.Core
+﻿namespace Library.UnitTests.Core
 {
     public class LoanTests
     {
         [Fact]
         // Given_When_Then
-        public void LoanIsCreated_Start_Success() 
+        public void LoanIsCreated_Start_Success()
         {
             // Arrange
             //var loan = new Loan();

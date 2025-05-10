@@ -9,20 +9,19 @@
             UpdateDate = DateTime.Now;
         }
 
-        public int Id { get; init; }
+        public int Id { get; private set; }
 
-        public Guid Guid { get; init; }
+        public Guid Guid { get; private set; }
 
-        public DateTime CreateDate { get; init; }
+        public DateTime CreateDate { get; private set; }
 
-        public DateTime UpdateDate { get; protected set; }
+        public DateTime UpdateDate { get; private set; }
 
-        public bool IsDeleted { get; protected set; }
+        public bool IsDeleted { get; private set; }
 
-        public void SetDeleted() 
-        { 
+        public void SetDeleted()
+        {
             IsDeleted = true;
-            UpdateDate = DateTime.Now;
         }
     }
 }

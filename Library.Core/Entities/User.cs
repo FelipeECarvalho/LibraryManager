@@ -5,12 +5,12 @@
     public class User : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private User() 
+        private User()
             : base()
         {
         }
 
-        public User(Name name, string document, string email, Address address) 
+        public User(Name name, string document, string email, Address address)
             : base()
         {
             Name = name;
