@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Library.Application.InputModels.Authors
+﻿namespace Library.Application.InputModels.Authors
 {
+    using Library.Core.ValueObjects;
+    using System.ComponentModel.DataAnnotations;
+    
     public class AuthorUpdateInputModel
     {
-        [Required]
-        public string Name { get; set; }
+        public Name Name { get; set; }
 
         public string Description { get; set; }
     }

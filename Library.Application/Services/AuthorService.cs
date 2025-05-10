@@ -25,7 +25,7 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(Author author)
         {
-            author.Delete();
+            author.SetDeleted();
             _repository.Update(author);
 
             await _unitOfWork.SaveChangesAsync();

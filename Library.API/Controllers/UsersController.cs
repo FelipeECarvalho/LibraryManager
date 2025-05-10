@@ -1,13 +1,17 @@
-﻿using AutoMapper;
-using Library.Application.DTOs;
-using Library.Application.InputModels.Users;
-using Library.Core.Entities;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Library.API.Controllers
+﻿namespace Library.API.Controllers
 {
-    [Route("api/v1/users")]
-    public class UsersController(IUserService _service, IMapper _mapper) : ControllerBase
+    using Asp.Versioning;
+    using AutoMapper;
+    using Library.Application.DTOs;
+    using Library.Application.InputModels.Users;
+    using Library.Core.Entities;
+    using Library.Core.ValueObjects;
+    using Microsoft.AspNetCore.Mvc;
+
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiController]
+    public class UsersController(dynamic _service, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -64,7 +68,7 @@ namespace Library.API.Controllers
             if (user is null)
                 return NotFound();
 
-            user.Update(model.Name);
+            user.Update(model.Name, model.Address);
 
             await _service.UpdateAsync(user);
             return NoContent();

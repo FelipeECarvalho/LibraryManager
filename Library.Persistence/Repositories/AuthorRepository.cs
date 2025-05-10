@@ -25,7 +25,7 @@ namespace Library.Persistence.Repositories
         {
             return await _context.Authors
                 .Include(x => x.Books)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public void Add(Author author) 

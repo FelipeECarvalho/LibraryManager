@@ -1,12 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Library.Application.InputModels.Authors
+﻿namespace Library.Application.InputModels.Authors
 {
+    using Library.Core.ValueObjects;
+    using System.ComponentModel.DataAnnotations;
+    
     public class AuthorCreateInputModel
     {
         [Required]
-        public string Name { get; set; }
+        public Name Name {  get; set; }
 
+        [StringLength(256, ErrorMessage = "Description cannot be more than 256 characters long")]
         public string Description { get; set; }
     }
 }

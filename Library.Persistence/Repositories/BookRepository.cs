@@ -26,7 +26,7 @@ namespace Library.Persistence.Repositories
         {
             return await _context.Books
                 .Include(x => x.Author)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Book>> GetByTitleAsync(string title)

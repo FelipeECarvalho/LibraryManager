@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Library.Application.InputModels.Loans
+﻿namespace Library.Application.InputModels.Loans
 {
+    using System.ComponentModel.DataAnnotations;
+    
     public class LoanCreateInputModel
     {
         [Required]

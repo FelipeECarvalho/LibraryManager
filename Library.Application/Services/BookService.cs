@@ -37,7 +37,7 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(Book book)
         {
-            book.Delete();
+            book.SetDeleted();
             _repository.Update(book);
 
             await _unityOfWork.SaveChangesAsync();

@@ -32,7 +32,7 @@ namespace Library.Application.Services
 
         public async Task DeleteAsync(User user)
         {
-            user.Delete();
+            user.SetDeleted();
             _repository.Update(user);
 
             await _unityOfWork.SaveChangesAsync();

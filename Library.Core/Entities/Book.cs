@@ -2,9 +2,14 @@
 {
     public class Book : BaseEntity
     {
-        private Book() { }
+        [Obsolete("EntityFrameworkCore constructor")]
+        private Book() 
+            : base()
+        {
+        }
 
-        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId) : base()
+        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId) 
+            : base()
         {
             Title = title;
             Description = description;
@@ -16,7 +21,7 @@
 
         public string Title { get; private set; }
 
-        public string Description { get; private set; }
+        public string? Description { get; private set; }
 
         public DateTime PublicationDate { get; private set; }
 

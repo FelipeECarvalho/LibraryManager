@@ -1,9 +1,13 @@
 ﻿namespace Library.Application.DTOs
 {
+    using Library.Core.ValueObjects;
+
     public class AuthorDto
     {
-        public int Id { get; init; }
-        public string Name { get; init; }
+        public Guid Guid { get; init; }
+
+        public Name Name { get; init; }
+
         public string Description { get; init; }
     }
 }

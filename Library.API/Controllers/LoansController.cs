@@ -1,13 +1,16 @@
-﻿using AutoMapper;
-using Library.Application.DTOs;
-using Library.Application.InputModels.Loans;
-using Library.Core.Entities;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Library.API.Controllers
+﻿namespace Library.API.Controllers
 {
-    [Route("api/v1/loans")]
-    public class LoansController(ILoanService _loanService, IMapper _mapper) : ControllerBase
+    using Asp.Versioning;
+    using AutoMapper;
+    using Library.Application.DTOs;
+    using Library.Application.InputModels.Loans;
+    using Library.Core.Entities;
+    using Microsoft.AspNetCore.Mvc;
+
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/[controller]")]
+    [ApiController]
+    public class LoansController(dynamic _loanService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll() 

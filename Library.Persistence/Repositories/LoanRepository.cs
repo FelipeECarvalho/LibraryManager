@@ -28,7 +28,7 @@ namespace Library.Persistence.Repositories
             return await _context.Loans
                 .Include(x => x.User)
                 .Include(x => x.Book)
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Loan>> GetByBookAsync(int bookId)

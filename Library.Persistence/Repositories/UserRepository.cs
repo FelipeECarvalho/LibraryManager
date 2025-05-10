@@ -24,7 +24,7 @@ namespace Library.Persistence.Repositories
         public async Task<User> GetByIdAsync(int id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id);
         }
 
         public void Add(User user)

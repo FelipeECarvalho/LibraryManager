@@ -1,19 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Library.Application.InputModels.Users
+﻿namespace Library.Application.InputModels.Users
 {
+    using Library.Core.ValueObjects;
+    using System.ComponentModel.DataAnnotations;
+    
     public class UserCreateInputModel
     {
         [Required]
-        [Length(2, 100, ErrorMessage = "The name must have between 2 and 100 characters")]
-        public string Name { get; set; }
+        public Name Name { get; set; }
 
         [Required]
-        [Length(11, 11, ErrorMessage = "The document must have 11 characters")]
+        [Length(11, 11, ErrorMessage = "The document must have 11 characters long")]
         public string Document { get; set; }
 
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required]
+        public Address Address { get; set; }
     }
 }

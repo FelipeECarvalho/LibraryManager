@@ -10,12 +10,16 @@
         }
 
         public int Id { get; init; }
+
         public Guid Guid { get; init; }
+
         public DateTime CreateDate { get; init; }
+
         public DateTime UpdateDate { get; protected set; }
+
         public bool IsDeleted { get; protected set; }
 
-        public void Delete() 
+        public void SetDeleted() 
         { 
             IsDeleted = true;
             UpdateDate = DateTime.Now;
