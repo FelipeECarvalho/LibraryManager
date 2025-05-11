@@ -37,12 +37,24 @@
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task AddBookAsync(Author author, Guid bookId)
+        public async Task AddBookAsync(Author author, IList<Guid> bookIds)
         {
-            var book = await _bookRepository.GetByIdAsync(bookId)
-                ?? throw new ArgumentException("Book not found");
+            var books = await _bookRepository.GetByIdAsync(bookIds);
 
-            author.AddBook(book);
+            if (books == null || !books.Any())
+            {
+                throw new ArgumentException("books not found");
+            }
+
+            foreach (var book in books)
+            { 
+                if (!bookIds.Contains(book.Id))
+                {
+                    throw new ArgumentException($"The book with ID: {book.Id} was not found");
+                } 
+
+                author.AddBook(book);
+            }
 
             _repository.Update(author);
 

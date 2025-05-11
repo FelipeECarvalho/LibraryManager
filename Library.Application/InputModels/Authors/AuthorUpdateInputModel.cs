@@ -4,8 +4,8 @@
 
     public class AuthorUpdateInputModel
     {
-        public Name Name { get; set; }
+        public Name Name { get; init; }
 
-        public string Description { get; set; }
+        public string Description { get; init; }
     }
 }

@@ -45,7 +45,8 @@
             var author = _mapper.Map<Author>(model);
 
             await _service.CreateAsync(author);
-            return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
+
+            return CreatedAtAction(nameof(GetById), new { id = author.Id });
         }
 
         [HttpDelete("{id:guid}")]
@@ -74,15 +75,15 @@
             return NoContent();
         }
 
-        [HttpPut("{id:guid}/add-book/{bookId:guid}")]
-        public async Task<IActionResult> AddBook(Guid id, Guid bookId)
+        [HttpPut("{id:guid}/add-books")]
+        public async Task<IActionResult> AddBook(Guid id, [FromBody] AuthorAddBookInputModel model)
         {
             var author = await _service.GetByIdAsync(id);
 
             if (author is null)
                 return NotFound();
 
-            await _service.AddBookAsync(author, bookId);
+            await _service.AddBookAsync(author, model.BookIds);
             return NoContent();
         }
     }

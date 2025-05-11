@@ -5,6 +5,6 @@
     public class LoanUpdateInputModel
     {
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; init; }
     }
 }

@@ -6,9 +6,9 @@
     public class AuthorCreateInputModel
     {
         [Required]
-        public Name Name { get; set; }
+        public Name Name { get; init; }
 
         [StringLength(256, ErrorMessage = "Description cannot be more than 256 characters long")]
-        public string Description { get; set; }
+        public string Description { get; init; }
     }
 }

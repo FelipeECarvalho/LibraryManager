@@ -6,20 +6,20 @@
     {
         [Required]
         [Length(3, 255)]
-        public string Title { get; set; }
+        public string Title { get; init; }
 
         [Length(3, 255)]
-        public string Description { get; set; }
+        public string Description { get; init; }
 
-        public int? StockNumber { get; set; }
-
-        [Required]
-        public DateTime PublicationDate { get; set; }
+        public int? StockNumber { get; init; }
 
         [Required]
-        public string ISBN { get; set; }
+        public DateTime PublicationDate { get; init; }
 
         [Required]
-        public int AuthorId { get; set; }
+        public string ISBN { get; init; }
+
+        [Required]
+        public Guid AuthorId { get; init; }
     }
 }

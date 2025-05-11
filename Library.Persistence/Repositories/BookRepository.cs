@@ -17,8 +17,8 @@
         public async Task<IList<Book>> GetAllAsync()
         {
             return await _context.Books
-                .Include(x => x.Author)
                 .AsNoTracking()
+                .Include(x => x.Author)
                 .ToListAsync();
         }
 
@@ -27,6 +27,15 @@
             return await _context.Books
                 .Include(x => x.Author)
                 .SingleOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<IList<Book>> GetByIdAsync(IList<Guid> ids)
+        {
+            return await _context.Books
+                .AsNoTracking()
+                .Include(x => x.Author)
+                .Where(x => ids.Contains(x.Id))
+                .ToListAsync();
         }
 
         public async Task<IList<Book>> GetByTitleAsync(string title)

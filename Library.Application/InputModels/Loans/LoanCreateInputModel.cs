@@ -5,15 +5,15 @@
     public class LoanCreateInputModel
     {
         [Required]
-        public int UserId { get; set; }
+        public Guid UserId { get; init; }
 
         [Required]
-        public int BookId { get; set; }
+        public Guid BookId { get; init; }
 
         [Required]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; init; }
 
         [Required]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; init; }
     }
 }

@@ -4,8 +4,8 @@
 
     public class UserUpdateInputModel
     {
-        public Name Name { get; set; }
+        public Name Name { get; init; }
 
-        public Address Address { get; set; }
+        public Address Address { get; init; }
     }
 }

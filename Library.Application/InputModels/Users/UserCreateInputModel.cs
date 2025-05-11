@@ -6,17 +6,17 @@
     public class UserCreateInputModel
     {
         [Required]
-        public Name Name { get; set; }
+        public Name Name { get; init; }
 
         [Required]
         [Length(11, 11, ErrorMessage = "The document must have 11 characters long")]
-        public string Document { get; set; }
+        public string Document { get; init; }
 
         [Required]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Email { get; init; }
 
         [Required]
-        public Address Address { get; set; }
+        public Address Address { get; init; }
     }
 }

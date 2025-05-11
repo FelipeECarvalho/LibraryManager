@@ -2,10 +2,10 @@
 {
     public class BookUpdateInputModel
     {
-        public string Title { get; set; }
+        public string Title { get; init; }
 
-        public string Description { get; set; }
+        public string Description { get; init; }
 
-        public DateTime PublicationDate { get; set; }
+        public DateTime PublicationDate { get; init; }
     }
 }
