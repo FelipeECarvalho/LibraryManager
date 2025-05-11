@@ -4,14 +4,12 @@
     {
         protected BaseEntity()
         {
-            Guid = Guid.NewGuid();
+            Id = Guid.NewGuid();
             CreateDate = DateTime.Now;
             UpdateDate = DateTime.Now;
         }
 
-        public int Id { get; private set; }
-
-        public Guid Guid { get; private set; }
+        public Guid Id { get; private set; }
 
         public DateTime CreateDate { get; private set; }
 

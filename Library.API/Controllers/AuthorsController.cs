@@ -4,13 +4,14 @@
     using AutoMapper;
     using Library.Application.DTOs;
     using Library.Application.InputModels.Authors;
+    using Library.Application.Services;
     using Library.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AuthorsController(dynamic _service, IMapper _mapper) : ControllerBase
+    public class AuthorsController(AuthorService _service, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -25,8 +26,8 @@
             return Ok(dto);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var author = await _service.GetByIdAsync(id);
 
@@ -47,20 +48,20 @@
             return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             var author = await _service.GetByIdAsync(id);
 
             if (author is null)
                 return NotFound();
-
+            
             await _service.DeleteAsync(author);
             return NoContent();
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] AuthorUpdateInputModel model)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] AuthorUpdateInputModel model)
         {
             var author = await _service.GetByIdAsync(id);
 
@@ -73,8 +74,8 @@
             return NoContent();
         }
 
-        [HttpPut("{id:int}/add-book/{bookId:int}")]
-        public async Task<IActionResult> AddBook(int id, int bookId)
+        [HttpPut("{id:guid}/add-book/{bookId:guid}")]
+        public async Task<IActionResult> AddBook(Guid id, Guid bookId)
         {
             var author = await _service.GetByIdAsync(id);
 

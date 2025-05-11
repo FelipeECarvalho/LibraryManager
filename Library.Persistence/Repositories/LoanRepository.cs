@@ -23,7 +23,7 @@
                 .ToListAsync();
         }
 
-        public async Task<Loan> GetByIdAsync(int id)
+        public async Task<Loan> GetByIdAsync(Guid id)
         {
             return await _context.Loans
                 .Include(x => x.User)
@@ -31,7 +31,7 @@
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Loan>> GetByBookAsync(int bookId)
+        public async Task<IList<Loan>> GetByBookAsync(Guid bookId)
         {
             return await _context.Loans
                 .AsNoTracking()

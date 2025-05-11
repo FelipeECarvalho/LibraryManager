@@ -13,7 +13,6 @@
 
             builder.HasKey(a => a.Id);
 
-            builder.Property(x => x.Guid);
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.UpdateDate);
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);

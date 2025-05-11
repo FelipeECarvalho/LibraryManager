@@ -10,7 +10,7 @@
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Author> GetByIdAsync(int id)
+        public async Task<Author> GetByIdAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);
         }
@@ -37,7 +37,7 @@
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task AddBookAsync(Author author, int bookId)
+        public async Task AddBookAsync(Author author, Guid bookId)
         {
             var book = await _bookRepository.GetByIdAsync(bookId)
                 ?? throw new ArgumentException("Book not found");

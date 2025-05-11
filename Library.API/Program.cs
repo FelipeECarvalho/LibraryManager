@@ -2,6 +2,7 @@ namespace Library.API
 {
     using Library.API.Middleware;
     using Library.Application.Mappings;
+    using Library.Application.Services;
 
     public class Program
     {
@@ -12,6 +13,11 @@ namespace Library.API
             builder.Services
                 .AddInfrastructure(builder.Configuration)
                 .AddVersioning();
+
+            builder.Services.AddScoped<UserService>();
+            builder.Services.AddScoped<BookService>();
+            builder.Services.AddScoped<AuthorService>();
+            builder.Services.AddScoped<LoanService>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddControllers();

@@ -7,7 +7,7 @@
         {
         }
 
-        public Loan(int userId, int bookId, DateTime startDate, DateTime endDate)
+        public Loan(Guid userId, Guid bookId, DateTime startDate, DateTime endDate)
             : base()
         {
             UserId = userId;
@@ -16,11 +16,11 @@
             EndDate = endDate;
         }
 
-        public int UserId { get; private set; }
+        public Guid UserId { get; private set; }
 
         public User User { get; private set; }
 
-        public int BookId { get; private set; }
+        public Guid BookId { get; private set; }
 
         public Book Book { get; private set; }
 

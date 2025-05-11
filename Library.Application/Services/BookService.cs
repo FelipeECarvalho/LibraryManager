@@ -10,7 +10,7 @@
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Book> GetByIdAsync(int id)
+        public async Task<Book> GetByIdAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);
         }

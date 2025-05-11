@@ -5,7 +5,7 @@
     public interface IAuthorRepository
     {
         Task<IList<Author>> GetAllAsync();
-        Task<Author> GetByIdAsync(int id);
+        Task<Author> GetByIdAsync(Guid id);
 
         void Add(Author author);
         void Update(Author author);

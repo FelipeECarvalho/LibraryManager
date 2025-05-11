@@ -4,13 +4,14 @@
     using AutoMapper;
     using Library.Application.DTOs;
     using Library.Application.InputModels.Loans;
+    using Library.Application.Services;
     using Library.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class LoansController(dynamic _loanService, IMapper _mapper) : ControllerBase
+    public class LoansController(LoanService _loanService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -25,8 +26,8 @@
             return Ok(dto);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var loan = await _loanService.GetByIdAsync(id);
 
@@ -48,8 +49,8 @@
             return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] LoanUpdateInputModel model)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] LoanUpdateInputModel model)
         {
             var loan = await _loanService.GetByIdAsync(id);
 
@@ -63,8 +64,8 @@
             return NoContent();
         }
 
-        [HttpPatch("{id:int}/return")]
-        public async Task<IActionResult> Return(int id)
+        [HttpPatch("{id:guid}/return")]
+        public async Task<IActionResult> Return(Guid id)
         {
             var loan = await _loanService.GetByIdAsync(id);
 

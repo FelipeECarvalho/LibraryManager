@@ -4,13 +4,14 @@
     using AutoMapper;
     using Library.Application.DTOs;
     using Library.Application.InputModels.Books;
+    using Library.Application.Services;
     using Library.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class BooksController(dynamic _bookService, IMapper _mapper) : ControllerBase
+    public class BooksController(BookService _bookService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -25,8 +26,8 @@
             return Ok(dto);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
             var book = await _bookService.GetByIdAsync(id);
 
@@ -60,8 +61,8 @@
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
             var book = await _bookService.GetByIdAsync(id);
 
@@ -72,8 +73,8 @@
             return NoContent();
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] BookUpdateInputModel model)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] BookUpdateInputModel model)
         {
             var book = await _bookService.GetByIdAsync(id);
 
@@ -86,8 +87,8 @@
             return NoContent();
         }
 
-        [HttpPut("{id:int}/update-stock/{stockNumber:int}")]
-        public async Task<IActionResult> Put(int id, int stockNumber)
+        [HttpPut("{id:Guid}/update-stock/{stockNumber:int}")]
+        public async Task<IActionResult> Put(Guid id, int stockNumber)
         {
             if (stockNumber < 0)
                 return BadRequest("Stock number cannot be a negative number.");

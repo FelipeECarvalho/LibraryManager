@@ -8,7 +8,7 @@
         {
         }
 
-        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, int authorId)
+        public Book(string title, string description, DateTime publicationDate, string isbn, int stockNumber, Guid authorId)
             : base()
         {
             Title = title;
@@ -29,7 +29,7 @@
 
         public int? StockNumber { get; private set; }
 
-        public int AuthorId { get; private set; }
+        public Guid AuthorId { get; private set; }
 
         public Author Author { get; private set; }
 

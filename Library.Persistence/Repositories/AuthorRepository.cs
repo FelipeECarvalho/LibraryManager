@@ -21,7 +21,7 @@
                 .ToListAsync();
         }
 
-        public async Task<Author> GetByIdAsync(int id)
+        public async Task<Author> GetByIdAsync(Guid id)
         {
             return await _context.Authors
                 .Include(x => x.Books)

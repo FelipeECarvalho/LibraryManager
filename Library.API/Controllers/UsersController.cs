@@ -4,18 +4,19 @@
     using AutoMapper;
     using Library.Application.DTOs;
     using Library.Application.InputModels.Users;
+    using Library.Application.Services;
     using Library.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UsersController(dynamic _service, IMapper _mapper) : ControllerBase
+    public class UsersController(UserService _userService, IMapper _mapper) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var users = await _service.GetAllAsync();
+            var users = await _userService.GetAllAsync();
 
             if (users is null)
                 return NoContent();
@@ -25,10 +26,10 @@
             return Ok(dto);
         }
 
-        [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id)
         {
-            var user = await _service.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
 
             if (user is null)
                 return NotFound();
@@ -38,8 +39,8 @@
             return Ok(dto);
         }
 
-        [HttpGet("{id:int}/loans")]
-        public Task<IActionResult> GetLoans(int id)
+        [HttpGet("{id:guid}/loans")]
+        public Task<IActionResult> GetLoans(Guid id)
         {
             throw new NotImplementedException();
         }
@@ -49,33 +50,33 @@
         {
             var user = _mapper.Map<User>(model);
 
-            await _service.CreateAsync(user);
+            await _userService.CreateAsync(user);
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            var user = await _service.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
 
             if (user is null)
                 return NotFound();
 
-            await _service.DeleteAsync(user);
+            await _userService.DeleteAsync(user);
             return NoContent();
         }
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UserUpdateInputModel model)
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(Guid id, [FromBody] UserUpdateInputModel model)
         {
-            var user = await _service.GetByIdAsync(id);
+            var user = await _userService.GetByIdAsync(id);
 
             if (user is null)
                 return NotFound();
 
             user.Update(model.Name, model.Address);
 
-            await _service.UpdateAsync(user);
+            await _userService.UpdateAsync(user);
             return NoContent();
         }
     }

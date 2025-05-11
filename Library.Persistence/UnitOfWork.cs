@@ -2,7 +2,7 @@
 {
     using Library.Core.Repositories;
 
-    internal sealed class UnitOfWork : IUnitOfWork
+    public sealed class UnitOfWork : IUnitOfWork
     {
         private readonly LibraryDbContext _context;
 

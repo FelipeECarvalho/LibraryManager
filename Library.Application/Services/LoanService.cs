@@ -9,7 +9,7 @@
         IUserRepository _userRepository,
         IUnitOfWork _unitOfWork)
     {
-        public async Task<Loan> GetByIdAsync(int id)
+        public async Task<Loan> GetByIdAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);
         }
@@ -19,7 +19,7 @@
             return await _repository.GetAllAsync();
         }
 
-        public async Task<IList<Loan>> GetByBookAsync(int bookId)
+        public async Task<IList<Loan>> GetByBookAsync(Guid bookId)
         {
             return await _repository.GetByBookAsync(bookId);
         }

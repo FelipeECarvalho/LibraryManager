@@ -30,6 +30,7 @@
         public void Update(Name name, Address address)
         {
             Name = name;
+            Address = address;
         }
     }
 }
