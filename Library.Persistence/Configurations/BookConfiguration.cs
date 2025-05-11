@@ -13,6 +13,7 @@
 
             builder.HasKey(x => x.Id);
 
+            builder.Property(a => a.Id).ValueGeneratedNever();
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.UpdateDate);
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);
@@ -22,6 +23,8 @@
             builder.Property(x => x.ISBN).HasMaxLength(50);
             builder.Property(x => x.Title).HasMaxLength(100);
             builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
+
+            builder.HasIndex(x => x.Title);
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

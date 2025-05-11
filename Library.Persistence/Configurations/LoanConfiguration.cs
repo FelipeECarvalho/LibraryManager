@@ -13,6 +13,7 @@ namespace Library.Persistence.Configurations
             
             builder.HasKey(x => x.Id);
 
+            builder.Property(a => a.Id).ValueGeneratedNever();
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.UpdateDate);
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);
