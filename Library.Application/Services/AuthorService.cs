@@ -2,6 +2,7 @@
 {
     using Library.Core.Entities;
     using Library.Core.Repositories;
+    using static System.Reflection.Metadata.BlobBuilder;
 
     public sealed class AuthorService(IAuthorRepository _repository, IBookRepository _bookRepository, IUnitOfWork _unitOfWork)
     {
@@ -41,24 +42,27 @@
         {
             var books = await _bookRepository.GetByIdAsync(bookIds);
 
-            if (books == null || !books.Any())
-            {
-                throw new ArgumentException("books not found");
-            }
+            ValidateAddBooks(books, bookIds);
 
-            foreach (var book in books)
-            { 
-                if (!bookIds.Contains(book.Id))
-                {
-                    throw new ArgumentException($"The book with ID: {book.Id} was not found");
-                } 
-
-                author.AddBook(book);
-            }
+            author.AddBook(books);
 
             _repository.Update(author);
 
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        private static void ValidateAddBooks(IList<Book> books, IList<Guid> bookIds)
+        {
+            if (books == null || !books.Any())
+            {
+                throw new ArgumentException("books were not found");
+            }
+
+            var booksNotFound = bookIds.Except(books.Select(x => x.Id));
+            if (booksNotFound.Any())
+            {
+                throw new ArgumentException($"The following book IDs were not found in the system: {string.Join(',', booksNotFound)}");
+            }
         }
     }
 }

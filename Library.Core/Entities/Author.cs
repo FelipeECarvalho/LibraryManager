@@ -10,12 +10,11 @@
         {
         }
 
-        public Author(Name name, string? description)
+        public Author(Name name)
             : base()
         {
             Name = name;
             Books = [];
-            Description = description;
         }
 
         public Author(Name name, string? description, IList<Book> books)
@@ -32,9 +31,22 @@
 
         public IList<Book>? Books { get; private set; }
 
+        public void AddBook(IList<Book> books)
+        {
+            if (books == null || !books.Any()) 
+            {
+                throw new ArgumentNullException(nameof(books));
+            }
+
+            Books ??= [];
+            foreach (var book in books) 
+            {
+                Books.Add(book);
+            }
+        }
+
         public void AddBook(Book book)
         {
-            Books ??= [];
             Books.Add(book);
         }
 
