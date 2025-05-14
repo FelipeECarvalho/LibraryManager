@@ -2,7 +2,6 @@
 {
     using Library.Core.Entities;
     using Library.Core.Repositories;
-    using static System.Reflection.Metadata.BlobBuilder;
 
     public sealed class AuthorService(IAuthorRepository _repository, IBookRepository _bookRepository, IUnitOfWork _unitOfWork)
     {

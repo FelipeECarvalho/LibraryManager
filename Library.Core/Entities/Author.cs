@@ -33,11 +33,6 @@
 
         public void AddBook(IList<Book> books)
         {
-            if (books == null || !books.Any()) 
-            {
-                throw new ArgumentNullException(nameof(books));
-            }
-
             Books ??= [];
             foreach (var book in books) 
             {
@@ -47,6 +42,7 @@
 
         public void AddBook(Book book)
         {
+            Books ??= [];
             Books.Add(book);
         }
 
