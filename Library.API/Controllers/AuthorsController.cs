@@ -64,11 +64,12 @@
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Put(Guid id, [FromBody] AuthorUpdateInputModel model)
         {
-            var author = await _service.GetByIdAsync(id);
+            var authorResult = await _service.GetByIdAsync(id);
 
-            if (author is null)
+            if (authorResult == null)
                 return NotFound();
 
+            var author = authorResult.Value;
             author.Update(model.Name, model.Description);
 
             await _service.UpdateAsync(author);

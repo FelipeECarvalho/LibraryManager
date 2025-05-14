@@ -1,21 +1,22 @@
 ﻿namespace Library.Application.Services
 {
+    using Library.Core.Common;
     using Library.Core.Entities;
     using Library.Core.Repositories;
 
     public sealed class AuthorService(IAuthorRepository _repository, IBookRepository _bookRepository, IUnitOfWork _unitOfWork)
     {
-        public async Task<IList<Author>> GetAllAsync()
+        public async Task<Result<IList<Author>>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Author> GetByIdAsync(Guid id)
+        public async Task<Result<Author>> GetByIdAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task<Author> CreateAsync(Author author)
+        public async Task<Result<Author>> CreateAsync(Author author)
         {
             _repository.Add(author);
             await _unitOfWork.SaveChangesAsync();
@@ -23,45 +24,58 @@
             return author;
         }
 
-        public async Task DeleteAsync(Author author)
+        public async Task<Result> DeleteAsync(Author author)
         {
             author.SetDeleted();
             _repository.Update(author);
 
             await _unitOfWork.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public async Task UpdateAsync(Author author)
+        public async Task<Result> UpdateAsync(Author author)
         {
             _repository.Update(author);
             await _unitOfWork.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        public async Task AddBookAsync(Author author, IList<Guid> bookIds)
+        public async Task<Result> AddBookAsync(Author author, IList<Guid> bookIds)
         {
             var books = await _bookRepository.GetByIdAsync(bookIds);
 
-            ValidateAddBooks(books, bookIds);
+            var validationResult = ValidateAddBooks(books, bookIds);
+
+            if (!validationResult.IsSuccess)
+            {
+                return Result.Failure(validationResult.Error);
+            }
 
             author.AddBook(books);
 
-            _repository.Update(author);
-
             await _unitOfWork.SaveChangesAsync();
+
+            return Result.Success();
         }
 
-        private static void ValidateAddBooks(IList<Book> books, IList<Guid> bookIds)
+        private static Result ValidateAddBooks(IList<Book> books, IList<Guid> bookIds)
         {
             if (books == null || !books.Any())
             {
-                throw new ArgumentException("books were not found");
+                return Result.Failure(Error.ProvidedBooksNotFound);
             }
 
-            var booksNotFound = bookIds.Except(books.Select(x => x.Id));
+            var existingIds = books.Select(x => x.Id).ToHashSet();
+            var booksNotFound = bookIds.Where(id => !existingIds.Contains(id));
+
             if (booksNotFound.Any())
             {
-                throw new ArgumentException($"The following book IDs were not found in the system: {string.Join(',', booksNotFound)}");
+                return Result.Failure(Error.ProvidedBooksNotFound);
             }
+
+            return Result.Success();
         }
     }
 }
