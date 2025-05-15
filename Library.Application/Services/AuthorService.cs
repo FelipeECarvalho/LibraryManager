@@ -8,7 +8,7 @@
     {
         public async Task<Result<IList<Author>>> GetAllAsync()
         {
-            return await _repository.GetAllAsync();
+            return Result.Success(await _repository.GetAllAsync());
         }
 
         public async Task<Result<Author>> GetByIdAsync(Guid id)

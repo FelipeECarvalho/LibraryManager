@@ -10,13 +10,14 @@
         {
         }
 
-        public User(Name name, string document, string email, Address address)
+        public User(Name name, string document, string email, DateTimeOffset birthDate, Address address)
             : base()
         {
             Name = name;
             Document = document;
             Email = email;
             Address = address;
+            BirthDate = birthDate;
         }
 
         public Name Name { get; private set; }
@@ -24,6 +25,8 @@
         public string Document { get; private set; }
 
         public string Email { get; private set; }
+
+        public DateTimeOffset BirthDate { get; set; }
 
         public Address Address { get; private set; }
 

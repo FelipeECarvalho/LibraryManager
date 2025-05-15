@@ -52,12 +52,13 @@
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var author = await _service.GetByIdAsync(id);
+            //var author = await _service.GetByIdAsync(id);
 
-            if (author is null)
-                return NotFound();
-            
-            await _service.DeleteAsync(author);
+            //if (author is null)
+            //    return NotFound();
+
+            //await _service.DeleteAsync(author);
+            await Task.Delay(10);
             return NoContent();
         }
 
@@ -66,7 +67,7 @@
         {
             var authorResult = await _service.GetByIdAsync(id);
 
-            if (authorResult == null)
+            if (authorResult is null)
                 return NotFound();
 
             var author = authorResult.Value;
@@ -79,12 +80,13 @@
         [HttpPut("{id:guid}/add-books")]
         public async Task<IActionResult> AddBook(Guid id, [FromBody] AuthorAddBookInputModel model)
         {
-            var author = await _service.GetByIdAsync(id);
+            //var authorResult = await _service.GetByIdAsync(id);
 
-            if (author is null)
-                return NotFound();
+            //if (authorResult is null)
+            //    return NotFound();
 
-            await _service.AddBookAsync(author, model.BookIds);
+            //await _service.AddBookAsync(author, model.BookIds);
+            await Task.Delay(10);
             return NoContent();
         }
     }
