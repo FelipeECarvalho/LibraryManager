@@ -1,13 +1,15 @@
-- Autenticação e autorização dos usuários
-- Testes unitários
+**TODO**
+
+- AutenticaÃ§Ã£o e autorizaÃ§Ã£o dos usuÃ¡rios
+- Testes unitÃ¡rios
 - Talvez implementar CQRS? Ver se faz sentido
 - Terminar de implementar o Result Pattern.
-- Adicionar aprovação de usuário
-	- Ao se cadastrar, o usuário vai precisar ser aprovado por algum administrador. (pensar se faz sentido)
-- Adicionar a carteirinha do usuário
-	- Talvez gerar uma impressão de uma carteirinha?
-	- Cadastrar a foto do usuário para a carteirinha
-- Adicionar o gênero do livro
-- Adicionar avaliações(faz sentido para uma biblioteca?)
-	- Acho que sim, pois a aplicação pode integrar com um site e tal.
+- Adicionar aprovaÃ§Ã£o de usuÃ¡rio
+	- Ao se cadastrar, o usuÃ¡rio vai precisar ser aprovado por algum administrador. (pensar se faz sentido)
+- Adicionar a carteirinha do usuÃ¡rio
+	- Talvez gerar uma impressÃ£o de uma carteirinha?
+	- Cadastrar a foto do usuÃ¡rio para a carteirinha
+- Adicionar o gÃªnero do livro
+- Adicionar avaliaÃ§Ãµes(faz sentido para uma biblioteca?)
+	- Acho que sim, pois a aplicaÃ§Ã£o pode integrar com um site e tal.
 - Talvez mais pra frente adicionar algo relacionado a pagamento?
