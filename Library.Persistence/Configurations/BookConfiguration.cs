@@ -22,7 +22,7 @@
             builder.Property(x => x.StockNumber).IsRequired(false);
             builder.Property(x => x.ISBN).HasMaxLength(50);
             builder.Property(x => x.Title).HasMaxLength(100);
-            builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
+            builder.Property(x => x.Description).HasColumnType("text").IsRequired(false);
 
             builder.HasIndex(x => x.Title);
 
