@@ -3,6 +3,7 @@ namespace Library.API
     using Library.API.Middleware;
     using Library.Application.Mappings;
     using Library.Application.Services;
+    using Library.Persistence;
 
     public class Program
     {
@@ -11,7 +12,7 @@ namespace Library.API
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services
-                .AddInfrastructure(builder.Configuration)
+                .AddPersistence(builder.Configuration)
                 .AddVersioning();
 
             builder.Services.AddScoped<UserService>();

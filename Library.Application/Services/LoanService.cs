@@ -1,6 +1,7 @@
 ﻿namespace Library.Application.Services
 {
     using Library.Core.Entities;
+    using Library.Core.Enums;
     using Library.Core.Repositories;
     
     public sealed class LoanService(
@@ -57,8 +58,8 @@
 
             var loans = await GetByBookAsync(loan.BookId);
 
-            if (loans.Count(x => !x.IsReturned) >= book.StockNumber)
-                throw new Exception("Book is without stock");
+            if (loans.Count(x =>  x.LoanStatus == LoanStatus.Borrowed) >= book.StockNumber)
+                throw new Exception("Book without stock");
         }
     }
 }

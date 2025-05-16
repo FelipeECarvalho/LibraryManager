@@ -1,19 +1,13 @@
 ﻿namespace Library.Core.Entities
 {
+    using Library.Core.Enums;
+
     public class Loan : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private Loan() : base()
-        {
-        }
-
-        public Loan(Guid userId, Guid bookId, DateTime startDate, DateTime endDate)
+        private Loan() 
             : base()
         {
-            UserId = userId;
-            BookId = bookId;
-            StartDate = startDate;
-            EndDate = endDate;
         }
 
         public Guid UserId { get; private set; }
@@ -28,21 +22,30 @@
 
         public DateTime EndDate { get; private set; }
 
-        public bool IsReturned { get; private set; }
+        public LoanStatus LoanStatus { get; private set; }
 
         public void Update(DateTime endDate)
         {
             EndDate = endDate;
         }
 
+        public void Create(Guid userId, Guid bookId, DateTime startDate, DateTime endDate)
+        {
+            UserId = userId;
+            BookId = bookId;
+            StartDate = startDate;
+            EndDate = endDate;
+            LoanStatus = LoanStatus.Requested;
+        }
+
         public void Return()
         {
-            if (IsReturned)
+            if (LoanStatus == LoanStatus.Requested)
             {
                 return;
             }
 
-            IsReturned = true;
+            LoanStatus = LoanStatus.Returned;
         }
     }
 }

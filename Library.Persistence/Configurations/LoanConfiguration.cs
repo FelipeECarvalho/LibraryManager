@@ -20,7 +20,7 @@ namespace Library.Persistence.Configurations
 
             builder.Property(x => x.StartDate);
             builder.Property(x => x.EndDate);
-            builder.Property(x => x.IsReturned).HasDefaultValue(false);
+            builder.Property(x => x.LoanStatus);
 
             builder.HasOne(x => x.User)
                 .WithMany()
