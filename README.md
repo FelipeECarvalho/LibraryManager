@@ -1,17 +1,19 @@
+**TODO**
+
 - Terminar de implementar o Result Pattern.
-- Adicionar o gênero do livro
+- Adicionar o gÃªnero do livro
 - Adicionar a entidade biblioteca
-	- Ela vai ter seus usuários, livros, etc.
-- Adicionar avaliações(faz sentido para uma biblioteca?)
-	- Acho que sim, pois a aplicação pode integrar com um site e tal.
-- Autenticação e autorização dos usuários
-- Testes unitários
+	- Ela vai ter seus usuÃ¡rios, livros, etc.
+- Adicionar avaliaÃ§Ãµes(faz sentido para uma biblioteca?)
+	- Acho que sim, pois a aplicaÃ§Ã£o pode integrar com um site e tal.
+- AutenticaÃ§Ã£o e autorizaÃ§Ã£o dos usuÃ¡rios
+- Testes unitÃ¡rios
 - Talvez implementar CQRS? Ver se faz sentido
 - Adicionar imagem para os livros
-- Adicionar aprovação de usuário
-	- Ao se cadastrar, o usuário vai precisar ser aprovado por algum administrador. (pensar se faz sentido)
-- Adicionar a carteirinha do usuário
-	- Talvez gerar uma impressão de uma carteirinha?
-	- Cadastrar a foto do usuário para a carteirinha
+- Adicionar aprovaÃ§Ã£o de usuÃ¡rio
+	- Ao se cadastrar, o usuÃ¡rio vai precisar ser aprovado por algum administrador. (pensar se faz sentido)
+- Adicionar a carteirinha do usuÃ¡rio
+	- Talvez gerar uma impressÃ£o de uma carteirinha?
+	- Cadastrar a foto do usuÃ¡rio para a carteirinha
 - Talvez mais pra frente adicionar algo relacionado a pagamento?
-	- Mensalidade dos usuários para ter a carteirinha da biblioteca, compra e aluguel de livros.
+	- Mensalidade dos usuÃ¡rios para ter a carteirinha da biblioteca, compra e aluguel de livros.
