@@ -1,8 +1,8 @@
-﻿namespace Library.Persistence.Repositories
+﻿namespace LibraryManager.Persistence.Repositories
 {
-    using Library.Core.Entities;
-    using Library.Core.Repositories;
-    using Library.Persistence;
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Repositories;
+    using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
     public sealed class AuthorRepository : IAuthorRepository

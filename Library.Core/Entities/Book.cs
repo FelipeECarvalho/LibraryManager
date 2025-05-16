@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Entities
+﻿namespace LibraryManager.Core.Entities
 {
     public class Book : BaseEntity
     {

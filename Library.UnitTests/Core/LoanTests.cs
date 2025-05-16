@@ -1,4 +1,4 @@
-﻿namespace Library.UnitTests.Core
+﻿namespace LibraryManager.UnitTests.Core
 {
     public class LoanTests
     {

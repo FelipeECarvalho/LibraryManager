@@ -1,6 +1,6 @@
-﻿namespace Library.Application.InputModels.Authors
+﻿namespace LibraryManager.Application.InputModels.Authors
 {
-    using Library.Core.ValueObjects;
+    using LibraryManager.Core.ValueObjects;
     using System.ComponentModel.DataAnnotations;
 
     public class AuthorCreateInputModel

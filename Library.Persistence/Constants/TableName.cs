@@ -1,6 +1,6 @@
-﻿namespace Library.Persistence.Constants
+﻿namespace LibraryManager.Persistence.Constants
 {
-    using Library.Core.Entities;
+    using LibraryManager.Core.Entities;
 
     internal static class TableNames
     {

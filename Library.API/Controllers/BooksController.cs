@@ -1,11 +1,11 @@
-﻿namespace Library.API.Controllers
+﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
     using AutoMapper;
-    using Library.Application.DTOs;
-    using Library.Application.InputModels.Books;
-    using Library.Application.Services;
-    using Library.Core.Entities;
+    using LibraryManager.Application.DTOs;
+    using LibraryManager.Application.InputModels.Books;
+    using LibraryManager.Application.Services;
+    using LibraryManager.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]

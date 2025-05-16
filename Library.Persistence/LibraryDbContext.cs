@@ -1,6 +1,6 @@
-﻿namespace Library.Persistence
+﻿namespace LibraryManager.Persistence
 {
-    using Library.Core.Entities;
+    using LibraryManager.Core.Entities;
     using Microsoft.EntityFrameworkCore;
 
     public class LibraryDbContext(DbContextOptions<LibraryDbContext> options) : DbContext(options)

@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Enums
+﻿namespace LibraryManager.Core.Enums
 {
     using System.ComponentModel;
 

@@ -1,12 +1,12 @@
-﻿namespace Library.Application.Mappings
+﻿namespace LibraryManager.Application.Mappings
 {
     using AutoMapper;
-    using Library.Application.DTOs;
-    using Library.Application.InputModels.Authors;
-    using Library.Application.InputModels.Books;
-    using Library.Application.InputModels.Loans;
-    using Library.Application.InputModels.Users;
-    using Library.Core.Entities;
+    using LibraryManager.Application.DTOs;
+    using LibraryManager.Application.InputModels.Authors;
+    using LibraryManager.Application.InputModels.Books;
+    using LibraryManager.Application.InputModels.Loans;
+    using LibraryManager.Application.InputModels.Users;
+    using LibraryManager.Core.Entities;
 
     public class MappingProfile : Profile
     {

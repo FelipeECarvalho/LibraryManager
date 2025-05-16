@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Repositories
+﻿namespace LibraryManager.Core.Repositories
 {
     public interface IUnitOfWork
     {

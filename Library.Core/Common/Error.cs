@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Common
+﻿namespace LibraryManager.Core.Common
 {
     public sealed record Error(string Code, string? Description = null)
     {

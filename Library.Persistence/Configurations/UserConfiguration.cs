@@ -1,7 +1,7 @@
-﻿namespace Library.Persistence.Configurations
+﻿namespace LibraryManager.Persistence.Configurations
 {
-    using Library.Core.Entities;
-    using Library.Persistence.Constants;
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,7 +27,7 @@
                 c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100);
             });
 
-            builder.OwnsOne(x => x.Address, c => 
+            builder.OwnsOne(x => x.Address, c =>
             {
                 c.Property(a => a.Street).HasColumnName("Street").HasMaxLength(50);
                 c.Property(a => a.Number).HasColumnName("Number").HasMaxLength(15);

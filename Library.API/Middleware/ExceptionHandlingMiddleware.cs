@@ -1,6 +1,6 @@
-﻿namespace Library.API.Middleware
+﻿namespace LibraryManager.API.Middleware
 {
-    using Library.API.Models;
+    using LibraryManager.API.Models;
     using System.Net;
 
     public class ExceptionHandlingMiddleware

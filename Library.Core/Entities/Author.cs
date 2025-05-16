@@ -1,6 +1,6 @@
-﻿namespace Library.Core.Entities
+﻿namespace LibraryManager.Core.Entities
 {
-    using Library.Core.ValueObjects;
+    using LibraryManager.Core.ValueObjects;
 
     public class Author : BaseEntity
     {
@@ -34,7 +34,7 @@
         public void AddBook(IList<Book> books)
         {
             Books ??= [];
-            foreach (var book in books ?? []) 
+            foreach (var book in books ?? [])
             {
                 Books.Add(book);
             }

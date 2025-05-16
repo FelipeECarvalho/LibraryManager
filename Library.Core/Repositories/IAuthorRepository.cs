@@ -1,6 +1,6 @@
-﻿namespace Library.Core.Repositories
+﻿namespace LibraryManager.Core.Repositories
 {
-    using Library.Core.Entities;
+    using LibraryManager.Core.Entities;
 
     public interface IAuthorRepository
     {

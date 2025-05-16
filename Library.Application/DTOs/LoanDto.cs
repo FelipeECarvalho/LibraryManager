@@ -1,4 +1,4 @@
-﻿namespace Library.Application.DTOs
+﻿namespace LibraryManager.Application.DTOs
 {
     public class LoanDto
     {

@@ -1,9 +1,9 @@
-namespace Library.API
+namespace LibraryManager.API
 {
-    using Library.API.Middleware;
-    using Library.Application.Mappings;
-    using Library.Application.Services;
-    using Library.Persistence;
+    using LibraryManager.API.Middleware;
+    using LibraryManager.Application.Mappings;
+    using LibraryManager.Application.Services;
+    using LibraryManager.Persistence;
 
     public class Program
     {

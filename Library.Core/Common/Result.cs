@@ -1,10 +1,10 @@
-﻿namespace Library.Core.Common
+﻿namespace LibraryManager.Core.Common
 {
     public class Result
     {
         protected Result(bool isSuccess, Error error)
         {
-            if (isSuccess && error != Error.None) 
+            if (isSuccess && error != Error.None)
             {
                 throw new InvalidOperationException();
             }

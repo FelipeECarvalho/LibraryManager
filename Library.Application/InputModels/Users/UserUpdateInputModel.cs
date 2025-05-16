@@ -1,6 +1,6 @@
-﻿namespace Library.Application.InputModels.Users
+﻿namespace LibraryManager.Application.InputModels.Users
 {
-    using Library.Core.ValueObjects;
+    using LibraryManager.Core.ValueObjects;
 
     public class UserUpdateInputModel
     {

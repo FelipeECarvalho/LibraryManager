@@ -1,4 +1,4 @@
-﻿namespace Library.Core.Common
+﻿namespace LibraryManager.Core.Common
 {
     public class Result<TValue> : Result
     {

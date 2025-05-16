@@ -1,4 +1,4 @@
-﻿namespace Library.API.Models
+﻿namespace LibraryManager.API.Models
 {
     using System.Text.Json;
 

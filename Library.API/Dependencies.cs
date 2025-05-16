@@ -1,4 +1,4 @@
-﻿namespace Library.API
+﻿namespace LibraryManager.API
 {
     using Asp.Versioning;
 

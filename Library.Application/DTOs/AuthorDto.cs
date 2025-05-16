@@ -1,6 +1,6 @@
-﻿namespace Library.Application.DTOs
+﻿namespace LibraryManager.Application.DTOs
 {
-    using Library.Core.ValueObjects;
+    using LibraryManager.Core.ValueObjects;
 
     public class AuthorDto
     {

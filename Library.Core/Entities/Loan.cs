@@ -1,11 +1,11 @@
-﻿namespace Library.Core.Entities
+﻿namespace LibraryManager.Core.Entities
 {
-    using Library.Core.Enums;
+    using LibraryManager.Core.Enums;
 
     public class Loan : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private Loan() 
+        private Loan()
             : base()
         {
         }

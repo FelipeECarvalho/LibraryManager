@@ -1,4 +1,4 @@
-﻿namespace Library.Application.InputModels.Authors
+﻿namespace LibraryManager.Application.InputModels.Authors
 {
     using System.ComponentModel.DataAnnotations;
 

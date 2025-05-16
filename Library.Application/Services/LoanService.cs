@@ -1,9 +1,9 @@
-﻿namespace Library.Application.Services
+﻿namespace LibraryManager.Application.Services
 {
-    using Library.Core.Entities;
-    using Library.Core.Enums;
-    using Library.Core.Repositories;
-    
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Repositories;
+
     public sealed class LoanService(
         ILoanRepository _repository,
         IBookRepository _bookRepository,
@@ -58,7 +58,7 @@
 
             var loans = await GetByBookAsync(loan.BookId);
 
-            if (loans.Count(x =>  x.LoanStatus == LoanStatus.Borrowed) >= book.StockNumber)
+            if (loans.Count(x => x.LoanStatus == LoanStatus.Borrowed) >= book.StockNumber)
                 throw new Exception("Book without stock");
         }
     }

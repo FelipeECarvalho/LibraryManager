@@ -1,16 +1,16 @@
-﻿using Library.Core.Entities;
-using Library.Persistence.Constants;
+﻿using LibraryManager.Core.Entities;
+using LibraryManager.Persistence.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Library.Persistence.Configurations
+namespace LibraryManager.Persistence.Configurations
 {
     internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
     {
         public void Configure(EntityTypeBuilder<Loan> builder)
         {
             builder.ToTable(TableNames.Loans);
-            
+
             builder.HasKey(x => x.Id);
 
             builder.Property(a => a.Id).ValueGeneratedNever();

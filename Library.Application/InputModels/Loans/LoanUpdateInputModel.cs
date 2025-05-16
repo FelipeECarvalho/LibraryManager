@@ -1,4 +1,4 @@
-﻿namespace Library.Application.InputModels.Loans
+﻿namespace LibraryManager.Application.InputModels.Loans
 {
     using System.ComponentModel.DataAnnotations;
 

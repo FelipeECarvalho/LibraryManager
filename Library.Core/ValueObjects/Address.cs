@@ -1,4 +1,4 @@
-﻿namespace Library.Core.ValueObjects
+﻿namespace LibraryManager.Core.ValueObjects
 {
     public sealed record Address(
         string Street,

@@ -1,4 +1,4 @@
-﻿namespace Library.Persistence
+﻿namespace LibraryManager.Persistence
 {
     using System.Reflection;
 

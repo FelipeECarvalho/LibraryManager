@@ -1,6 +1,6 @@
-﻿namespace Library.Core.Entities
+﻿namespace LibraryManager.Core.Entities
 {
-    using Library.Core.ValueObjects;
+    using LibraryManager.Core.ValueObjects;
 
     public class User : BaseEntity
     {

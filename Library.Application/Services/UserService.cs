@@ -1,8 +1,8 @@
-﻿namespace Library.Application.Services
+﻿namespace LibraryManager.Application.Services
 {
-    using Library.Core.Entities;
-    using Library.Core.Repositories;
-    
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Repositories;
+
     public sealed class UserService(IUserRepository _repository, IUnitOfWork _unityOfWork)
     {
         public async Task<IList<User>> GetAllAsync()
