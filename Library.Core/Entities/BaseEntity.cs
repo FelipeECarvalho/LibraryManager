@@ -5,15 +5,15 @@
         protected BaseEntity()
         {
             Id = Guid.NewGuid();
-            CreateDate = DateTime.Now;
-            UpdateDate = DateTime.Now;
+            CreateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.Now;
         }
 
         public Guid Id { get; private set; }
 
-        public DateTime CreateDate { get; private set; }
+        public DateTimeOffset CreateDate { get; private set; }
 
-        public DateTime UpdateDate { get; private set; }
+        public DateTimeOffset UpdateDate { get; private set; }
 
         public bool IsDeleted { get; private set; }
 

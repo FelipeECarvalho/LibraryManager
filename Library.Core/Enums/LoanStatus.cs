@@ -22,4 +22,8 @@
         [Description("The loan was cancelled before the book was picked up.")]
         Cancelled
     }
+
+    public static class LoanStatusExtension
+    {
+    }
 }

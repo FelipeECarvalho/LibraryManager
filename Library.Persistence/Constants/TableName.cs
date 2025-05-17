@@ -11,5 +11,9 @@
         internal const string Loans = nameof(Loan);
 
         internal const string Authors = nameof(Author);
+
+        internal const string Categories = nameof(Category);
+
+        internal const string BookCategory = "BookCategory";
     }
 }

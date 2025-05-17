@@ -17,7 +17,7 @@
             Books = [];
         }
 
-        public Author(Name name, string? description, IList<Book> books)
+        public Author(Name name, string description, IList<Book> books)
             : base()
         {
             Name = name;
@@ -34,21 +34,10 @@
         public void AddBook(IList<Book> books)
         {
             Books ??= [];
-            foreach (var book in books ?? [])
+            foreach (var book in books)
             {
                 Books.Add(book);
             }
-        }
-
-        public void AddBook(Book book)
-        {
-            Books ??= [];
-            Books.Add(book);
-        }
-
-        public void Update(Name name)
-        {
-            Name = name;
         }
 
         public void Update(Name name, string? description)

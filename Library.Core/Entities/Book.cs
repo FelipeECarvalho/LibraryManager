@@ -8,7 +8,7 @@
         {
         }
 
-        public Book(string title, string description, DateTime publicationDate, string isbn, int? stockNumber, Guid authorId)
+        public Book(string title, string description, DateTimeOffset publicationDate, string isbn, int? stockNumber, Guid authorId)
             : base()
         {
             Title = title;
@@ -23,7 +23,7 @@
 
         public string? Description { get; private set; }
 
-        public DateTime PublicationDate { get; private set; }
+        public DateTimeOffset PublicationDate { get; private set; }
 
         public string ISBN { get; private set; }
 
@@ -33,7 +33,11 @@
 
         public Author Author { get; private set; }
 
-        public void Update(string title, string description, DateTime publicationDate)
+        public IList<BookCategory> BookCategories { get; private set; }
+
+        public IList<Loan>? Loans { get; private set; }
+
+        public void Update(string title, string description, DateTimeOffset publicationDate)
         {
             Title = title;
             Description = description;

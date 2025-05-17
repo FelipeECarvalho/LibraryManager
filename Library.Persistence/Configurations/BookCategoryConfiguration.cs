@@ -5,32 +5,28 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
+    internal sealed class BookCategoryConfiguration : IEntityTypeConfiguration<BookCategory>
     {
-        public void Configure(EntityTypeBuilder<Loan> builder)
+        public void Configure(EntityTypeBuilder<BookCategory> builder)
         {
-            builder.ToTable(TableNames.Loans);
+            builder.ToTable(TableNames.BookCategory);
 
-            builder.HasKey(x => x.Id);
+            builder.HasKey(a => a.Id);
 
             builder.Property(a => a.Id).ValueGeneratedNever();
             builder.Property(x => x.CreateDate);
             builder.Property(x => x.UpdateDate);
             builder.Property(x => x.IsDeleted).HasDefaultValue(false);
 
-            builder.Property(x => x.StartDate);
-            builder.Property(x => x.EndDate);
-            builder.Property(x => x.LoanStatus);
-
-            builder.HasOne(x => x.User)
-                .WithMany(x => x.Loans)
-                .HasForeignKey(x => x.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
-
             builder.HasOne(x => x.Book)
-                .WithMany(x => x.Loans)
+                .WithMany(x => x.BookCategories)
                 .HasForeignKey(x => x.BookId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.Category)
+                .WithMany(x => x.BookCategories)
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

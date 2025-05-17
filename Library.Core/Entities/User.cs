@@ -30,6 +30,8 @@
 
         public Address Address { get; private set; }
 
+        public IList<Loan>? Loans { get; private set; }
+
         public void Update(Name name, Address address)
         {
             Name = name;
