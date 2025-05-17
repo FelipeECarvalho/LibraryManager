@@ -31,14 +31,6 @@
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IList<Loan>> GetByBookAsync(Guid bookId)
-        {
-            return await _context.Loans
-                .AsNoTracking()
-                .Where(x => x.BookId == bookId)
-                .ToListAsync();
-        }
-
         public void Add(Loan loan)
         {
             _context.Loans.Add(loan);

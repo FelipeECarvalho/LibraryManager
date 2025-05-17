@@ -21,6 +21,8 @@
             builder.Property(x => x.Name).HasMaxLength(50);
             builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
+            builder.HasIndex(x => x.Name).IsUnique();
+
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

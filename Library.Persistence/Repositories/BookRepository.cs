@@ -26,6 +26,7 @@
         {
             return await _context.Books
                 .Include(x => x.Author)
+                .Include(x => x.Loans)
                 .SingleOrDefaultAsync(x => x.Id == id);
         }
 

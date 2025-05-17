@@ -20,11 +20,6 @@
             return await _repository.GetAllAsync();
         }
 
-        public async Task<IList<Loan>> GetByBookAsync(Guid bookId)
-        {
-            return await _repository.GetByBookAsync(bookId);
-        }
-
         public async Task CreateAsync(Loan loan)
         {
             await ValidateCreate(loan);
@@ -56,9 +51,7 @@
             var user = await _userRepository.GetByIdAsync(loan.UserId)
                 ?? throw new ArgumentException("User not found");
 
-            var loans = await GetByBookAsync(loan.BookId);
-
-            if (loans.Count(x => x.LoanStatus == LoanStatus.Borrowed) >= book.StockNumber)
+            if (book.Loans.Count(x => x.LoanStatus == LoanStatus.Borrowed) >= book.StockNumber)
                 throw new Exception("Book without stock");
         }
     }
