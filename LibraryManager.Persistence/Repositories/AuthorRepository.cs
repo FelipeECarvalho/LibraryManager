@@ -5,11 +5,11 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class AuthorRepository : IAuthorRepository
+    internal sealed class AuthorRepository : IAuthorRepository
     {
         private readonly LibraryDbContext _context;
 
-        public AuthorRepository(LibraryDbContext context)
+        internal AuthorRepository(LibraryDbContext context)
         {
             _context = context;
         }

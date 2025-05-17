@@ -5,11 +5,11 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class BookRepository : IBookRepository
+    internal sealed class BookRepository : IBookRepository
     {
         private readonly LibraryDbContext _context;
 
-        public BookRepository(LibraryDbContext context)
+        internal BookRepository(LibraryDbContext context)
         {
             _context = context;
         }

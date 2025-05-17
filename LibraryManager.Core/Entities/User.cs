@@ -26,7 +26,7 @@
 
         public string Email { get; private set; }
 
-        public DateTimeOffset BirthDate { get; set; }
+        public DateTimeOffset BirthDate { get; private set; }
 
         public Address Address { get; private set; }
 

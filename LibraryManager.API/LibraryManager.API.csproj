@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Library.Application\LibraryManager.Application.csproj" />
-    <ProjectReference Include="..\Library.Persistence\LibraryManager.Persistence.csproj" />
+    <ProjectReference Include="..\LibraryManager.Application\LibraryManager.Application.csproj" />
+    <ProjectReference Include="..\LibraryManager.Persistence\LibraryManager.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

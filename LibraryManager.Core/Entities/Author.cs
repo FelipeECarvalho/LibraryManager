@@ -10,18 +10,11 @@
         {
         }
 
-        public Author(Name name)
+        public Author(Name name, string? description = null)
             : base()
         {
-            Name = name;
             Books = [];
-        }
-
-        public Author(Name name, string description, IList<Book> books)
-            : base()
-        {
             Name = name;
-            Books = books;
             Description = description;
         }
 

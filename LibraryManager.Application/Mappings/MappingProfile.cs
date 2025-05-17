@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Application.Mappings
 {
     using AutoMapper;
-    using LibraryManager.Application.DTOs;
     using LibraryManager.Application.InputModels.Authors;
     using LibraryManager.Application.InputModels.Books;
     using LibraryManager.Application.InputModels.Loans;
@@ -12,11 +11,6 @@
     {
         public MappingProfile()
         {
-            CreateMap<Book, BookDto>();
-            CreateMap<User, UserDto>();
-            CreateMap<Author, AuthorDto>();
-            CreateMap<Loan, LoanDto>();
-
             CreateMap<AuthorCreateInputModel, Author>()
                 .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
 

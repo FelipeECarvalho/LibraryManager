@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Persistence
 {
     using LibraryManager.Core.Repositories;
-    using LibraryManager.Persistence.Repositories;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -13,10 +12,6 @@
             services.AddDbContext<LibraryDbContext>(c
                 => c.UseSqlServer(configuration.GetConnectionString("LibraryDbContextConnection")));
 
-            services.AddScoped<IBookRepository, BookRepository>();
-            services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ILoanRepository, LoanRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;

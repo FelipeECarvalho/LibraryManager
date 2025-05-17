@@ -5,11 +5,11 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class UserRepository : IUserRepository
+    internal sealed class UserRepository : IUserRepository
     {
         private readonly LibraryDbContext _context;
 
-        public UserRepository(LibraryDbContext context)
+        internal UserRepository(LibraryDbContext context)
         {
             _context = context;
         }

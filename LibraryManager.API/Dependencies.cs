@@ -4,7 +4,7 @@
 
     public static class Dependencies
     {
-        public static void AddVersioning(this IServiceCollection services)
+        public static IServiceCollection AddVersioning(this IServiceCollection services)
         {
             services.AddApiVersioning(options =>
             {
@@ -20,6 +20,8 @@
                 options.GroupNameFormat = "'v'VVV";
                 options.SubstituteApiVersionInUrl = true;
             });
+
+            return services;
         }
     }
 }

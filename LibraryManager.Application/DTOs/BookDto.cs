@@ -1,5 +1,7 @@
 ﻿namespace LibraryManager.Application.DTOs
 {
+    using LibraryManager.Application.Queries.Authors;
+
     public class BookDto
     {
         public Guid Id { get; init; }
@@ -14,6 +16,6 @@
 
         public int StockNumber { get; init; }
 
-        public AuthorDto Author { get; init; }
+        public AuthorResponse Author { get; init; }
     }
 }

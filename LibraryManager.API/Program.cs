@@ -1,8 +1,8 @@
 namespace LibraryManager.API
 {
     using LibraryManager.API.Middleware;
+    using LibraryManager.Application;
     using LibraryManager.Application.Mappings;
-    using LibraryManager.Application.Services;
     using LibraryManager.Persistence;
 
     public class Program
@@ -13,12 +13,8 @@ namespace LibraryManager.API
 
             builder.Services
                 .AddPersistence(builder.Configuration)
-                .AddVersioning();
-
-            builder.Services.AddScoped<UserService>();
-            builder.Services.AddScoped<BookService>();
-            builder.Services.AddScoped<AuthorService>();
-            builder.Services.AddScoped<LoanService>();
+                .AddVersioning()
+                .AddHandlers();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddControllers();

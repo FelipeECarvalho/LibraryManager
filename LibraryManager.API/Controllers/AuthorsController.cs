@@ -2,8 +2,8 @@
 {
     using Asp.Versioning;
     using AutoMapper;
-    using LibraryManager.Application.DTOs;
     using LibraryManager.Application.InputModels.Authors;
+    using LibraryManager.Application.Queries.Authors;
     using LibraryManager.Application.Services;
     using LibraryManager.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@
             if (authors is null)
                 return NoContent();
 
-            var dto = _mapper.Map<IList<AuthorDto>>(authors);
+            var dto = _mapper.Map<IList<AuthorResponse>>(authors);
 
             return Ok(dto);
         }
@@ -34,7 +34,7 @@
             if (author is null)
                 return NotFound();
 
-            var dto = _mapper.Map<AuthorDto>(author);
+            var dto = _mapper.Map<AuthorResponse>(author);
 
             return Ok(dto);
         }

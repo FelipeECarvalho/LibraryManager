@@ -5,11 +5,11 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class LoanRepository : ILoanRepository
+    internal sealed class LoanRepository : ILoanRepository
     {
         private readonly LibraryDbContext _context;
 
-        public LoanRepository(LibraryDbContext context)
+        internal LoanRepository(LibraryDbContext context)
         {
             _context = context;
         }
