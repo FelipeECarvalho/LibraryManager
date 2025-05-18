@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Application.DTOs
 {
-    using LibraryManager.Application.Queries.Authors.GetAll;
+    using LibraryManager.Application.Queries.Author.GetAll;
 
     public class BookDto
     {

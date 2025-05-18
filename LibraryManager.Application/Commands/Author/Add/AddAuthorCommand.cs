@@ -3,16 +3,5 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.ValueObjects;
 
-    public class AddAuthorCommand : ICommand
-    {
-        public AddAuthorCommand(Name name, string description)
-        {
-            Name = name;
-            Description = description;
-        }
-
-        public Name Name{ get; set; }
-
-        public string Description { get; set; }
-    }
+    public sealed record AddAuthorCommand(Name Name, string Description) : ICommand;
 }

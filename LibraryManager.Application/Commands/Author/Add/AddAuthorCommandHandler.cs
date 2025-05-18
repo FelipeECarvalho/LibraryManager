@@ -6,23 +6,23 @@
     using LibraryManager.Core.Repositories;
     using System.Threading.Tasks;
 
-    public class AddAuthorCommandHandler : ICommandHandler<AddAuthorCommand>
+    internal class AddAuthorCommandHandler : ICommandHandler<AddAuthorCommand>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public AddAuthorCommandHandler(IUnitOfWork unitOfWork)
+        internal AddAuthorCommandHandler(IUnitOfWork unitOfWork)
         { 
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> HandleAsync(AddAuthorCommand request, CancellationToken cancellationToken)
+        public async Task<Result> HandleAsync(AddAuthorCommand request, CancellationToken ct)
         {
             var author = new Author(request.Name, request.Description);
 
             _unitOfWork.Authors.Add(author);
             
             await _unitOfWork
-                .SaveChangesAsync(cancellationToken)
+                .SaveChangesAsync(ct)
                 .ConfigureAwait(false);
 
             return Result.Success();

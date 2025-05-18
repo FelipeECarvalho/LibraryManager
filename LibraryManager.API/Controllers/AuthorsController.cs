@@ -17,7 +17,8 @@
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken ct)
         {
-            var result = await _mediator.QueryAsync(new GetAuthorsQuery(), ct);
+            var result = await _mediator
+                .QueryAsync<GetAuthorsQuery, IList<AuthorResponse>>(new GetAuthorsQuery(), ct);
 
             return Ok(result.Value);
         }
@@ -44,12 +45,7 @@
 
             var result = await _mediator.DispatchAsync(command, ct);
 
-            if (result.IsFailure)
-            {
-                return 
-            }
-
-            return CreatedAtAction(nameof(GetById), new { id = author.Id });
+            return CreatedAtAction(nameof(GetById), new());
         }
 
         [HttpDelete("{id:guid}")]
