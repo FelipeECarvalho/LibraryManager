@@ -1,18 +1,19 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using AutoMapper;
-    using LibraryManager.Application.Commands.Author.Create;
-    using LibraryManager.Application.InputModels.Authors;
-    using LibraryManager.Application.Queries.Author.GetAll;
-    using LibraryManager.Application.Services;
+    using LibraryManager.Application.Commands.Author.AddBooksToAuthor;
+    using LibraryManager.Application.Commands.Author.CreateAuthor;
+    using LibraryManager.Application.Commands.Author.DeleteAuthor;
+    using LibraryManager.Application.Commands.Author.UpdateAuthor;
+    using LibraryManager.Application.Queries.Author.GetAuthorById;
+    using LibraryManager.Application.Queries.Author.GetAuthors;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AuthorsController(IMapper _mapper, IMediator _mediator) : ControllerBase
+    public class AuthorsController(IMediator _mediator) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken ct)
@@ -22,70 +23,82 @@
             return Ok(result.Value);
         }
 
-        //[HttpGet("{id:guid}")]
-        //public async Task<IActionResult> GetById(Guid id)
-        //{
-        //    var author = await _service.GetByIdAsync(id);
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
+        {
+            var query = new GetAuthorByIdQuery(id);
 
-        //    if (author is null)
-        //        return NotFound();
+            var result = await _mediator.Send(query, ct);
 
-        //    var dto = _mapper.Map<AuthorResponse>(author);
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
 
-        //    return Ok(dto);
-        //}
+            return Ok(result.Value);
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Post(
-        //    [FromBody] AuthorCreateInputModel model,
-        //    CancellationToken ct)
-        //{
-        //    var command = new CreateAuthorCommand(model.Name, model.Description);
+        [HttpPost]
+        public async Task<IActionResult> Post(
+            [FromBody] CreateAuthorCommand command,
+            CancellationToken ct)
+        {
+            var result = await _mediator.Send(command, ct);
 
-        //    var result = await _mediator.Send(command, ct);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-        //    return CreatedAtAction(nameof(GetById), new());
-        //}
+            var author = result.Value;
+            return CreatedAtAction(nameof(GetById), new { id = author.Id}, author);
+        }
 
-        //[HttpDelete("{id:guid}")]
-        //public async Task<IActionResult> Delete(Guid id)
-        //{
-        //    //var author = await _service.GetByIdAsync(id);
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+        {
+            var result = await _mediator.Send(new DeleteAuthorCommand(id), ct);
 
-        //    //if (author is null)
-        //    //    return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-        //    //await _service.DeleteAsync(author);
-        //    await Task.Delay(10);
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
 
-        //[HttpPut("{id:guid}")]
-        //public async Task<IActionResult> Put(Guid id, [FromBody] AuthorUpdateInputModel model)
-        //{
-        //    var authorResult = await _service.GetByIdAsync(id);
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Put(
+            Guid id,
+            [FromBody] UpdateAuthorCommand command,
+            CancellationToken ct)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command, ct);
 
-        //    if (authorResult is null)
-        //        return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-        //    var author = authorResult.Value;
-        //    author.Update(model.Name, model.Description);
+            return NoContent();
+        }
 
-        //    await _service.UpdateAsync(author);
-        //    return NoContent();
-        //}
+        [HttpPut("{id:guid}/add-books")]
+        public async Task<IActionResult> AddBook(
+            Guid id,
+            [FromBody] AddBooksToAuthorCommand command,
+            CancellationToken ct)
+        {
+            command.Id = id;
+            var result = await _mediator.Send(command, ct);
 
-        //[HttpPut("{id:guid}/add-books")]
-        //public async Task<IActionResult> AddBook(Guid id, [FromBody] AuthorAddBookInputModel model)
-        //{
-        //    //var authorResult = await _service.GetByIdAsync(id);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-        //    //if (authorResult is null)
-        //    //    return NotFound();
-
-        //    //await _service.AddBookAsync(author, model.BookIds);
-        //    await Task.Delay(10);
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
     }
 }

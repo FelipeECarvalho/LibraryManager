@@ -1,8 +1,13 @@
 **TODO**
 
 - Terminar de implementar o Result Pattern.
+- Implementar fluent validation
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
+- Envio de e-mails
+	- Quando o usuário se cadastrar
+	- Quando o empréstimo estiver atrasado
+	- etc.
 - Adicionar avaliações(faz sentido para uma biblioteca?)
 	- Acho que sim, pois a aplicação pode integrar com um site e tal.
 - Autenticação e autorização dos usuários

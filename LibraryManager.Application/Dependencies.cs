@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Application
 {
     using Microsoft.Extensions.DependencyInjection;
-    using System.Reflection;
 
     public static class Dependencies
     {

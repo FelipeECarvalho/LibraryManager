@@ -3,7 +3,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Repositories;
 
-    public sealed class BookService(IBookRepository _repository, IUnitOfWork _unityOfWork)
+    public sealed class BookService(IBookRepository _repository, IUnitOfWork _unitOfWork)
     {
         public async Task<IList<Book>> GetAllAsync()
         {
@@ -23,7 +23,7 @@
         public async Task<Book> CreateAsync(Book book)
         {
             _repository.Add(book);
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return book;
         }
@@ -32,7 +32,7 @@
         {
             _repository.Update(book);
 
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(Book book)
@@ -40,7 +40,7 @@
             book.SetDeleted();
             _repository.Update(book);
 
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

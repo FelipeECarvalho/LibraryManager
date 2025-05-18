@@ -3,7 +3,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Repositories;
 
-    public sealed class UserService(IUserRepository _repository, IUnitOfWork _unityOfWork)
+    public sealed class UserService(IUserRepository _repository, IUnitOfWork _unitOfWork)
     {
         public async Task<IList<User>> GetAllAsync()
         {
@@ -18,7 +18,7 @@
         public async Task<User> CreateAsync(User user)
         {
             _repository.Add(user);
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return user;
         }
@@ -27,7 +27,7 @@
         {
             _repository.Update(user);
 
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(User user)
@@ -35,7 +35,7 @@
             user.SetDeleted();
             _repository.Update(user);
 
-            await _unityOfWork.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

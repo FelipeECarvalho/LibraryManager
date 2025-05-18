@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Queries.Author.GetAll
+﻿namespace LibraryManager.Application.Queries.Author
 {
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.ValueObjects;

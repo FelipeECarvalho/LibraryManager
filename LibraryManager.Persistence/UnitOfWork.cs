@@ -6,8 +6,7 @@
     {
         private readonly LibraryDbContext _context;
 
-        public UnitOfWork(
-            LibraryDbContext context)
+        public UnitOfWork(LibraryDbContext context)
         {
             _context = context;
         }

@@ -1,6 +1,6 @@
-﻿namespace LibraryManager.Application.Commands.Author.Create
+﻿namespace LibraryManager.Application.Commands.Author.CreateAuthor
 {
-    using LibraryManager.Application.Queries.Author.GetAll;
+    using LibraryManager.Application.Queries.Author;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.ValueObjects;
     using MediatR;

@@ -21,11 +21,11 @@
                 .ToListAsync(ct);
         }
 
-        public async Task<Author> GetByIdAsync(Guid id)
+        public async Task<Author> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return await _context.Authors
                 .Include(x => x.Books)
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
         public void Add(Author author)
