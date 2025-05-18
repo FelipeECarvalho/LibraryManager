@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Queries.Authors
+﻿namespace LibraryManager.Application.Queries.Author.GetAll
 {
     using LibraryManager.Application.Abstractions.Messaging;
 

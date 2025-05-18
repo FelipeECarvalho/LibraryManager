@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Commands.AddAuthor
+﻿namespace LibraryManager.Application.Commands.Author.Add
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;

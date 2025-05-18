@@ -6,7 +6,6 @@
 - Adicionar avaliações(faz sentido para uma biblioteca?)
 	- Acho que sim, pois a aplicação pode integrar com um site e tal.
 - Autenticação e autorização dos usuários
-- Talvez implementar CQRS? Ver se faz sentido
 - Testes unitários
 - Adicionar imagem para os livros
 - Adicionar aprovação de usuário

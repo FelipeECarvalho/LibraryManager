@@ -46,12 +46,12 @@
         {
             var books = await _bookRepository.GetByIdAsync(bookIds);
 
-            var validationResult = ValidateAddBooks(books, bookIds);
+            //var validationResult = ValidateAddBooks(books, bookIds);
 
-            if (!validationResult.IsSuccess)
-            {
-                return Result.Failure(validationResult.Error);
-            }
+            //if (!validationResult.IsSuccess)
+            //{
+            //    return Result.Failure(validationResult.Error);
+            //}
 
             author.AddBook(books);
 
@@ -60,22 +60,22 @@
             return Result.Success();
         }
 
-        private static Result ValidateAddBooks(IList<Book> books, IList<Guid> bookIds)
-        {
-            if (books == null || !books.Any())
-            {
-                return Result.Failure(Error.ProvidedBooksNotFound);
-            }
+        //private static Result ValidateAddBooks(IList<Book> books, IList<Guid> bookIds)
+        //{
+        //    if (books == null || !books.Any())
+        //    {
+        //        return Result.Failure(Error.ProvidedBooksNotFound);
+        //    }
 
-            var existingIds = books.Select(x => x.Id).ToHashSet();
-            var booksNotFound = bookIds.Where(id => !existingIds.Contains(id));
+        //    var existingIds = books.Select(x => x.Id).ToHashSet();
+        //    var booksNotFound = bookIds.Where(id => !existingIds.Contains(id));
 
-            if (booksNotFound.Any())
-            {
-                return Result.Failure(Error.ProvidedBooksNotFound);
-            }
+        //    if (booksNotFound.Any())
+        //    {
+        //        return Result.Failure(Error.ProvidedBooksNotFound);
+        //    }
 
-            return Result.Success();
-        }
+        //    return Result.Success();
+        //}
     }
 }

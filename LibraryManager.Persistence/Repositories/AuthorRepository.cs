@@ -14,11 +14,11 @@
             _context = context;
         }
 
-        public async Task<IList<Author>> GetAllAsync()
+        public async Task<IList<Author>> GetAllAsync(CancellationToken ct)
         {
             return await _context.Authors
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
         public async Task<Author> GetByIdAsync(Guid id)

@@ -2,28 +2,24 @@
 {
     using Asp.Versioning;
     using AutoMapper;
+    using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Application.Commands.Author.Add;
     using LibraryManager.Application.InputModels.Authors;
-    using LibraryManager.Application.Queries.Authors;
+    using LibraryManager.Application.Queries.Author.GetAll;
     using LibraryManager.Application.Services;
-    using LibraryManager.Core.Entities;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AuthorsController(AuthorService _service, IMapper _mapper) : ControllerBase
+    public class AuthorsController(AuthorService _service, IMapper _mapper, IMediator _mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken ct)
         {
-            var authors = await _service.GetAllAsync();
+            var result = await _mediator.QueryAsync(new GetAuthorsQuery(), ct);
 
-            if (authors is null)
-                return NoContent();
-
-            var dto = _mapper.Map<IList<AuthorResponse>>(authors);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpGet("{id:guid}")]
@@ -40,11 +36,18 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AuthorCreateInputModel model)
+        public async Task<IActionResult> Post(
+            [FromBody] AuthorCreateInputModel model,
+            CancellationToken ct)
         {
-            var author = _mapper.Map<Author>(model);
+            var command = new AddAuthorCommand(model.Name, model.Description);
 
-            await _service.CreateAsync(author);
+            var result = await _mediator.DispatchAsync(command, ct);
+
+            if (result.IsFailure)
+            {
+                return 
+            }
 
             return CreatedAtAction(nameof(GetById), new { id = author.Id });
         }
