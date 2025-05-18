@@ -1,6 +1,9 @@
 ﻿namespace LibraryManager.Application.Abstractions.Messaging
 {
-    public interface ICommand;
+    using LibraryManager.Core.Common;
+    using MediatR;
 
-    public interface ICommand<TResponse>;
+    public interface ICommand : IRequest<Result>;
+
+    public interface ICommand<TResponse> : IRequest<Result<TResponse>>;
 }

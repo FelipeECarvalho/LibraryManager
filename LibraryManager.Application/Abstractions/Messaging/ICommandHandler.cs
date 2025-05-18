@@ -1,16 +1,11 @@
 ﻿namespace LibraryManager.Application.Abstractions.Messaging
 {
     using LibraryManager.Core.Common;
+    using MediatR;
 
-    public interface ICommandHandler<in TCommand>
-        where TCommand : ICommand
-    {
-        Task<Result> HandleAsync(TCommand command, CancellationToken cancellationToken);
-    }
+    public interface ICommandHandler<in TCommand> : IRequestHandler<TCommand, Result>
+        where TCommand : ICommand;
 
-    public interface ICommandHandler<in TCommand, TResponse>
-        where TCommand : ICommand<TResponse>
-    {
-        Task<Result<TResponse>> HandleAsync(TCommand command, CancellationToken cancellationToken);
-    }
+    public interface ICommandHandler<in TCommand, TResponse> : IRequestHandler<TCommand, Result<TResponse>>
+        where TCommand : ICommand<TResponse>;
 }

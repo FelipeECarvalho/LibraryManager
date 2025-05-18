@@ -3,22 +3,9 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.ValueObjects;
 
-    public class AuthorResponse
+    public sealed record AuthorResponse(Guid Id, Name Name, string Description)
     {
-        public Guid Id { get; init; }
-
-        public Name Name { get; init; }
-
-        public string Description { get; init; }
-
         public static AuthorResponse FromEntity(Author author)
-        {
-            return new AuthorResponse
-            {
-                Id = author.Id,
-                Name = author.Name,
-                Description = author.Description
-            };
-        }
+            => new(author.Id, author.Name, author.Description);
     }
 }

@@ -6,12 +6,19 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    internal sealed class GetAuthorsQueryHandler(IUnitOfWork _unitOfWork) 
+    internal sealed class GetAuthorsQueryHandler 
         : IQueryHandler<GetAuthorsQuery, IList<AuthorResponse>>
     {
-        public async Task<Result<IList<AuthorResponse>>> HandleAsync(GetAuthorsQuery query, CancellationToken ct)
+        private readonly IAuthorRepository _authorRepository;
+        
+        public GetAuthorsQueryHandler(IAuthorRepository authorRepository)
         {
-            var authors = await _unitOfWork.Authors.GetAllAsync(ct);
+            _authorRepository = authorRepository;
+        }
+
+        public async Task<Result<IList<AuthorResponse>>> Handle(GetAuthorsQuery request, CancellationToken ct)
+        {
+            var authors = await _authorRepository.GetAllAsync(ct);
 
             var response = authors?
                 .Select(AuthorResponse.FromEntity)?

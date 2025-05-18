@@ -6,11 +6,6 @@
 
     public sealed class AuthorService(IAuthorRepository _repository, IBookRepository _bookRepository, IUnitOfWork _unitOfWork)
     {
-        public async Task<Result<IList<Author>>> GetAllAsync()
-        {
-            return Result.Success(await _repository.GetAllAsync());
-        }
-
         public async Task<Result<Author>> GetByIdAsync(Guid id)
         {
             return await _repository.GetByIdAsync(id);

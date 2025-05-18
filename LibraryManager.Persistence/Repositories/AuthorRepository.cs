@@ -9,7 +9,7 @@
     {
         private readonly LibraryDbContext _context;
 
-        internal AuthorRepository(LibraryDbContext context)
+        public AuthorRepository(LibraryDbContext context)
         {
             _context = context;
         }

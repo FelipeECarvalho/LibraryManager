@@ -9,7 +9,7 @@
     {
         private readonly LibraryDbContext _context;
 
-        internal BookRepository(LibraryDbContext context)
+        public BookRepository(LibraryDbContext context)
         {
             _context = context;
         }
