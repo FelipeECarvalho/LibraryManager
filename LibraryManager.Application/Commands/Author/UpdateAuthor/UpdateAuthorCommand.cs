@@ -1,11 +1,11 @@
 ﻿namespace LibraryManager.Application.Commands.Author.UpdateAuthor
 {
-    using LibraryManager.Core.Common;
+    using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.ValueObjects;
-    using MediatR;
     using System.Text.Json.Serialization;
 
-    public sealed record UpdateAuthorCommand(Name Name, string Description) : IRequest<Result>
+    public sealed record UpdateAuthorCommand(Name Name, string Description) 
+        : ICommand
     {
         [JsonIgnore]
         public Guid Id { get; set; }

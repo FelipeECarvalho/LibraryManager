@@ -1,8 +1,7 @@
 ﻿namespace LibraryManager.Application.Commands.Author.DeleteAuthor
 {
-    using LibraryManager.Core.Common;
-    using MediatR;
+    using LibraryManager.Application.Abstractions.Messaging;
 
     public sealed record DeleteAuthorCommand(Guid Id) 
-        : IRequest<Result>;
+        : ICommand;
 }

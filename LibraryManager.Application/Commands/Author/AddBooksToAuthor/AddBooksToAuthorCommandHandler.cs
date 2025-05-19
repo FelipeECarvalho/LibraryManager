@@ -1,17 +1,17 @@
 ﻿namespace LibraryManager.Application.Commands.Author.AddBooksToAuthor
 {
+    using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using MediatR;
     using System;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
     internal class AddBooksToAuthorCommandHandler
-        : IRequestHandler<AddBooksToAuthorCommand, Result>
+        : ICommandHandler<AddBooksToAuthorCommand>
     {
         private readonly IAuthorRepository _repository;
         private readonly IUnitOfWork _unitOfWork;

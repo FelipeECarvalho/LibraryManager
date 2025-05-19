@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public sealed class GetAuthorByIdQueryHandler
+    internal sealed class GetAuthorByIdQueryHandler
         : IQueryHandler<GetAuthorByIdQuery, AuthorResponse>
     {
         private readonly IAuthorRepository _authorRepository;

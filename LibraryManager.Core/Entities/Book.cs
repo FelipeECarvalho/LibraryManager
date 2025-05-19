@@ -1,5 +1,7 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Errors;
+
     public class Book : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
@@ -46,6 +48,11 @@
 
         public void UpdateStock(int stockNumber)
         {
+            if (StockNumber < 0) 
+            {
+                throw new ArgumentException(DomainErrors.Book.StockNumberInvalid.Description);
+            }
+
             StockNumber = stockNumber;
         }
     }

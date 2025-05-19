@@ -4,10 +4,10 @@
 
     public interface IBookRepository
     {
-        Task<IList<Book>> GetAllAsync();
-        Task<Book> GetByIdAsync(Guid id);
-        Task<IList<Book>> GetByIdAsync(IList<Guid> ids);
-        Task<IList<Book>> GetByTitleAsync(string title);
+        Task<IList<Book>> GetAllAsync(CancellationToken ct = default);
+        Task<Book> GetByIdAsync(Guid id, CancellationToken ct = default);
+        Task<IList<Book>> GetByIdAsync(IList<Guid> ids, CancellationToken ct = default);
+        Task<IList<Book>> GetByTitleAsync(string title, CancellationToken ct = default);
 
         void Add(Book book);
         void Update(Book book);

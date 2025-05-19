@@ -14,38 +14,38 @@
             _context = context;
         }
 
-        public async Task<IList<Book>> GetAllAsync()
+        public async Task<IList<Book>> GetAllAsync(CancellationToken ct)
         {
             return await _context.Books
                 .AsNoTracking()
                 .Include(x => x.Author)
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
-        public async Task<Book> GetByIdAsync(Guid id)
+        public async Task<Book> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return await _context.Books
                 .Include(x => x.Author)
                 .Include(x => x.Loans)
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
-        public async Task<IList<Book>> GetByIdAsync(IList<Guid> ids)
+        public async Task<IList<Book>> GetByIdAsync(IList<Guid> ids, CancellationToken ct)
         {
             return await _context.Books
                 .AsNoTracking()
                 .Include(x => x.Author)
                 .Where(x => ids.Contains(x.Id))
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
-        public async Task<IList<Book>> GetByTitleAsync(string title)
+        public async Task<IList<Book>> GetByTitleAsync(string title, CancellationToken ct)
         {
             return await _context.Books
                 .Include(x => x.Author)
                 .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
         public void Add(Book book)

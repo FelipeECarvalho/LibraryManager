@@ -1,106 +1,110 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using AutoMapper;
-    using LibraryManager.Application.DTOs;
-    using LibraryManager.Application.InputModels.Books;
-    using LibraryManager.Application.Services;
-    using LibraryManager.Core.Entities;
+    using LibraryManager.Application.Commands.Book.CreateBook;
+    using LibraryManager.Application.Commands.Book.DeleteBook;
+    using LibraryManager.Application.Commands.Book.UpdateBook;
+    using LibraryManager.Application.Commands.Book.UpdateBookStock;
+    using LibraryManager.Application.Queries.Book.GetBookById;
+    using LibraryManager.Application.Queries.Book.GetBooks;
+    using LibraryManager.Application.Queries.Book.GetBooksByTitle;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class BooksController(BookService _bookService, IMapper _mapper) : ControllerBase
+    public class BooksController(IMediator _mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken ct)
         {
-            var books = await _bookService.GetAllAsync();
+            var result = await _mediator.Send(new GetBooksQuery(), ct);
 
-            if (books is null || books.Count == 0)
-                return NoContent();
-
-            var dto = _mapper.Map<IList<BookDto>>(books);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
         {
-            var book = await _bookService.GetByIdAsync(id);
+            var query = new GetBookByIdQuery(id);
+            var result = await _mediator.Send(query, ct);
 
-            if (book is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
 
-            var dto = _mapper.Map<BookDto>(book);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpGet("{title}")]
-        public async Task<IActionResult> GetByTitle(string title)
+        public async Task<IActionResult> GetByTitle(string title, CancellationToken ct)
         {
-            var books = await _bookService.GetByTitleAsync(title);
+            var query = new GetBooksByTitleQuery(title);
+            var result = await _mediator.Send(query, ct);
 
-            if (books is null || books.Count == 0)
-                return NoContent();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            var dto = _mapper.Map<IList<BookDto>>(books);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BookCreateInputModel model)
+        public async Task<IActionResult> Post([FromBody] CreateBookCommand command, CancellationToken ct)
         {
-            var book = _mapper.Map<Book>(model);
+            var result = await _mediator.Send(command, ct);
 
-            await _bookService.CreateAsync(book);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            var book = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
-            var book = await _bookService.GetByIdAsync(id);
+            var result = await _mediator.Send(new DeleteBookCommand(id), ct);
 
-            if (book is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            await _bookService.DeleteAsync(book);
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] BookUpdateInputModel model)
+        public async Task<IActionResult> Put(Guid id, [FromBody] UpdateBookCommand command)
         {
-            var book = await _bookService.GetByIdAsync(id);
+            command.Id = id;
 
-            if (book is null)
-                return NotFound();
+            var result = await _mediator.Send(command);
 
-            book.Update(model.Title, model.Description, model.PublicationDate);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            await _bookService.UpdateAsync(book);
             return NoContent();
         }
 
-        [HttpPut("{id:Guid}/update-stock/{stockNumber:int}")]
-        public async Task<IActionResult> Put(Guid id, int stockNumber)
+        [HttpPut("{id:Guid}/stock/{stockNumber:int}")]
+        public async Task<IActionResult> Put(Guid id, int stockNumber, CancellationToken ct)
         {
-            if (stockNumber < 0)
-                return BadRequest("Stock number cannot be a negative number.");
+            var result = await _mediator.Send(new UpdateBookStockCommand(id, stockNumber), ct);
 
-            var book = await _bookService.GetByIdAsync(id);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            if (book is null)
-                return BadRequest();
-
-            book.UpdateStock(stockNumber);
-
-            await _bookService.UpdateAsync(book);
             return NoContent();
         }
     }

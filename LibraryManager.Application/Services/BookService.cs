@@ -5,29 +5,6 @@
 
     public sealed class BookService(IBookRepository _repository, IUnitOfWork _unitOfWork)
     {
-        public async Task<IList<Book>> GetAllAsync()
-        {
-            return await _repository.GetAllAsync();
-        }
-
-        public async Task<Book> GetByIdAsync(Guid id)
-        {
-            return await _repository.GetByIdAsync(id);
-        }
-
-        public async Task<IList<Book>> GetByTitleAsync(string title)
-        {
-            return await _repository.GetByTitleAsync(title);
-        }
-
-        public async Task<Book> CreateAsync(Book book)
-        {
-            _repository.Add(book);
-            await _unitOfWork.SaveChangesAsync();
-
-            return book;
-        }
-
         public async Task UpdateAsync(Book book)
         {
             _repository.Update(book);

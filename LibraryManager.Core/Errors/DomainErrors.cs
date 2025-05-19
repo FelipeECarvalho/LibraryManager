@@ -50,8 +50,38 @@
 
             public static readonly Func<IList<Guid>, Error> NotFoundList = ids => new(
                 "Book.NotFound",
-                $"The following book ids were not found {string.Join(", ", ids)}.",
+                $"The following book IDs were not found: {string.Join(", ", ids)}.",
                 ErrorType.NotFound);
+
+            public static Error TitleRequired => new(
+                "Book.TitleRequired",
+                "The book title is required.",
+                ErrorType.Validation);
+
+            public static Error TitleTooLong => new(
+                "Book.TitleTooLong",
+                "The book title must be between 2 and 100 characters long.",
+                ErrorType.Validation);
+
+            public static Error IsbnRequired => new(
+                "Book.IsbnRequired",
+                "The book ISBN is required.",
+                ErrorType.Validation);
+
+            public static Error IsbnTooLong => new(
+                "Book.IsbnTooLong",
+                "The book ISBN must be between 2 and 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error PublicationDateRequired => new(
+                "Book.PublicationDateRequired",
+                "The book Publication Date is required.",
+                ErrorType.Validation);
+
+            public static Error StockNumberInvalid => new(
+                "Book.StockNumberInvalid",
+                "The book Stock number is invalid.",
+                ErrorType.Validation);
         }
     }
 }

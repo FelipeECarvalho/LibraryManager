@@ -1,10 +1,12 @@
 ﻿namespace LibraryManager.Application.DTOs
 {
+    using LibraryManager.Application.Queries.Book;
+
     public class LoanDto
     {
         public Guid Id { get; init; }
 
-        public BookDto Book { get; init; }
+        public BookResponse Book { get; init; }
 
         public UserDto User { get; init; }
 

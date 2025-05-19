@@ -1,14 +1,14 @@
 ﻿namespace LibraryManager.Application.Commands.Author.UpdateAuthor
 {
+    using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public sealed class UpdateAuthorCommandHandler
-        : IRequestHandler<UpdateAuthorCommand, Result>
+    internal sealed class UpdateAuthorCommandHandler
+        : ICommandHandler<UpdateAuthorCommand>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IUnitOfWork _unitOfWork;

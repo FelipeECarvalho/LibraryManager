@@ -1,14 +1,14 @@
 ﻿namespace LibraryManager.Application.Commands.Author.DeleteAuthor
 {
+    using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using MediatR;
     using System.Threading;
     using System.Threading.Tasks;
 
     internal class DeleteAuthorCommandHandler
-        : IRequestHandler<DeleteAuthorCommand, Result>
+        : ICommandHandler<DeleteAuthorCommand>
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IUnitOfWork _unitOfWork;

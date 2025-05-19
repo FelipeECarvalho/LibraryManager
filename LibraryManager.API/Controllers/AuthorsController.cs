@@ -84,7 +84,7 @@
             return NoContent();
         }
 
-        [HttpPut("{id:guid}/add-books")]
+        [HttpPut("{id:guid}/books")]
         public async Task<IActionResult> AddBook(
             Guid id,
             [FromBody] AddBooksToAuthorCommand command,

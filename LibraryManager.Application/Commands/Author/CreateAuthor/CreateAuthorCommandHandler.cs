@@ -1,15 +1,15 @@
 ﻿namespace LibraryManager.Application.Commands.Author.CreateAuthor
 {
+    using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Author;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using MediatR;
     using System.Threading.Tasks;
 
     internal sealed class CreateAuthorCommandHandler 
-        : IRequestHandler<CreateAuthorCommand, Result<AuthorResponse>>
+        : ICommandHandler<CreateAuthorCommand, AuthorResponse>
     {
         private readonly IAuthorRepository _repository;
         private readonly IUnitOfWork _unitOfWork;
@@ -27,7 +27,7 @@
             if (validationResult.IsFailure) 
             {
                 return Result.Failure<AuthorResponse>(validationResult.Error);
-            }
+            }   
 
             var author = new Author(command.Name, command.Description);
 
@@ -45,7 +45,7 @@
                 return Result.Failure(Error.NullValue);
             }
 
-            if (string.IsNullOrEmpty(command.Name?.FirstName))
+            if (string.IsNullOrWhiteSpace(command.Name?.FirstName))
             {
                 return Result.Failure(DomainErrors.Name.FirstNameRequired);
             }
@@ -55,7 +55,7 @@
                 return Result.Failure(DomainErrors.Name.FirstNameLengthError);
             }
 
-            if (string.IsNullOrEmpty(command.Name?.LastName))
+            if (string.IsNullOrWhiteSpace(command.Name?.LastName))
             {
                 return Result.Failure(DomainErrors.Name.LastNameRequired);
             }
