@@ -37,6 +37,7 @@
         public void Update(DateTimeOffset endDate)
         {
             EndDate = endDate;
+            UpdateDate = DateTimeOffset.Now;
         }
 
         public void Return()

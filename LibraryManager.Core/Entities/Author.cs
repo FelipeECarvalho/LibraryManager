@@ -31,12 +31,16 @@
             {
                 Books.Add(book);
             }
+
+            UpdateDate = DateTimeOffset.Now;
         }
 
         public void Update(Name name, string? description)
         {
             Name = name;
             Description = description;
+
+            UpdateDate = DateTimeOffset.Now;
         }
     }
 }

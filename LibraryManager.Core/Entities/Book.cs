@@ -44,6 +44,7 @@
             Title = title;
             Description = description;
             PublicationDate = publicationDate;
+            UpdateDate = DateTimeOffset.Now;
         }
 
         public void UpdateStock(int stockNumber)
@@ -54,6 +55,7 @@
             }
 
             StockNumber = stockNumber;
+            UpdateDate = DateTimeOffset.Now;
         }
     }
 }

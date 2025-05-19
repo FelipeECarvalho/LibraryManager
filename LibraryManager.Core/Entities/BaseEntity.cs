@@ -13,7 +13,7 @@
 
         public DateTimeOffset CreateDate { get; private set; }
 
-        public DateTimeOffset UpdateDate { get; private set; }
+        public DateTimeOffset UpdateDate { get; protected set; }
 
         public bool IsDeleted { get; private set; }
 
