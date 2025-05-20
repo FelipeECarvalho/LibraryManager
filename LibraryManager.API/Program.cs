@@ -15,7 +15,6 @@ namespace LibraryManager.API
                 .AddVersioning()
                 .AddHandlers();
 
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

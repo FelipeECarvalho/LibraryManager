@@ -5,7 +5,7 @@
     using LibraryManager.Application.Commands.Loan.ReturnLoan;
     using LibraryManager.Application.Commands.Loan.UpdateLoan;
     using LibraryManager.Application.Queries.Loan.GetLoanById;
-    using LibraryManager.Application.Queries.Loan.GetUserLoans;
+    using LibraryManager.Application.Queries.Loan.GetLoans;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 

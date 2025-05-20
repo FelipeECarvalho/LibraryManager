@@ -19,6 +19,7 @@
             return await _context.Loans
                 .Include(x => x.User)
                 .Include(x => x.Book)
+                    .ThenInclude(x => x.Author)
                 .AsNoTracking()
                 .ToListAsync(ct);
         }
