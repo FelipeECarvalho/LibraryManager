@@ -14,21 +14,31 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync()
+        public async Task<IList<Loan>> GetAllAsync(CancellationToken ct)
         {
             return await _context.Loans
                 .Include(x => x.User)
                 .Include(x => x.Book)
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
-        public async Task<Loan> GetByIdAsync(Guid id)
+        public async Task<IList<Loan>> GetByUserAsync(Guid userId, CancellationToken ct)
+        {
+            return await _context.Loans
+                .Where(x => x.User.Id == userId)
+                .Include(x => x.User)
+                .Include(x => x.Book)
+                .AsNoTracking()
+                .ToListAsync(ct);
+        }
+
+        public async Task<Loan> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return await _context.Loans
                 .Include(x => x.User)
                 .Include(x => x.Book)
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
         public void Add(Loan loan)

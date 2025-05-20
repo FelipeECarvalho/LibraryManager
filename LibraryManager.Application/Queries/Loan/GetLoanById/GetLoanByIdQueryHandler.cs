@@ -1,0 +1,33 @@
+﻿namespace LibraryManager.Application.Queries.Loan.GetLoanById
+{
+    using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Core.Common;
+    using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Repositories;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    internal sealed class GetLoanByIdQueryHandler
+        : IQueryHandler<GetLoanByIdQuery, LoanResponse>
+    {
+        private readonly ILoanRepository _loanRepository;
+
+        public GetLoanByIdQueryHandler(ILoanRepository loanRepository)
+        {
+            _loanRepository = loanRepository;
+        }
+
+        public async Task<Result<LoanResponse>> Handle(GetLoanByIdQuery request, CancellationToken ct)
+        {
+            var loan = await _loanRepository.GetByIdAsync(request.Id, ct);
+
+            if (loan is null)
+            {
+                return Result.Failure<LoanResponse>(
+                    DomainErrors.Loan.NotFound(request.Id));
+            }
+
+            return LoanResponse.FromEntity(loan);
+        }
+    }
+}

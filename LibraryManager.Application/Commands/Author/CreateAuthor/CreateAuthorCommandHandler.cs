@@ -45,6 +45,11 @@
                 return Result.Failure(Error.NullValue);
             }
 
+            if (command.Name == null)
+            {
+                return Result.Failure(DomainErrors.Name.NameRequired);
+            }
+
             if (string.IsNullOrWhiteSpace(command.Name?.FirstName))
             {
                 return Result.Failure(DomainErrors.Name.FirstNameRequired);

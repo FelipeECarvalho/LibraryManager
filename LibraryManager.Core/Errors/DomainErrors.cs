@@ -18,8 +18,147 @@
                 ErrorType.Validation);
         }
 
+        public static class User
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new(
+                "User.NotFound",
+                $"The user with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static Error DocumentTooLong => new(
+                "User.DocumentTooLong",
+                "The document must be at most 30 characters long.",
+                ErrorType.Validation);
+
+            public static Error DocumentRequired => new(
+                "User.DocumentRequired",
+                "The document is required.",
+                ErrorType.Validation);
+
+            public static Error EmailTooLong => new(
+                "User.EmailTooLong",
+                "The email must be at most 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error EmailRequired => new(
+                "User.EmailRequired",
+                "The email is required.",
+                ErrorType.Validation);
+        }
+
+        public static class Loan
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new(
+                "Loan.NotFound",
+                $"The loan with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static Error UserIdRequired => new(
+                "Loan.UserIdRequired",
+                "The user ID is required.",
+                ErrorType.Validation);
+
+            public static Error BookIdRequired => new(
+                "Loan.BookIdRequired",
+                "The book ID is required.",
+                ErrorType.Validation);
+
+            public static Error InvalidStartDate => new(
+                "Loan.InvalidStartDate",
+                "The start date must be earlier than the end date.",
+                ErrorType.Validation);
+
+            public static Error StartDateInPast => new(
+                "Loan.StartDateInPast",
+                "The start date cannot be in the past.",
+                ErrorType.Validation);
+        }
+
+        public static class Address
+        {
+            public static Error AddressRequired => new(
+                "Address.AddressRequired",
+                "The address is required.",
+                ErrorType.Validation);
+
+            public static Error StreetRequired => new(
+                "Address.StreetRequired",
+                "The street is required.",
+                ErrorType.Validation);
+
+            public static Error StreetTooLong => new(
+                "Address.StreetTooLong",
+                "The street must be at most 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error NumberRequired => new(
+                "Address.NumberRequired",
+                "The number is required.",
+                ErrorType.Validation);
+
+            public static Error NumberTooLong => new(
+                "Address.NumberTooLong",
+                "The number must be at most 15 characters long.",
+                ErrorType.Validation);
+
+            public static Error DistrictRequired => new(
+                "Address.DistrictRequired",
+                "The district is required.",
+                ErrorType.Validation);
+
+            public static Error DistrictTooLong => new(
+                "Address.DistrictTooLong",
+                "The district must be at most 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error CityRequired => new(
+                "Address.CityRequired",
+                "The city is required.",
+                ErrorType.Validation);
+
+            public static Error CityTooLong => new(
+                "Address.CityTooLong",
+                "The city must be at most 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error StateRequired => new(
+                "Address.StateRequired",
+                "The state is required.",
+                ErrorType.Validation);
+
+            public static Error StateTooLong => new(
+                "Address.StateTooLong",
+                "The state must be at most 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error CountryCodeRequired => new(
+                "Address.CountryCodeRequired",
+                "The country code is required.",
+                ErrorType.Validation);
+
+            public static Error CountryCodeTooLong => new(
+                "Address.CountryCodeTooLong",
+                "The country code must be at most 5 characters long.",
+                ErrorType.Validation);
+
+            public static Error ZipCodeRequired => new(
+                "Address.ZipCodeRequired",
+                "The zip code is required.",
+                ErrorType.Validation);
+
+            public static Error ZipCodeTooLong => new(
+                "Address.ZipCodeTooLong",
+                "The zip code must be at most 20 characters long.",
+                ErrorType.Validation);
+        }
+
         public static class Name
         {
+            public static Error NameRequired => new(
+                "Name.Required",
+                $"The name is required",
+                ErrorType.Validation);
+
             public static Error FirstNameRequired => new(
                 "Name.FirstNameRequired",
                 $"The first name is required",

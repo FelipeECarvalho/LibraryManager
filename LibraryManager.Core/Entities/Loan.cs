@@ -42,6 +42,8 @@
 
         public void Return()
         {
+            LoanStatus = LoanStatus.Returned;
+            UpdateDate = DateTimeOffset.Now;
         }
     }
 }

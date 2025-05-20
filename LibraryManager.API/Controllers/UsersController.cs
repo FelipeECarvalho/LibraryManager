@@ -1,82 +1,99 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using AutoMapper;
-    using LibraryManager.Application.DTOs;
-    using LibraryManager.Application.InputModels.Users;
-    using LibraryManager.Application.Services;
-    using LibraryManager.Core.Entities;
+    using LibraryManager.Application.Commands.User.CreateUser;
+    using LibraryManager.Application.Commands.User.DeleteUser;
+    using LibraryManager.Application.Commands.User.UpdateUser;
+    using LibraryManager.Application.Queries.User.GetUserById;
+    using LibraryManager.Application.Queries.User.GetUserLoans;
+    using LibraryManager.Application.Queries.User.GetUsers;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UsersController(UserService _userService, IMapper _mapper) : ControllerBase
+    public class UsersController(IMediator _mediator) : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(CancellationToken ct)
         {
-            var users = await _userService.GetAllAsync();
+            var result = await _mediator.Send(new GetUsersQuery(), ct);
 
-            if (users is null)
-                return NoContent();
-
-            var dto = _mapper.Map<IList<UserDto>>(users);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var result = await _mediator.Send(new GetUserByIdQuery(id), ct);
 
-            if (user is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
 
-            var dto = _mapper.Map<UserDto>(user);
+            var user = result.Value;
 
-            return Ok(dto);
+            return Ok(user);
         }
 
         [HttpGet("{id:guid}/loans")]
-        public Task<IActionResult> GetLoans(Guid id)
+        public async Task<IActionResult> GetLoans(Guid id, CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var result = await _mediator.Send(new GetUserLoansQuery(id), ct);
+
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
+
+            var loans = result.Value;
+
+            return Ok(loans);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserCreateInputModel model)
+        public async Task<IActionResult> Post([FromBody] CreateUserCommand command, CancellationToken ct)
         {
-            var user = _mapper.Map<User>(model);
+            var result = await _mediator.Send(command, ct);
 
-            await _userService.CreateAsync(user);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            var user = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
         {
-            var user = await _userService.GetByIdAsync(id);
+            var result = await _mediator.Send(new DeleteUserCommand(id), ct);
 
-            if (user is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            await _userService.DeleteAsync(user);
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] UserUpdateInputModel model)
+        public async Task<IActionResult> Put(
+            Guid id,
+            [FromBody] UpdateUserCommand command,
+            CancellationToken ct)
         {
-            var user = await _userService.GetByIdAsync(id);
+            command.Id = id;
+            var result = await _mediator.Send(command, ct);
 
-            if (user is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            user.Update(model.Name, model.Address);
-
-            await _userService.UpdateAsync(user);
             return NoContent();
         }
     }

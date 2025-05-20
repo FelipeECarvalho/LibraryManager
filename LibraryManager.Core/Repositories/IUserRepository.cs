@@ -4,8 +4,8 @@
 
     public interface IUserRepository
     {
-        Task<IList<User>> GetAllAsync();
-        Task<User> GetByIdAsync(Guid id);
+        Task<IList<User>> GetAllAsync(CancellationToken ct);
+        Task<User> GetByIdAsync(Guid id, CancellationToken ct);
 
         void Add(User user);
         void Update(User user);

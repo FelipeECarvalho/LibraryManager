@@ -1,84 +1,86 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using AutoMapper;
-    using LibraryManager.Application.DTOs;
-    using LibraryManager.Application.InputModels.Loans;
-    using LibraryManager.Application.Services;
-    using LibraryManager.Core.Entities;
+    using LibraryManager.Application.Commands.Loan.CreateLoan;
+    using LibraryManager.Application.Commands.Loan.ReturnLoan;
+    using LibraryManager.Application.Commands.Loan.UpdateLoan;
+    using LibraryManager.Application.Queries.Loan.GetLoanById;
+    using LibraryManager.Application.Queries.Loan.GetUserLoans;
+    using MediatR;
     using Microsoft.AspNetCore.Mvc;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class LoansController(LoanService _loanService, IMapper _mapper) : ControllerBase
+    public class LoansController(IMediator _mediator) : ControllerBase
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var loans = await _loanService.GetAllAsync();
+            var result = await _mediator.Send(new GetLoansQuery());
 
-            if (loans is null)
-                return NoContent();
-
-            var dto = _mapper.Map<IList<LoanDto>>(loans);
-
-            return Ok(dto);
+            return Ok(result.Value);
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var loan = await _loanService.GetByIdAsync(id);
+            var result = await _mediator.Send(new GetLoanByIdQuery(id));
 
-            if (loan is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return NotFound(result.Error);
+            }
 
-            var dto = _mapper.Map<LoanDto>(loan);
+            var loan = result.Value;
 
-            return Ok(dto);
+            return Ok(loan);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] LoanCreateInputModel model)
+        public async Task<IActionResult> Post([FromBody] CreateLoanCommand command, CancellationToken ct)
         {
-            var loan = _mapper.Map<Loan>(model);
+            var result = await _mediator.Send(command, ct);
 
-            await _loanService.CreateAsync(loan);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
+
+            var loan = result.Value;
 
             return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
         }
 
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Put(Guid id, [FromBody] LoanUpdateInputModel model)
+        public async Task<IActionResult> Put(
+            Guid id,
+            [FromBody] UpdateLoanCommand command,
+            CancellationToken ct)
         {
-            var loan = await _loanService.GetByIdAsync(id);
+            command.Id = id;
+            var result = await _mediator.Send(command, ct);
 
-            if (loan is null)
-                return NotFound();
-
-            loan.Update(model.EndDate);
-
-            await _loanService.UpdateAsync(loan);
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
             return NoContent();
         }
 
         [HttpPatch("{id:guid}/return")]
-        public async Task<IActionResult> Return(Guid id)
+        public async Task<IActionResult> Return(Guid id, CancellationToken ct)
         {
-            var loan = await _loanService.GetByIdAsync(id);
+            var result = await _mediator.Send(new ReturnLoanCommand(id), ct);
 
-            if (loan is null)
-                return NotFound();
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error);
+            }
 
-            await _loanService.ReturnAsync(loan);
-
-            var message = DateTime.Now > loan.EndDate
-                ? "Book returned past due"
-                : "Book returned on time";
-
-            return Ok(message);
+            return NoContent();
         }
     }
 }

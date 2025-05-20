@@ -14,17 +14,17 @@
             _context = context;
         }
 
-        public async Task<IList<User>> GetAllAsync()
+        public async Task<IList<User>> GetAllAsync(CancellationToken ct)
         {
             return await _context.Users
                 .AsNoTracking()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
-        public async Task<User> GetByIdAsync(Guid id)
+        public async Task<User> GetByIdAsync(Guid id, CancellationToken ct)
         {
             return await _context.Users
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
         public void Add(User user)
