@@ -9,7 +9,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetUserLoansQueryHandler
+    internal sealed class GetUserLoansQueryHandler
         : IQueryHandler<GetUserLoansQuery, IList<LoanResponse>>
     {
         private readonly IUserRepository _userRepository;

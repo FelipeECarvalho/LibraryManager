@@ -8,7 +8,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetLoansQueryHandler
+    internal sealed class GetLoansQueryHandler
         : IQueryHandler<GetLoansQuery, IList<LoanResponse>>
     {
         private readonly ILoanRepository _loanRepository;

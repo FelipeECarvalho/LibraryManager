@@ -253,7 +253,7 @@ namespace Library.Persistence.Migrations
 
                             b1.HasKey("AuthorId");
 
-                            b1.ToTable("Author");
+                            b1.ToTable("Author", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("AuthorId");
@@ -314,31 +314,6 @@ namespace Library.Persistence.Migrations
 
             modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
                 {
-                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("FirstName");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("LastName");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("User");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
                     b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -391,7 +366,32 @@ namespace Library.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("User");
+                            b1.ToTable("User", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("FirstName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("LastName");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("User", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

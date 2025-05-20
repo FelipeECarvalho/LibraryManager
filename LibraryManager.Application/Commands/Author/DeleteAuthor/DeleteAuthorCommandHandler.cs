@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class DeleteAuthorCommandHandler
+    internal sealed class DeleteAuthorCommandHandler
         : ICommandHandler<DeleteAuthorCommand>
     {
         private readonly IAuthorRepository _authorRepository;

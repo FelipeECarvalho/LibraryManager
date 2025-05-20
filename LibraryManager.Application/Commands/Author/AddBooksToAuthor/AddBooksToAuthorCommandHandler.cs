@@ -10,7 +10,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class AddBooksToAuthorCommandHandler
+    internal sealed class AddBooksToAuthorCommandHandler
         : ICommandHandler<AddBooksToAuthorCommand>
     {
         private readonly IAuthorRepository _repository;

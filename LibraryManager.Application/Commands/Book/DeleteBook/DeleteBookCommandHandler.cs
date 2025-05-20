@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class DeleteBookCommandHandler
+    internal sealed class DeleteBookCommandHandler
         : ICommandHandler<DeleteBookCommand>
     {
         private readonly IBookRepository _bookRepository;

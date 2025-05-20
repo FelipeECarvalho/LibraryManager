@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetUserByIdQueryHandler
+    internal sealed class GetUserByIdQueryHandler
         : IQueryHandler<GetUserByIdQuery, UserResponse>
     {
         private readonly IUserRepository _userRepository;
