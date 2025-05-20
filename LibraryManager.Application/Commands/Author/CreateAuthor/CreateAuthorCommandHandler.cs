@@ -8,7 +8,7 @@
     using LibraryManager.Core.Repositories;
     using System.Threading.Tasks;
 
-    internal sealed class CreateAuthorCommandHandler 
+    internal sealed class CreateAuthorCommandHandler
         : ICommandHandler<CreateAuthorCommand, AuthorResponse>
     {
         private readonly IAuthorRepository _repository;
@@ -24,10 +24,10 @@
         {
             var validationResult = Validate(command);
 
-            if (validationResult.IsFailure) 
+            if (validationResult.IsFailure)
             {
                 return Result.Failure<AuthorResponse>(validationResult.Error);
-            }   
+            }
 
             var author = new Author(command.Name, command.Description);
 

@@ -14,14 +14,14 @@
 
         public Address Address { get; set; }
 
-        public static UserResponse FromEntity(Core.Entities.User user) 
+        public static UserResponse FromEntity(Core.Entities.User user)
             => new()
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Document = user.Document,
-            Email = user.Email,
-            Address = user.Address
-        };
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Document = user.Document,
+                Email = user.Email,
+                Address = user.Address
+            };
     }
 }

@@ -51,7 +51,7 @@
             }
 
             var author = result.Value;
-            return CreatedAtAction(nameof(GetById), new { id = author.Id}, author);
+            return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);
         }
 
         [HttpDelete("{id:guid}")]

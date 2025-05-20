@@ -2,6 +2,6 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
 
-    public sealed record GetUserByIdQuery(Guid Id) 
+    public sealed record GetUserByIdQuery(Guid Id)
         : IQuery<UserResponse>;
 }

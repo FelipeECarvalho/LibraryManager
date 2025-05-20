@@ -2,6 +2,6 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
 
-    public sealed record GetLoanByIdQuery(Guid Id) 
+    public sealed record GetLoanByIdQuery(Guid Id)
         : IQuery<LoanResponse>;
 }

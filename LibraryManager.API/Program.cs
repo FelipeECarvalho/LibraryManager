@@ -2,7 +2,6 @@ namespace LibraryManager.API
 {
     using LibraryManager.API.Middleware;
     using LibraryManager.Application;
-    using LibraryManager.Application.Mappings;
     using LibraryManager.Persistence;
 
     public class Program

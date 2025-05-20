@@ -10,7 +10,7 @@
         {
         }
 
-        public Loan(Guid userId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate) 
+        public Loan(Guid userId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate)
             : base()
         {
             UserId = userId;

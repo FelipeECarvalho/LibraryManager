@@ -5,8 +5,8 @@
     using LibraryManager.Core.ValueObjects;
 
     public sealed record CreateUserCommand(
-        Name Name, 
-        string Document, 
+        Name Name,
+        string Document,
         string Email,
         DateTimeOffset BirthDate,
         Address Address) : ICommand<UserResponse>;

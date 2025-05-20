@@ -6,7 +6,7 @@
     {
         public static IServiceCollection AddHandlers(this IServiceCollection services)
         {
-            services.AddMediatR(configuration => 
+            services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssemblies(typeof(Dependencies).Assembly);
             });

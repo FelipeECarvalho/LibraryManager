@@ -33,7 +33,7 @@
 
             var author = await _repository.GetByIdAsync(request.Id, ct);
 
-            if (author == null) 
+            if (author == null)
             {
                 return Result.Failure(DomainErrors.Author.NotFound(request.Id));
             }

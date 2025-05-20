@@ -2,6 +2,6 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
 
-    public sealed record DeleteUserCommand(Guid Id) 
+    public sealed record DeleteUserCommand(Guid Id)
         : ICommand;
 }

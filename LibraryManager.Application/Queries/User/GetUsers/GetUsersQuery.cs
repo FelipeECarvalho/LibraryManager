@@ -2,6 +2,6 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
 
-    public sealed record GetUsersQuery 
+    public sealed record GetUsersQuery
         : IQuery<IList<UserResponse>>;
 }

@@ -3,6 +3,6 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Author;
 
-    public sealed record GetAuthorsQuery 
+    public sealed record GetAuthorsQuery
         : IQuery<IList<AuthorResponse>>;
 }

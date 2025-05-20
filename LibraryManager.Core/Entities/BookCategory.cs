@@ -8,7 +8,7 @@
         {
         }
 
-        public BookCategory(Guid bookId, Guid categoryId) 
+        public BookCategory(Guid bookId, Guid categoryId)
             : base()
         {
             BookId = bookId;

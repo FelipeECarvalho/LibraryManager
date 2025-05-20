@@ -8,7 +8,6 @@
     using LibraryManager.Application.Queries.Loan.GetUserLoans;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]

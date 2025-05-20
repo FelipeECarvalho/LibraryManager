@@ -3,7 +3,7 @@
     public class Category : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private Category() 
+        private Category()
             : base()
         {
         }
@@ -14,7 +14,7 @@
             Name = name;
         }
 
-        public Category(string name, string description) 
+        public Category(string name, string description)
             : base()
         {
             Name = name;

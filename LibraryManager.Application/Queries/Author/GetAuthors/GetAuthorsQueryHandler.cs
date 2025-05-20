@@ -7,11 +7,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    internal sealed class GetAuthorsQueryHandler 
+    internal sealed class GetAuthorsQueryHandler
         : IQueryHandler<GetAuthorsQuery, IList<AuthorResponse>>
     {
         private readonly IAuthorRepository _authorRepository;
-        
+
         public GetAuthorsQueryHandler(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
@@ -25,7 +25,7 @@
                 .Select(AuthorResponse.FromEntity)?
                 .ToList();
 
-            return response; 
+            return response;
         }
     }
 }

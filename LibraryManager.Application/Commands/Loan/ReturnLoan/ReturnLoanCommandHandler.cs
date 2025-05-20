@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class ReturnLoanCommandHandler 
+    internal class ReturnLoanCommandHandler
         : ICommandHandler<ReturnLoanCommand>
     {
         private readonly IUnitOfWork _unitOfWork;

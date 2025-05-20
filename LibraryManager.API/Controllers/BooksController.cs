@@ -10,7 +10,6 @@
     using LibraryManager.Application.Queries.Book.GetBooksByTitle;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]

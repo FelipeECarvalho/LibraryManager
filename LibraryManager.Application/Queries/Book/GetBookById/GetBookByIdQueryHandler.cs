@@ -21,7 +21,7 @@
         {
             var book = await _bookRepository.GetByIdAsync(request.Id, ct);
 
-            if (book == null) 
+            if (book == null)
             {
                 return Result.Failure<BookResponse>(
                     DomainErrors.Book.NotFound(request.Id));

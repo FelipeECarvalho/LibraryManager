@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class UpdateBookStockCommandHandler 
+    internal sealed class UpdateBookStockCommandHandler
         : ICommandHandler<UpdateBookStockCommand>
     {
         private readonly IBookRepository _bookRepository;

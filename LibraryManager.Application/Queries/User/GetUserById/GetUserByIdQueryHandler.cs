@@ -4,11 +4,10 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
-    public class GetUserByIdQueryHandler 
+    public class GetUserByIdQueryHandler
         : IQueryHandler<GetUserByIdQuery, UserResponse>
     {
         private readonly IUserRepository _userRepository;

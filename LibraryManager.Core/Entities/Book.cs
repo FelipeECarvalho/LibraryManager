@@ -49,7 +49,7 @@
 
         public void UpdateStock(int stockNumber)
         {
-            if (StockNumber < 0) 
+            if (StockNumber < 0)
             {
                 throw new ArgumentException(DomainErrors.Book.StockNumberInvalid.Description);
             }

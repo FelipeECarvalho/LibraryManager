@@ -9,7 +9,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class CreateBookCommandHandler 
+    internal sealed class CreateBookCommandHandler
         : ICommandHandler<CreateBookCommand, BookResponse>
     {
         private readonly IAuthorRepository _authorRepository;

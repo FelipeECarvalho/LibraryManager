@@ -25,7 +25,7 @@
         {
             var user = await _userRepository.GetByIdAsync(request.Id, ct);
 
-            if (user == null) 
+            if (user == null)
             {
                 return Result.Failure<IList<LoanResponse>>(DomainErrors.User.NotFound(request.Id));
             }

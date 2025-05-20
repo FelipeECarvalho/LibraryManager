@@ -18,7 +18,7 @@
 
         public AuthorResponse Author { get; init; }
 
-        public static BookResponse FromEntity(Core.Entities.Book book) 
+        public static BookResponse FromEntity(Core.Entities.Book book)
         {
             return new BookResponse
             {

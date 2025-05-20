@@ -4,7 +4,7 @@
     using LibraryManager.Core.ValueObjects;
     using System.Text.Json.Serialization;
 
-    public sealed record UpdateAuthorCommand(Name Name, string Description) 
+    public sealed record UpdateAuthorCommand(Name Name, string Description)
         : ICommand
     {
         [JsonIgnore]
