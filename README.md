@@ -1,9 +1,11 @@
 **TODO**
 
 - Implementar fluent validation
+- Implementar melhorias no UnitOfWork
+- Autenticação e autorização dos usuários
+- Melhorias na classe de Loan
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
-- Autenticação e autorização dos usuários
 - Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar

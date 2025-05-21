@@ -22,11 +22,11 @@
 
         public Guid UserId { get; private set; }
 
-        public User User { get; private set; }
+        public User User { get; private set; } = null!;
 
         public Guid BookId { get; private set; }
 
-        public Book Book { get; private set; }
+        public Book Book { get; private set; } = null!;
 
         public DateTimeOffset StartDate { get; private set; }
 
