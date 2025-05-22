@@ -8,8 +8,13 @@
 
         public static readonly Error NullValue = new("General.Null", "Null value was provided", ErrorType.Failure);
 
-        public Error(string code, string description, ErrorType type)
+        public Error(string code, string? description, ErrorType? type)
         {
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                throw new ArgumentNullException(nameof(code));
+            }
+
             Code = code;
             Description = description;
             Type = type;
@@ -17,9 +22,11 @@
 
         public string Code { get; }
 
-        public string Description { get; }
+        public string? Description { get; }
 
-        public ErrorType Type { get; }
+        public IDictionary<string, string[]>? Data { get; }
+
+        public ErrorType? Type { get; }
 
         public static Error Failure(string code, string description)
             => new(code, description, ErrorType.Failure);
@@ -32,5 +39,7 @@
 
         public static Error Conflict(string code, string description)
             => new(code, description, ErrorType.Conflict);
+
+        public static implicit operator string?(Error? error) => error?.Description;
     }
 }

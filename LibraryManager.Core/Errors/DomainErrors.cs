@@ -44,6 +44,11 @@
                 "User.EmailRequired",
                 "The email is required.",
                 ErrorType.Validation);
+
+            public static Error InvalidEmail => new(
+                "User.EmailInvalid",
+                "Invalid email format.",
+                ErrorType.Validation);
         }
 
         public static class Loan
