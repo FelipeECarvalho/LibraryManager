@@ -12,7 +12,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class LoansController(IMediator _mediator) : ControllerBase
+    public class LoansController(IMediator _mediator) : ApiController
     {
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -44,7 +44,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             var loan = result.Value;
@@ -63,7 +63,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();
@@ -76,7 +76,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();

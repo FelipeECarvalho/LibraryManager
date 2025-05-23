@@ -13,7 +13,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class AuthorsController(IMediator _mediator) : ControllerBase
+    public class AuthorsController(IMediator _mediator) : ApiController
     {
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken ct)
@@ -47,7 +47,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             var author = result.Value;
@@ -61,7 +61,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();
@@ -78,7 +78,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();
@@ -95,7 +95,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();

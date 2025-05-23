@@ -13,7 +13,7 @@ namespace LibraryManager.API
             builder.Services
                 .AddPersistence(builder.Configuration)
                 .AddVersioning()
-                .AddHandlers();
+                .AddApplication();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

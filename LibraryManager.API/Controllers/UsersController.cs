@@ -13,7 +13,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UsersController(IMediator _mediator) : ControllerBase
+    public class UsersController(IMediator _mediator) : ApiController
     {
         [HttpGet]
         public async Task<IActionResult> GetAll(CancellationToken ct)
@@ -60,7 +60,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             var user = result.Value;
@@ -74,7 +74,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();
@@ -91,7 +91,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return NoContent();

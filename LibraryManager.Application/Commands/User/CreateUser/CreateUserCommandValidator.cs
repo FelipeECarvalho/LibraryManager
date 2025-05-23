@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Application.Commands.User.CreateUser
 {
     using FluentValidation;
+    using LibraryManager.Application.Validators;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
 
@@ -12,14 +13,16 @@
                 .NotNull().WithMessage(Error.NullValue);
 
             RuleFor(x => x.Name)
-                .NotNull().WithMessage(DomainErrors.Name.NameRequired);
+                .NotNull().WithMessage(DomainErrors.Name.NameRequired)
+                .SetValidator(new NameValidator());
 
             RuleFor(x => x.Document)
                 .NotEmpty().WithMessage(DomainErrors.User.DocumentRequired)
                 .MaximumLength(30).WithMessage(DomainErrors.User.DocumentTooLong);
 
             RuleFor(x => x.Address)
-                .NotNull().WithMessage(DomainErrors.Address.AddressRequired);
+                .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
+                .SetValidator(new AddressValidator());
 
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage(DomainErrors.User.InvalidEmail)
