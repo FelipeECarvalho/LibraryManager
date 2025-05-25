@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Enums;
     using LibraryManager.Core.ValueObjects;
 
     public class User : BaseEntity
@@ -30,7 +31,13 @@
 
         public Address Address { get; private set; }
 
-        public IList<Loan>? Loans { get; private set; }
+        public IList<Loan>? Loans { get; private set; } = [];
+
+        public bool CanLoan(Book book)
+        {
+            Loans ??= [];
+            return !Loans.Any(x => x.BookId == book.Id && x.Status.IsActive());
+        }
 
         public void Update(Name name, Address address)
         {

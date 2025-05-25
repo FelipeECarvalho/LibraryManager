@@ -20,7 +20,7 @@
 
             builder.Property(x => x.StartDate);
             builder.Property(x => x.EndDate);
-            builder.Property(x => x.LoanStatus);
+            builder.Property(x => x.Status);
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.Loans)
@@ -31,6 +31,10 @@
                 .WithMany(x => x.Loans)
                 .HasForeignKey(x => x.BookId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasIndex(x => new { x.UserId, x.BookId, x.Status })
+                .IsUnique()
+                .HasFilter("Status in (0, 1, 2, 4)");
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

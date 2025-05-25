@@ -1,6 +1,8 @@
 ﻿namespace LibraryManager.Core.Entities
 {
     using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Exceptions;
 
     public class Loan : BaseEntity
     {
@@ -17,32 +19,39 @@
             BookId = bookId;
             StartDate = startDate;
             EndDate = endDate;
-            LoanStatus = LoanStatus.Requested;
+            Status = LoanStatus.Requested;
         }
 
         public Guid UserId { get; private set; }
 
-        public User User { get; private set; } = null!;
+        public User User { get; private set; }
 
         public Guid BookId { get; private set; }
 
-        public Book Book { get; private set; } = null!;
+        public Book Book { get; private set; }
 
         public DateTimeOffset StartDate { get; private set; }
 
         public DateTimeOffset EndDate { get; private set; }
 
-        public LoanStatus LoanStatus { get; private set; }
+        public LoanStatus Status { get; private set; }
 
         public void Update(DateTimeOffset endDate)
         {
             EndDate = endDate;
+
+            if (Status == LoanStatus.Overdue &&
+                EndDate > DateTimeOffset.UtcNow) 
+            {
+                Status = LoanStatus.Borrowed;
+            }
+
             UpdateDate = DateTimeOffset.Now;
         }
 
         public void Return()
         {
-            LoanStatus = LoanStatus.Returned;
+            Status = LoanStatus.Returned;
             UpdateDate = DateTimeOffset.Now;
         }
     }

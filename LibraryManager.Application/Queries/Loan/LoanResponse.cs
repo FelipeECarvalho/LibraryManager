@@ -17,14 +17,14 @@
 
         public DateTimeOffset EndDate { get; init; }
 
-        public LoanStatus LoanStatus { get; init; }
+        public LoanStatus Status { get; init; }
 
         public static LoanResponse FromEntity(Loan loan) => new()
         {
             Id = loan.Id,
             EndDate = loan.EndDate,
             StartDate = loan.StartDate,
-            LoanStatus = loan.LoanStatus,
+            Status = loan.Status,
             Book = BookResponse.FromEntity(loan.Book),
             User = UserResponse.FromEntity(loan.User)
         };

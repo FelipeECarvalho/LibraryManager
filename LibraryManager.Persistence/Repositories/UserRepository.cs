@@ -27,6 +27,18 @@
                 .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
+        public async Task<User> GetByEmailAsync(string email, CancellationToken ct)
+        {
+            return await _context.Users
+                .SingleOrDefaultAsync(x => x.Email == email, ct);
+        }
+
+        public async Task<User> GetByDocumentAsync(string document, CancellationToken ct)
+        {
+            return await _context.Users
+                .SingleOrDefaultAsync(x => x.Document == document, ct);
+        }
+
         public void Add(User user)
         {
             _context.Users.Add(user);

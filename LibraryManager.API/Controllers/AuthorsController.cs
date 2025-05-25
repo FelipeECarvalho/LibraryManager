@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using LibraryManager.Application.Commands.Author.AddBooksToAuthor;
     using LibraryManager.Application.Commands.Author.CreateAuthor;
     using LibraryManager.Application.Commands.Author.DeleteAuthor;
     using LibraryManager.Application.Commands.Author.UpdateAuthor;
@@ -71,23 +70,6 @@
         public async Task<IActionResult> Put(
             Guid id,
             [FromBody] UpdateAuthorCommand command,
-            CancellationToken ct)
-        {
-            command.Id = id;
-            var result = await _mediator.Send(command, ct);
-
-            if (result.IsFailure)
-            {
-                return HandleFailure(result);
-            }
-
-            return NoContent();
-        }
-
-        [HttpPut("{id:guid}/books")]
-        public async Task<IActionResult> AddBook(
-            Guid id,
-            [FromBody] AddBooksToAuthorCommand command,
             CancellationToken ct)
         {
             command.Id = id;

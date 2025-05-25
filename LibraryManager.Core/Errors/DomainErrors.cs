@@ -35,6 +35,16 @@
                 "The document is required.",
                 ErrorType.Validation);
 
+            public static Error EmailAlreadyExists => new(
+                "User.EmailAlreadyExists",
+                "A user with this email already exists.",
+                ErrorType.Validation);
+
+            public static Error DocumentAlreadyExists => new(
+                "User.DocumentAlreadyExists",
+                "A user with this document already exists.",
+                ErrorType.Validation);
+
             public static Error EmailTooLong => new(
                 "User.EmailTooLong",
                 "The email must be at most 50 characters long.",
@@ -76,6 +86,16 @@
             public static Error StartDateInPast => new(
                 "Loan.StartDateInPast",
                 "The start date cannot be in the past.",
+                ErrorType.Validation);
+
+            public static Error CannotReturnWhenNotBorrowed => new(
+                "Loan.CannotReturnWhenNotBorrowed",
+                "Cannot return a loan when the book is not currently borrowed by the user.",
+                ErrorType.Conflict);
+
+            public static Error BookAlreadyLoaned => new(
+                "Loan.BookAlreadyLoaned",
+                "This book is already loaned to the user.",
                 ErrorType.Validation);
         }
 
@@ -225,6 +245,11 @@
             public static Error StockNumberInvalid => new(
                 "Book.StockNumberInvalid",
                 "The book Stock number is invalid.",
+                ErrorType.Validation);
+
+            public static Error NotAvaliableForLoan => new(
+                "Book.NotAvaliableForLoan",
+                "The book is not currently avaliable for loan.",
                 ErrorType.Validation);
         }
     }

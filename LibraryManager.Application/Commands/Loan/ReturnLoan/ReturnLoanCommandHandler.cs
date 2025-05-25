@@ -2,6 +2,7 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
+    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
     using System.Threading;
@@ -28,6 +29,11 @@
             if (loan == null)
             {
                 return Result.Failure(DomainErrors.Loan.NotFound(request.Id));
+            }
+
+            if (!loan.Status.IsWithUser())
+            {
+                return Result.Failure(DomainErrors.Loan.CannotReturnWhenNotBorrowed);
             }
 
             loan.Return();

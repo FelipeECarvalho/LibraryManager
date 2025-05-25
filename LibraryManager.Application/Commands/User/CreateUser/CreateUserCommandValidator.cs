@@ -5,7 +5,8 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
 
-    internal sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    internal sealed class CreateUserCommandValidator
+        : AbstractValidator<CreateUserCommand>
     {
         public CreateUserCommandValidator()
         {

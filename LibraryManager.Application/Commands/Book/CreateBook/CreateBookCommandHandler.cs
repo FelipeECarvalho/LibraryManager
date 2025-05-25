@@ -28,13 +28,6 @@
 
         public async Task<Result<BookResponse>> Handle(CreateBookCommand request, CancellationToken ct)
         {
-            var validationResult = Validate(request);
-
-            if (validationResult.IsFailure)
-            {
-                return Result.Failure<BookResponse>(validationResult.Error);
-            }
-
             var author = await _authorRepository.GetByIdAsync(request.AuthorId, ct);
 
             if (author == null)
@@ -55,46 +48,6 @@
             await _unitOfWork.SaveChangesAsync(ct);
 
             return BookResponse.FromEntity(book);
-        }
-
-        private static Result Validate(CreateBookCommand request)
-        {
-            if (request == null)
-            {
-                return Result.Failure(Error.NullValue);
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Title))
-            {
-                return Result.Failure(DomainErrors.Book.TitleRequired);
-            }
-
-            if (request.Title.Length > 100)
-            {
-                return Result.Failure(DomainErrors.Book.TitleTooLong);
-            }
-
-            if (string.IsNullOrWhiteSpace(request.Isbn))
-            {
-                return Result.Failure(DomainErrors.Book.IsbnRequired);
-            }
-
-            if (request.Isbn.Length > 100 || request.Isbn.Length < 2)
-            {
-                return Result.Failure(DomainErrors.Book.IsbnTooLong);
-            }
-
-            if (request.PublicationDate == default)
-            {
-                return Result.Failure(DomainErrors.Book.PublicationDateRequired);
-            }
-
-            if (request.AuthorId == default)
-            {
-                return Result.Failure(DomainErrors.Author.NotFound(request.AuthorId));
-            }
-
-            return Result.Success();
         }
     }
 }

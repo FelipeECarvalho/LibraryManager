@@ -29,7 +29,7 @@
             var errors = _validators
                 .Select(validator => validator.Validate(request))
                 .SelectMany(validationResult => validationResult.Errors)
-                .Where(validatioFailure => validatioFailure is not null)
+                .Where(validationFailure => validationFailure is not null)
                 .Select(failure => new Error(
                     failure.PropertyName,
                     failure.ErrorMessage,

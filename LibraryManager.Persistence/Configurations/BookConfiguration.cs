@@ -25,6 +25,7 @@
             builder.Property(x => x.Description).HasColumnType("text").IsRequired(false);
 
             builder.HasIndex(x => x.Title);
+            builder.HasIndex(x => x.ISBN).IsUnique();
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

@@ -38,6 +38,9 @@
                 c.Property(a => a.ZipCode).HasColumnName("ZipCode").HasMaxLength(20);
             });
 
+            builder.HasIndex(x => x.Email).IsUnique();
+            builder.HasIndex(x => x.Document).IsUnique();
+
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

@@ -13,7 +13,6 @@
         public Author(Name name, string? description = null)
             : base()
         {
-            Books = [];
             Name = name;
             Description = description;
         }
@@ -24,22 +23,10 @@
 
         public IList<Book>? Books { get; private set; }
 
-        public void AddBook(IList<Book> books)
-        {
-            Books ??= [];
-            foreach (var book in books)
-            {
-                Books.Add(book);
-            }
-
-            UpdateDate = DateTimeOffset.Now;
-        }
-
         public void Update(Name name, string? description)
         {
             Name = name;
             Description = description;
-
             UpdateDate = DateTimeOffset.Now;
         }
     }

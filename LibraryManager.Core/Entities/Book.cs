@@ -1,6 +1,8 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Exceptions;
 
     public class Book : BaseEntity
     {
@@ -47,13 +49,21 @@
             UpdateDate = DateTimeOffset.Now;
         }
 
-        public void UpdateStock(int stockNumber)
+        public bool IsAvaliable()
         {
-            if (StockNumber < 0)
+            if (StockNumber == null)
             {
-                throw new ArgumentException(DomainErrors.Book.StockNumberInvalid.Description);
+                return true;
             }
 
+            var totalActive = Loans?
+                .Count(x => x.Status.IsActive());
+
+            return StockNumber > totalActive;
+        }
+
+        public void UpdateStock(int stockNumber)
+        {
             StockNumber = stockNumber;
             UpdateDate = DateTimeOffset.Now;
         }

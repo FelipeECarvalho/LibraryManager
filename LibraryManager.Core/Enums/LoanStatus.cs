@@ -23,7 +23,32 @@
         Cancelled
     }
 
-    public static class LoanStatusExtension
+    public static class LoanStatusExtension 
     {
+        public static IList<LoanStatus> Active()
+        {
+            return 
+            [
+                LoanStatus.Requested,
+                LoanStatus.Approved,
+                LoanStatus.Borrowed,
+                LoanStatus.Overdue
+            ];
+        }
+
+        public static IList<LoanStatus> BookInUserHands()
+        {
+            return
+            [
+                LoanStatus.Borrowed,
+                LoanStatus.Overdue
+            ];
+        }
+
+        public static bool IsWithUser(this LoanStatus status)
+            => BookInUserHands().Contains(status);
+
+        public static bool IsActive(this LoanStatus status) 
+            => Active().Contains(status);
     }
 }
