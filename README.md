@@ -1,7 +1,6 @@
 **TODO**
 
 - Implementar melhorias no UnitOfWork
-- Melhorias na classe de Loan
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
 - Autenticação e autorização dos usuários

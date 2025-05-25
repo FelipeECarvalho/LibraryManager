@@ -46,7 +46,7 @@
 
             if (result.IsFailure)
             {
-                return BadRequest(result.Error);
+                return HandleFailure(result);
             }
 
             return Ok(result.Value);

@@ -27,9 +27,7 @@
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = exception is InvalidOperationException 
-                ? (int)HttpStatusCode.BadRequest
-                : (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             await context.Response.WriteAsync(new ErrorDetails()
             {

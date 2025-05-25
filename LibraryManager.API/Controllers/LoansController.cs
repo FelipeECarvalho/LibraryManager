@@ -2,8 +2,8 @@
 {
     using Asp.Versioning;
     using LibraryManager.Application.Commands.Loan.CreateLoan;
-    using LibraryManager.Application.Commands.Loan.ReturnLoan;
     using LibraryManager.Application.Commands.Loan.UpdateLoan;
+    using LibraryManager.Application.Commands.Loan.UpdateLoanStatus;
     using LibraryManager.Application.Queries.Loan.GetLoanById;
     using LibraryManager.Application.Queries.Loan.GetLoans;
     using MediatR;
@@ -69,10 +69,13 @@
             return NoContent();
         }
 
-        [HttpPatch("{id:guid}/return")]
-        public async Task<IActionResult> Return(Guid id, CancellationToken ct)
+        [HttpPatch("{id:guid}/status")]
+        public async Task<IActionResult> Status(Guid id,
+            [FromBody] UpdateLoanStatusCommand command,
+            CancellationToken ct)
         {
-            var result = await _mediator.Send(new ReturnLoanCommand(id), ct);
+            command.Id = id;
+            var result = await _mediator.Send(command, ct);
 
             if (result.IsFailure)
             {

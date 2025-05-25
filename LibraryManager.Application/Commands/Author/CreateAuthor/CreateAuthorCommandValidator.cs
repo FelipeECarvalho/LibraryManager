@@ -1,7 +1,6 @@
-﻿namespace LibraryManager.Application.Commands.Author.UpdateAuthor
+﻿namespace LibraryManager.Application.Commands.Author.CreateAuthor
 {
     using FluentValidation;
-    using LibraryManager.Application.Commands.Author.CreateAuthor;
     using LibraryManager.Application.Validators;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
