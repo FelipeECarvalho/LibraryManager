@@ -14,7 +14,7 @@
 
             RuleFor(x => x.Title)
                 .NotEmpty().WithMessage(DomainErrors.Book.TitleRequired)
-                .MaximumLength(100).WithMessage(DomainErrors.Book.TitleTooLong);
+                .Length(2, 100).WithMessage(DomainErrors.Book.TitleInvalidLength);
 
             RuleFor(x => x.PublicationDate)
                 .NotEmpty().WithMessage(DomainErrors.Book.PublicationDateRequired);

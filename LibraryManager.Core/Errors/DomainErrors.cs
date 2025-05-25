@@ -12,8 +12,8 @@
                 $"The author with the ID {id} was not found.",
                 ErrorType.NotFound);
 
-            public static Error DescriptionTooLong => new(
-                "Author.DescriptionTooLong",
+            public static Error DescriptionInvalidLength => new(
+                "Author.DescriptionInvalidLength",
                 $"The author description must be less than 256 characters long.",
                 ErrorType.Validation);
         }
@@ -25,9 +25,9 @@
                 $"The user with the ID {id} was not found.",
                 ErrorType.NotFound);
 
-            public static Error DocumentTooLong => new(
-                "User.DocumentTooLong",
-                "The document must be at most 30 characters long.",
+            public static Error DocumentInvalidLength => new(
+                "User.DocumentInvalidLength",
+                "The document must be between 2 and 30 characters long.",
                 ErrorType.Validation);
 
             public static Error DocumentRequired => new(
@@ -45,9 +45,9 @@
                 "A user with this document already exists.",
                 ErrorType.Validation);
 
-            public static Error EmailTooLong => new(
-                "User.EmailTooLong",
-                "The email must be at most 50 characters long.",
+            public static Error EmailInvalidLength => new(
+                "User.EmailInvalidLength",
+                "The email must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error EmailRequired => new(
@@ -111,9 +111,9 @@
                 "The street is required.",
                 ErrorType.Validation);
 
-            public static Error StreetTooLong => new(
-                "Address.StreetTooLong",
-                "The street must be at most 50 characters long.",
+            public static Error StreetInvalidLength => new(
+                "Address.StreetInvalidLength",
+                "The street must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error NumberRequired => new(
@@ -121,9 +121,9 @@
                 "The number is required.",
                 ErrorType.Validation);
 
-            public static Error NumberTooLong => new(
-                "Address.NumberTooLong",
-                "The number must be at most 15 characters long.",
+            public static Error NumberInvalidLength => new(
+                "Address.NumberInvalidLength",
+                "The number must be between 1 and 15 characters long",
                 ErrorType.Validation);
 
             public static Error DistrictRequired => new(
@@ -131,9 +131,9 @@
                 "The district is required.",
                 ErrorType.Validation);
 
-            public static Error DistrictTooLong => new(
-                "Address.DistrictTooLong",
-                "The district must be at most 50 characters long.",
+            public static Error DistrictInvalidLength => new(
+                "Address.DistrictInvalidLength",
+                "The district must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error CityRequired => new(
@@ -141,9 +141,9 @@
                 "The city is required.",
                 ErrorType.Validation);
 
-            public static Error CityTooLong => new(
-                "Address.CityTooLong",
-                "The city must be at most 50 characters long.",
+            public static Error CityInvalidLength => new(
+                "Address.CityInvalidLength",
+                "The city must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error StateRequired => new(
@@ -151,9 +151,9 @@
                 "The state is required.",
                 ErrorType.Validation);
 
-            public static Error StateTooLong => new(
-                "Address.StateTooLong",
-                "The state must be at most 50 characters long.",
+            public static Error StateInvalidLength => new(
+                "Address.StateInvalidLength",
+                "The state must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error CountryCodeRequired => new(
@@ -161,9 +161,9 @@
                 "The country code is required.",
                 ErrorType.Validation);
 
-            public static Error CountryCodeTooLong => new(
-                "Address.CountryCodeTooLong",
-                "The country code must be at most 5 characters long.",
+            public static Error CountryCodeInvalidLength => new(
+                "Address.CountryCodeInvalidLength",
+                "The country must be between 2 and 5 characters long",
                 ErrorType.Validation);
 
             public static Error ZipCodeRequired => new(
@@ -171,9 +171,9 @@
                 "The zip code is required.",
                 ErrorType.Validation);
 
-            public static Error ZipCodeTooLong => new(
-                "Address.ZipCodeTooLong",
-                "The zip code must be at most 20 characters long.",
+            public static Error ZipCodeInvalidLength => new(
+                "Address.ZipCodeInvalidLength",
+                "The zip code must be between 2 and 20 characters long",
                 ErrorType.Validation);
         }
 
@@ -194,12 +194,12 @@
                 $"The last name is required",
                 ErrorType.Validation);
 
-            public static Error FirstNameLengthError => new(
+            public static Error FirstNameInvalidLength => new(
                 "Name.FirstNameLengthError",
                 $"The first name must be between 2 and 100 characters long",
                 ErrorType.Validation);
 
-            public static Error LastNameLengthError => new(
+            public static Error LastNameInvalidLength => new(
                 "Name.LastNameLengthError",
                 $"The last name must be between 2 and 100 characters long",
                 ErrorType.Validation);
@@ -222,8 +222,8 @@
                 "The book title is required.",
                 ErrorType.Validation);
 
-            public static Error TitleTooLong => new(
-                "Book.TitleTooLong",
+            public static Error TitleInvalidLength => new(
+                "Book.TitleInvalidLength",
                 "The book title must be between 2 and 100 characters long.",
                 ErrorType.Validation);
 
@@ -232,8 +232,8 @@
                 "The book ISBN is required.",
                 ErrorType.Validation);
 
-            public static Error IsbnTooLong => new(
-                "Book.IsbnTooLong",
+            public static Error IsbnInvalidLength => new(
+                "Book.IsbnInvalidLength",
                 "The book ISBN must be between 2 and 50 characters long.",
                 ErrorType.Validation);
 

@@ -10,31 +10,31 @@
         {
             RuleFor(x => x.Street)
                 .NotEmpty().WithMessage(DomainErrors.Address.StreetRequired)
-                .MaximumLength(50).WithMessage(DomainErrors.Address.StreetTooLong);
+                .Length(2, 50).WithMessage(DomainErrors.Address.StreetInvalidLength);
 
             RuleFor(x => x.Number)
                 .NotEmpty().WithMessage(DomainErrors.Address.NumberRequired)
-                .MaximumLength(15).WithMessage(DomainErrors.Address.NumberTooLong);
+                .Length(1, 15).WithMessage(DomainErrors.Address.NumberInvalidLength);
 
             RuleFor(x => x.District)
                 .NotEmpty().WithMessage(DomainErrors.Address.DistrictRequired)
-                .MaximumLength(50).WithMessage(DomainErrors.Address.DistrictTooLong);
+                .Length(2, 50).WithMessage(DomainErrors.Address.DistrictInvalidLength);
 
             RuleFor(x => x.City)
                 .NotEmpty().WithMessage(DomainErrors.Address.CityRequired)
-                .MaximumLength(50).WithMessage(DomainErrors.Address.CityTooLong);
+                .Length(2, 50).WithMessage(DomainErrors.Address.CityInvalidLength);
 
             RuleFor(x => x.State)
                 .NotEmpty().WithMessage(DomainErrors.Address.StateRequired)
-                .MaximumLength(50).WithMessage(DomainErrors.Address.StateTooLong);
+                .Length(2, 50).WithMessage(DomainErrors.Address.StateInvalidLength);
 
             RuleFor(x => x.CountryCode)
                 .NotEmpty().WithMessage(DomainErrors.Address.CountryCodeRequired)
-                .MaximumLength(5).WithMessage(DomainErrors.Address.CountryCodeTooLong);
+                .Length(2, 5).WithMessage(DomainErrors.Address.CountryCodeInvalidLength);
 
             RuleFor(x => x.ZipCode)
                 .NotEmpty().WithMessage(DomainErrors.Address.ZipCodeRequired)
-                .MaximumLength(20).WithMessage(DomainErrors.Address.ZipCodeTooLong);
+                .Length(2, 20).WithMessage(DomainErrors.Address.ZipCodeInvalidLength);
         }
     }
 }

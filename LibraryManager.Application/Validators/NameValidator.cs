@@ -10,13 +10,11 @@
         {
             RuleFor(x => x.FirstName)
                .NotEmpty().WithMessage(DomainErrors.Name.FirstNameRequired)
-               .MinimumLength(2).WithMessage(DomainErrors.Name.FirstNameLengthError)
-               .MaximumLength(100).WithMessage(DomainErrors.Name.FirstNameLengthError);
+                .Length(2, 100).WithMessage(DomainErrors.Name.LastNameInvalidLength);
 
             RuleFor(x => x.LastName)
                .NotEmpty().WithMessage(DomainErrors.Name.LastNameRequired)
-               .MinimumLength(2).WithMessage(DomainErrors.Name.LastNameLengthError)
-               .MaximumLength(100).WithMessage(DomainErrors.Name.LastNameLengthError);
+                .Length(2, 100).WithMessage(DomainErrors.Name.LastNameInvalidLength);
         }
     }
 }

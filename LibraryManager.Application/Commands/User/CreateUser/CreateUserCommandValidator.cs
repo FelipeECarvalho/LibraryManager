@@ -19,7 +19,7 @@
 
             RuleFor(x => x.Document)
                 .NotEmpty().WithMessage(DomainErrors.User.DocumentRequired)
-                .MaximumLength(30).WithMessage(DomainErrors.User.DocumentTooLong);
+                .Length(2, 30).WithMessage(DomainErrors.User.DocumentInvalidLength);
 
             RuleFor(x => x.Address)
                 .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
@@ -28,7 +28,7 @@
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage(DomainErrors.User.InvalidEmail)
                 .NotEmpty().WithMessage(DomainErrors.User.EmailRequired)
-                .MaximumLength(50).WithMessage(DomainErrors.User.EmailTooLong);
+                .Length(2, 50).WithMessage(DomainErrors.User.EmailInvalidLength);
         }
     }
 }

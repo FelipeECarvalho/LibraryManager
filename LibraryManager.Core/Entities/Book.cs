@@ -2,7 +2,6 @@
 {
     using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Exceptions;
 
     public class Book : BaseEntity
     {

@@ -1,9 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
     using LibraryManager.Core.Enums;
-    using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Exceptions;
-
     public class Loan : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]

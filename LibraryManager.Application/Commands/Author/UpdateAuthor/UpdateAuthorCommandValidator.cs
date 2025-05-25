@@ -18,7 +18,7 @@
                 .SetValidator(new NameValidator());
 
             RuleFor(x => x.Description)
-                .MaximumLength(256).WithMessage(DomainErrors.Author.DescriptionTooLong);
+                .MaximumLength(256).WithMessage(DomainErrors.Author.DescriptionInvalidLength);
         }
     }
 }
