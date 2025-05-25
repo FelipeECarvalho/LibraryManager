@@ -1,11 +1,10 @@
 **TODO**
 
-- Implementar fluent validation
 - Implementar melhorias no UnitOfWork
-- Autenticação e autorização dos usuários
 - Melhorias na classe de Loan
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
+- Autenticação e autorização dos usuários
 - Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar
@@ -20,4 +19,7 @@
 	- Talvez gerar uma impressão de uma carteirinha?
 	- Cadastrar a foto do usuário para a carteirinha
 - Talvez mais pra frente adicionar algo relacionado a pagamento?
+	- Mensalidade para usar os serviços
+		- Modelo gratuito - Até 20 livros. Model pago - Até 100. Seí lá, pensar melhor
 	- Mensalidade dos usuários para ter a carteirinha da biblioteca, compra e aluguel de livros.
+		- Uma parte pra biblioteca, uma parte pra gente.
