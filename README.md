@@ -1,5 +1,8 @@
 **TODO**
 
+- Implementar as ações de categoria
+	- Get, GetAll, Create, Delete (Sem update)
+- Implementar paginação nos GetAll
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
 - Implementar melhorias no UnitOfWork

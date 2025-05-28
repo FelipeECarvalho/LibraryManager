@@ -4,6 +4,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Extensions;
     using LibraryManager.Core.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
@@ -42,20 +43,20 @@
             return Result.Success();
         }
 
-        private static Result ValidateStatusTransition(LoanStatus current, LoanStatus requested)
+        private static Result ValidateStatusTransition(LoanStatus currentStatus, LoanStatus newStatus)
         {
-            return requested switch
+            return newStatus switch
             {
-                LoanStatus.Approved when current != LoanStatus.Requested =>
+                LoanStatus.Approved when !newStatus.CanApproveFrom(currentStatus) =>
                     Result.Failure(DomainErrors.Loan.CannotApproveWhenNotRequested),
 
-                LoanStatus.Cancelled when !current.CanBeCancelled() =>
+                LoanStatus.Cancelled when !newStatus.CanCancelFrom(currentStatus) =>
                     Result.Failure(DomainErrors.Loan.CannotCancelInThisStatus),
 
-                LoanStatus.Borrowed when current != LoanStatus.Approved =>
+                LoanStatus.Borrowed when !newStatus.CanBorrowFrom(currentStatus) =>
                     Result.Failure(DomainErrors.Loan.CannotBorrowWhenNotApproved),
 
-                LoanStatus.Returned when !current.IsWithUser() =>
+                LoanStatus.Returned when !newStatus.CanReturnFrom(currentStatus) =>
                     Result.Failure(DomainErrors.Loan.CannotReturnWhenNotBorrowed),
 
                 _ => Result.Success()

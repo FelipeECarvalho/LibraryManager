@@ -21,11 +21,13 @@
             builder.HasOne(x => x.Book)
                 .WithMany(x => x.BookCategories)
                 .HasForeignKey(x => x.BookId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.BookCategories)
                 .HasForeignKey(x => x.CategoryId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasIndex(x => new { x.BookId, x.CategoryId }).IsUnique();

@@ -22,42 +22,4 @@
         [Description("The loan was cancelled before the book was picked up.")]
         Cancelled
     }
-
-    public static class LoanStatusExtension 
-    {
-        public static IList<LoanStatus> BookUnavailable()
-        {
-            return 
-            [
-                LoanStatus.Requested,
-                LoanStatus.Approved,
-                LoanStatus.Borrowed,
-                LoanStatus.Overdue
-            ];
-        }
-
-        public static IList<LoanStatus> BookInUserHands()
-        {
-            return
-            [
-                LoanStatus.Borrowed,
-                LoanStatus.Overdue
-            ];
-        }
-
-        public static bool CanBeCancelled(this LoanStatus status)
-        {
-            return new[] 
-            {
-                LoanStatus.Requested, 
-                LoanStatus.Approved 
-            }.Contains(status);
-        }
-
-        public static bool IsWithUser(this LoanStatus status)
-            => BookInUserHands().Contains(status);
-
-        public static bool IsBookUnavailable(this LoanStatus status) 
-            => BookUnavailable().Contains(status);
-    }
 }

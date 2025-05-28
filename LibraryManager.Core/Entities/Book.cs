@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Core.Entities
 {
-    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Extensions;
 
     public class Book : BaseEntity
     {

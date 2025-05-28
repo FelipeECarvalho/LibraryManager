@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
-    using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;
 
     public class User : BaseEntity

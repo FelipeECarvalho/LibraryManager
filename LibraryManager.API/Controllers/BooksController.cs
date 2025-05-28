@@ -38,8 +38,8 @@
             return Ok(result.Value);
         }
 
-        [HttpGet("{title}")]
-        public async Task<IActionResult> GetByTitle(string title, CancellationToken ct)
+        [HttpGet]
+        public async Task<IActionResult> GetByTitle([FromQuery] string title, CancellationToken ct)
         {
             var query = new GetBooksByTitleQuery(title);
             var result = await _mediator.Send(query, ct);
@@ -94,8 +94,8 @@
             return NoContent();
         }
 
-        [HttpPut("{id:Guid}/stock/{stockNumber:int}")]
-        public async Task<IActionResult> Put(Guid id, int stockNumber, CancellationToken ct)
+        [HttpPut("{id:Guid}/stock")]
+        public async Task<IActionResult> Put(Guid id, [FromQuery] int stockNumber, CancellationToken ct)
         {
             var result = await _mediator.Send(new UpdateBookStockCommand(id, stockNumber), ct);
 
