@@ -17,7 +17,7 @@
             Title = title;
             Description = description;
             PublicationDate = publicationDate;
-            ISBN = isbn;
+            Isbn = isbn;
             StockNumber = stockNumber;
             AuthorId = authorId;
         }
@@ -28,7 +28,7 @@
 
         public DateTimeOffset PublicationDate { get; private set; }
 
-        public string ISBN { get; private set; }
+        public string Isbn { get; private set; }
 
         public int? StockNumber { get; private set; }
 
@@ -63,8 +63,11 @@
 
         public void UpdateStock(int stockNumber)
         {
-            StockNumber = stockNumber;
+            if (stockNumber > 0)
+            {
+            }
             UpdateDate = DateTimeOffset.Now;
+            StockNumber = stockNumber;
         }
     }
 }

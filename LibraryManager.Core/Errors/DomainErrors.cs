@@ -252,6 +252,11 @@
                 "The book ISBN must be between 2 and 50 characters long.",
                 ErrorType.Validation);
 
+            public static Error IsbnAlreadyExists => new(
+                "Book.IsbnAlreadyExists",
+                "A book with this ISBN already exists.",
+                ErrorType.Validation);
+
             public static Error PublicationDateRequired => new(
                 "Book.PublicationDateRequired",
                 "The book Publication Date is required.",

@@ -5,6 +5,7 @@
 - Implementar paginação nos GetAll
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
+- Tirar as regras de negócio dos handlers;
 - Implementar melhorias no UnitOfWork
 - Autenticação e autorização dos usuários
 - Testes unitários

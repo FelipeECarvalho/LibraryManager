@@ -43,16 +43,16 @@
         
         private async Task<Result> ValidateAsync(CreateUserCommand request, CancellationToken ct)
         {
-            var userByEmail = await _userRepository.GetByEmailAsync(request.Email, ct);
+            var isEmailUnique = await _userRepository.IsEmailUnique(request.Email, ct);
 
-            if (userByEmail != null) 
+            if (!isEmailUnique) 
             {
                 return Result.Failure(DomainErrors.User.EmailAlreadyExists);
             }
 
-            var userByDocument = await _userRepository.GetByDocumentAsync(request.Document, ct);
+            var isDocumentUnique = await _userRepository.IsDocumentUnique(request.Document, ct);
 
-            if (userByDocument != null)
+            if (isDocumentUnique)
             {
                 return Result.Failure(DomainErrors.User.DocumentAlreadyExists);
             }

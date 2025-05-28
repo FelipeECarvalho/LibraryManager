@@ -28,6 +28,13 @@
 
         public async Task<Result<BookResponse>> Handle(CreateBookCommand request, CancellationToken ct)
         {
+            var validationResult = await Validate(request, ct);
+
+            if (validationResult.IsFailure) 
+            {
+                return Result.Failure<BookResponse>(validationResult.Error);
+            }
+            
             var author = await _authorRepository.GetByIdAsync(request.AuthorId, ct);
 
             if (author == null)
@@ -48,6 +55,18 @@
             await _unitOfWork.SaveChangesAsync(ct);
 
             return BookResponse.FromEntity(book);
+        }
+
+        private async Task<Result> Validate(CreateBookCommand request, CancellationToken ct)
+        {
+            var isIsbnUnique = await _bookRepository.IsIsbnUnique(request.Isbn, ct);
+
+            if (!isIsbnUnique)
+            {
+                return Result.Failure<BookResponse>(DomainErrors.Book.IsbnAlreadyExists);
+            }
+
+            return Result.Success();
         }
     }
 }

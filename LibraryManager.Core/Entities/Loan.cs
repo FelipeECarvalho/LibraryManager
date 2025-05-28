@@ -46,9 +46,9 @@
             UpdateDate = DateTimeOffset.Now;
         }
 
-        public void Return()
+        public void UpdateStatus(LoanStatus status)
         {
-            Status = LoanStatus.Returned;
+            Status = status;
             UpdateDate = DateTimeOffset.Now;
         }
     }

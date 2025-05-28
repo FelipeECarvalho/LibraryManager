@@ -38,6 +38,7 @@
                 return validationResult;
             }
 
+            loan.UpdateStatus(request.Status);
             await _unitOfWork.SaveChangesAsync(ct);
 
             return Result.Success();

@@ -27,16 +27,14 @@
                 .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
-        public async Task<User> GetByEmailAsync(string email, CancellationToken ct)
+        public async Task<bool> IsEmailUnique(string email, CancellationToken ct)
         {
-            return await _context.Users
-                .SingleOrDefaultAsync(x => x.Email == email, ct);
+            return !await _context.Users.AnyAsync(x => x.Email == email, ct);
         }
 
-        public async Task<User> GetByDocumentAsync(string document, CancellationToken ct)
+        public async Task<bool> IsDocumentUnique(string document, CancellationToken ct)
         {
-            return await _context.Users
-                .SingleOrDefaultAsync(x => x.Document == document, ct);
+            return !await _context.Users.AnyAsync(x => x.Document == document, ct);
         }
 
         public void Add(User user)

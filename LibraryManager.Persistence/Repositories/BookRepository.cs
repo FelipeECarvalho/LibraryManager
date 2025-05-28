@@ -48,6 +48,11 @@
                 .ToListAsync(ct);
         }
 
+        public async Task<bool> IsIsbnUnique(string isbn, CancellationToken ct = default)
+        {
+            return !await _context.Books.AnyAsync(x => x.Isbn == isbn, ct);
+        }
+
         public void Add(Book book)
         {
             _context.Books.Add(book);
