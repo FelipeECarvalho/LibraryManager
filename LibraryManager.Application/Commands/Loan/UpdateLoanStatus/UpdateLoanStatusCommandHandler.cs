@@ -31,15 +31,35 @@
                 return Result.Failure(DomainErrors.Loan.NotFound(request.Id));
             }
 
-            if (!loan.Status.IsWithUser())
+            var validationResult = ValidateStatusTransition(loan.Status, request.Status);
+            if (validationResult.IsFailure)
             {
-                return Result.Failure(DomainErrors.Loan.CannotReturnWhenNotBorrowed);
+                return validationResult;
             }
 
-            loan.Return();
             await _unitOfWork.SaveChangesAsync(ct);
 
             return Result.Success();
+        }
+
+        private static Result ValidateStatusTransition(LoanStatus current, LoanStatus requested)
+        {
+            return requested switch
+            {
+                LoanStatus.Approved when current != LoanStatus.Requested =>
+                    Result.Failure(DomainErrors.Loan.CannotApproveWhenNotRequested),
+
+                LoanStatus.Cancelled when !current.CanBeCancelled() =>
+                    Result.Failure(DomainErrors.Loan.CannotCancelInThisStatus),
+
+                LoanStatus.Borrowed when current != LoanStatus.Approved =>
+                    Result.Failure(DomainErrors.Loan.CannotBorrowWhenNotApproved),
+
+                LoanStatus.Returned when !current.IsWithUser() =>
+                    Result.Failure(DomainErrors.Loan.CannotReturnWhenNotBorrowed),
+
+                _ => Result.Success()
+            };
         }
     }
 }

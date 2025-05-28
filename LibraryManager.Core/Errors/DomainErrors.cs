@@ -97,6 +97,21 @@
                 "Loan.BookAlreadyLoaned",
                 "This book is already loaned to the user.",
                 ErrorType.Validation);
+
+            public static Error CannotApproveWhenNotRequested => new(
+                "Loan.CannotApproveWhenNotRequested",
+                "The loan can only be approved if it is currently in the 'Requested' status.",
+                ErrorType.Validation);
+
+            public static Error CannotCancelInThisStatus => new(
+                "Loan.CannotCancelInThisStatus",
+                "The loan cannot be cancelled in its current status.",
+                ErrorType.Validation);
+
+            public static Error CannotBorrowWhenNotApproved => new(
+                "Loan.CannotBorrowWhenNotApproved",
+                "The loan can only be marked as borrowed if it is currently approved.",
+                ErrorType.Validation);
         }
 
         public static class Address

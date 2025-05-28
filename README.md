@@ -1,8 +1,8 @@
 **TODO**
 
-- Implementar melhorias no UnitOfWork
 - Adicionar a entidade biblioteca
 	- Ela vai ter seus usuários, livros, etc.
+- Implementar melhorias no UnitOfWork
 - Autenticação e autorização dos usuários
 - Testes unitários
 - Envio de e-mails

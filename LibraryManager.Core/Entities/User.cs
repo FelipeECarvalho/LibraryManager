@@ -35,8 +35,8 @@
 
         public bool CanLoan(Book book)
         {
-            Loans ??= [];
-            return !Loans.Any(x => x.BookId == book.Id && x.Status.IsActive());
+            return !Loans
+                .Any(x => x.BookId == book.Id && x.Status.IsBookUnavailable());
         }
 
         public void Update(Name name, Address address)

@@ -25,7 +25,7 @@
 
     public static class LoanStatusExtension 
     {
-        public static IList<LoanStatus> Active()
+        public static IList<LoanStatus> BookUnavailable()
         {
             return 
             [
@@ -45,10 +45,19 @@
             ];
         }
 
+        public static bool CanBeCancelled(this LoanStatus status)
+        {
+            return new[] 
+            {
+                LoanStatus.Requested, 
+                LoanStatus.Approved 
+            }.Contains(status);
+        }
+
         public static bool IsWithUser(this LoanStatus status)
             => BookInUserHands().Contains(status);
 
-        public static bool IsActive(this LoanStatus status) 
-            => Active().Contains(status);
+        public static bool IsBookUnavailable(this LoanStatus status) 
+            => BookUnavailable().Contains(status);
     }
 }

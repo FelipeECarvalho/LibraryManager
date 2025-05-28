@@ -45,7 +45,7 @@
                 return Result.Failure<LoanResponse>(DomainErrors.Book.NotFound(request.BookId));
             }
 
-            if (!book.IsAvaliable())
+            if (!book.IsAvailable())
             {
                 return Result.Failure<LoanResponse>(DomainErrors.Book.NotAvaliableForLoan);
             }

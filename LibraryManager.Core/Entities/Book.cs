@@ -48,17 +48,17 @@
             UpdateDate = DateTimeOffset.Now;
         }
 
-        public bool IsAvaliable()
+        public bool IsAvailable()
         {
             if (StockNumber == null)
             {
                 return true;
             }
 
-            var totalActive = Loans?
-                .Count(x => x.Status.IsActive());
+            var totalUnavailable = Loans?
+                .Count(x => x.Status.IsBookUnavailable());
 
-            return StockNumber > totalActive;
+            return StockNumber > totalUnavailable;
         }
 
         public void UpdateStock(int stockNumber)
