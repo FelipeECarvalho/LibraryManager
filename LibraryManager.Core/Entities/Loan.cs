@@ -1,6 +1,10 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Common;
     using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Errors;
+    using LibraryManager.Core.Extensions;
+
     public class Loan : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
@@ -33,8 +37,13 @@
 
         public LoanStatus Status { get; private set; }
 
-        public void Update(DateTimeOffset endDate)
+        public Result Update(DateTimeOffset endDate)
         {
+            if (StartDate > endDate) 
+            {
+                return Result.Failure(DomainErrors.Loan.InvalidStartDate);
+            }
+
             EndDate = endDate;
 
             if (Status == LoanStatus.Overdue &&
@@ -44,12 +53,43 @@
             }
 
             UpdateDate = DateTimeOffset.Now;
+
+            return Result.Success();
         }
 
-        public void UpdateStatus(LoanStatus status)
+        public Result UpdateStatus(LoanStatus status)
         {
+            var validationResult = ValidateStatusTransition(status);
+
+            if (validationResult.IsFailure)
+            {
+                return validationResult;
+            }
+
             Status = status;
             UpdateDate = DateTimeOffset.Now;
+
+            return Result.Success();
+        }
+
+        private Result ValidateStatusTransition(LoanStatus newStatus)
+        {
+            return newStatus switch
+            {
+                LoanStatus.Approved when !newStatus.CanApproveFrom(Status) =>
+                    Result.Failure(DomainErrors.Loan.CannotApproveWhenNotRequested),
+
+                LoanStatus.Cancelled when !newStatus.CanCancelFrom(Status) =>
+                    Result.Failure(DomainErrors.Loan.CannotCancelInThisStatus),
+
+                LoanStatus.Borrowed when !newStatus.CanBorrowFrom(Status) =>
+                    Result.Failure(DomainErrors.Loan.CannotBorrowWhenNotApproved),
+
+                LoanStatus.Returned when !newStatus.CanReturnFrom(Status) =>
+                    Result.Failure(DomainErrors.Loan.CannotReturnWhenNotBorrowed),
+
+                _ => Result.Success()
+            };
         }
     }
 }

@@ -30,26 +30,14 @@
                 return Result.Failure(DomainErrors.Loan.NotFound(request.Id));
             }
 
-            var validationResult = Validate(loan, request);
+            var result = loan.Update(request.EndDate);
 
-            if (validationResult.IsFailure)
+            if (result.IsFailure)
             {
-                return Result.Failure(validationResult.Error);
+                return Result.Failure(result.Error);
             }
-
-            loan.Update(request.EndDate);
 
             await _unitOfWork.SaveChangesAsync(ct);
-
-            return Result.Success();
-        }
-
-        private static Result Validate(Core.Entities.Loan loan, UpdateLoanCommand request)
-        {
-            if (loan.StartDate >= request.EndDate)
-            {
-                return Result.Failure(DomainErrors.Loan.InvalidStartDate);
-            }
 
             return Result.Success();
         }
