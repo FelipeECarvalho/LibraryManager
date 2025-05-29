@@ -32,11 +32,11 @@
                 return Result.Failure(DomainErrors.Loan.NotFound(request.Id));
             }
 
-            var validationResult = loan.UpdateStatus(request.Status);
+            var result = loan.UpdateStatus(request.Status);
 
-            if (validationResult.IsFailure)
+            if (result.IsFailure)
             {
-                return validationResult;
+                return result;
             }
             
             await _unitOfWork.SaveChangesAsync(ct);

@@ -31,7 +31,12 @@
                 return Result.Failure(DomainErrors.Book.NotFound(request.Id));
             }
 
-            book.UpdateStock(request.StockNumber);
+            var result = book.UpdateStock(request.StockNumber);
+
+            if (result.IsFailure) 
+            {
+                return result;
+            }
 
             await _unitOfWork.SaveChangesAsync(ct);
 

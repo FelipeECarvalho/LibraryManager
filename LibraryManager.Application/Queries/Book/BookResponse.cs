@@ -12,7 +12,7 @@
 
         public DateTimeOffset PublicationDate { get; init; }
 
-        public string ISBN { get; init; }
+        public string Isbn { get; init; }
 
         public int? StockNumber { get; init; }
 
@@ -26,7 +26,7 @@
                 Title = book.Title,
                 Description = book.Description,
                 PublicationDate = book.PublicationDate,
-                ISBN = book.ISBN,
+                Isbn = book.Isbn,
                 StockNumber = book.StockNumber,
                 Author = AuthorResponse.FromEntity(book.Author)
             };

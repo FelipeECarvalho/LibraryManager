@@ -20,12 +20,12 @@
 
             builder.Property(x => x.PublicationDate);
             builder.Property(x => x.StockNumber).IsRequired(false);
-            builder.Property(x => x.ISBN).HasMaxLength(50);
+            builder.Property(x => x.Isbn).HasMaxLength(50);
             builder.Property(x => x.Title).HasMaxLength(100);
             builder.Property(x => x.Description).HasColumnType("text").IsRequired(false);
 
             builder.HasIndex(x => x.Title);
-            builder.HasIndex(x => x.ISBN).IsUnique();
+            builder.HasIndex(x => x.Isbn).IsUnique();
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

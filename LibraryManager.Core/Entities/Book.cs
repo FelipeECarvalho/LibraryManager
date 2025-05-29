@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Extensions;
 
@@ -61,13 +62,17 @@
             return StockNumber > totalUnavailable;
         }
 
-        public void UpdateStock(int stockNumber)
+        public Result UpdateStock(int stockNumber)
         {
-            if (stockNumber > 0)
+            if (stockNumber < 0)
             {
+                return Result.Failure(DomainErrors.Book.StockNumberInvalid);
             }
-            UpdateDate = DateTimeOffset.Now;
+
             StockNumber = stockNumber;
+            UpdateDate = DateTimeOffset.Now;
+
+            return Result.Success();
         }
     }
 }

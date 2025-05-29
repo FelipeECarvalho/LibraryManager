@@ -4,6 +4,9 @@
     using LibraryManager.Application.Commands.User.CreateUser;
     using LibraryManager.Application.Commands.User.DeleteUser;
     using LibraryManager.Application.Commands.User.UpdateUser;
+    using LibraryManager.Application.Queries.Author;
+    using LibraryManager.Application.Queries.Loan;
+    using LibraryManager.Application.Queries.User;
     using LibraryManager.Application.Queries.User.GetUserById;
     using LibraryManager.Application.Queries.User.GetUserLoans;
     using LibraryManager.Application.Queries.User.GetUsers;
@@ -13,18 +16,36 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
-    public class UsersController(IMediator _mediator) : ApiController
+    public class UsersController(IMediator _mediator) : ApiControllerBase
     {
+        /// <summary>
+        /// Retrieves all users.
+        /// </summary>
+        /// <response code="200">Users retrieved successfully.</response>
+        /// <returns>A list containing all users.</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(CancellationToken ct)
+        [ProducesResponseType(typeof(IList<UserResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll(
+            CancellationToken ct)
         {
             var result = await _mediator.Send(new GetUsersQuery(), ct);
 
             return Ok(result.Value);
         }
 
+        /// <summary>
+        /// Retrieves the user with the specified ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the user.</param>
+        /// <response code="200">User retrieved successfully.</response>
+        /// <response code="404">User not found.</response>
+        /// <returns>Returns the user if found.</returns>
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> GetById(Guid id, CancellationToken ct)
+        [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(
+            Guid id, 
+            CancellationToken ct)
         {
             var result = await _mediator.Send(new GetUserByIdQuery(id), ct);
 
@@ -38,8 +59,19 @@
             return Ok(user);
         }
 
+        /// <summary>
+        /// Retrieves the user loans with the specified ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the user.</param>
+        /// <response code="200">User retrieved successfully.</response>
+        /// <response code="404">User not found.</response>
+        /// <returns>Returns the user loans if found.</returns>
         [HttpGet("{id:guid}/loans")]
-        public async Task<IActionResult> GetLoans(Guid id, CancellationToken ct)
+        [ProducesResponseType(typeof(IList<LoanResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetLoans(
+            Guid id,
+            CancellationToken ct)
         {
             var result = await _mediator.Send(new GetUserLoansQuery(id), ct);
 
@@ -53,10 +85,21 @@
             return Ok(loans);
         }
 
+        /// <summary>
+        /// Creates a new user
+        /// </summary>
+        /// <param name="userRequest">An object containing the user's data.</param>
+        /// <response code="201">User created successfully.</response>
+        /// <response code="400">Validation error.</response>
+        /// <returns>The newly created user.</returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateUserCommand command, CancellationToken ct)
+        [ProducesResponseType(typeof(AuthorResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Post(
+            [FromBody] CreateUserCommand userRequest,
+            CancellationToken ct)
         {
-            var result = await _mediator.Send(command, ct);
+            var result = await _mediator.Send(userRequest, ct);
 
             if (result.IsFailure)
             {
@@ -67,8 +110,18 @@
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, user);
         }
 
+        /// <summary>
+        /// Deletes an user by ID.
+        /// </summary>
+        /// <param name="id">The unique identifier of the user.</param>
+        /// <response code="204">User deleted successfully.</response>
+        /// <response code="404">User not found.</response>
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(
+            Guid id,
+            CancellationToken ct)
         {
             var result = await _mediator.Send(new DeleteUserCommand(id), ct);
 
@@ -80,14 +133,26 @@
             return NoContent();
         }
 
+
+        /// <summary>
+        /// Updates an user.
+        /// </summary>
+        /// <param name="id">The unique identifier of the user.</param>
+        /// <param name="userRequest">An object containing the updated user data.</param>
+        /// <response code="204">User updated successfully.</response>
+        /// <response code="400">Validation error.</response>
+        /// <response code="404">User not found.</response>
         [HttpPut("{id:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(
             Guid id,
-            [FromBody] UpdateUserCommand command,
+            [FromBody] UpdateUserCommand userRequest,
             CancellationToken ct)
         {
-            command.Id = id;
-            var result = await _mediator.Send(command, ct);
+            userRequest.Id = id;
+            var result = await _mediator.Send(userRequest, ct);
 
             if (result.IsFailure)
             {
