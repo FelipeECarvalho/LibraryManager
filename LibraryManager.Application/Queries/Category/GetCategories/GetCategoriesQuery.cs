@@ -3,5 +3,5 @@
     using LibraryManager.Application.Abstractions.Messaging;
 
     public sealed record GetCategoriesQuery
-        : IQuery<CategoryResponse>;
+        : IQuery<IList<CategoryResponse>>;
 }

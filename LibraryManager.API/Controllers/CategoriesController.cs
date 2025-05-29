@@ -29,7 +29,7 @@
         {
             var response = await _mediator.Send(new GetCategoriesQuery(), ct);
 
-            return Ok(response);
+            return Ok(response.Value);
         }
 
         /// <summary>
@@ -46,14 +46,15 @@
             Guid id,
             CancellationToken ct)
         {
-            var response = await _mediator.Send(new GetCategoryById(id), ct);
+            var response = await _mediator.Send(new GetCategoryByIdQuery(id), ct);
 
             if (response.IsFailure)
             {
                 return HandleFailure(response);
             }
 
-            return Ok(response);
+            var category = response.Value;
+            return Ok(category);
         }
 
         /// <summary>

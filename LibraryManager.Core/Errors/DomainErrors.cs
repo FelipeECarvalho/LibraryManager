@@ -272,5 +272,28 @@
                 "The book is not currently avaliable for loan.",
                 ErrorType.Validation);
         }
+
+        public static class Category
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new(
+                "Category.NotFound",
+                $"The category with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static Error NameRequired => new(
+                "Category.NameRequired",
+                "The category name is required.",
+                ErrorType.Validation);
+
+            public static Error NameInvalidLength => new(
+                "Category.NameInvalidLength",
+                "The category name must be between 2 and 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error DescriptionInvalidLength => new(
+                "Category.DescriptionInvalidLength",
+                "The category description must be at most 256 characters long.",
+                ErrorType.Validation);
+        }
     }
 }

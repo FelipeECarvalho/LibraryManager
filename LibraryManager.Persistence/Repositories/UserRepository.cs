@@ -5,7 +5,8 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    internal sealed class UserRepository : IUserRepository
+    internal sealed class UserRepository 
+        : IUserRepository
     {
         private readonly LibraryDbContext _context;
 

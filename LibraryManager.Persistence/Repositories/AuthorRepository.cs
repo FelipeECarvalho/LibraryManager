@@ -5,7 +5,8 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    internal sealed class AuthorRepository : IAuthorRepository
+    internal sealed class AuthorRepository 
+        : IAuthorRepository
     {
         private readonly LibraryDbContext _context;
 

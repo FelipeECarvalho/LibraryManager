@@ -8,13 +8,7 @@
         {
         }
 
-        public Category(string name)
-            : base()
-        {
-            Name = name;
-        }
-
-        public Category(string name, string description)
+        public Category(string name, string? description)
             : base()
         {
             Name = name;

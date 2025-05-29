@@ -5,7 +5,8 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    internal sealed class LoanRepository : ILoanRepository
+    internal sealed class LoanRepository 
+        : ILoanRepository
     {
         private readonly LibraryDbContext _context;
 

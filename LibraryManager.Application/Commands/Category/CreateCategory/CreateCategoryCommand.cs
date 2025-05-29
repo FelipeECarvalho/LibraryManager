@@ -5,6 +5,6 @@
 
     public sealed record CreateCategoryCommand(
         string Name,
-        string Description) 
+        string? Description) 
         : ICommand<CategoryResponse>;
 }
