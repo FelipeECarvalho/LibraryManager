@@ -2,7 +2,7 @@
 {
     using LibraryManager.Core.ValueObjects;
 
-    public class UserResponse
+    public sealed record UserResponse
     {
         public Guid Id { get; init; }
 

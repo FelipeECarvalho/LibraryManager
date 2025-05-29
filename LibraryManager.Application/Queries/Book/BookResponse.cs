@@ -2,7 +2,7 @@
 {
     using LibraryManager.Application.Queries.Author;
 
-    public class BookResponse
+    public sealed record BookResponse
     {
         public Guid Id { get; init; }
 

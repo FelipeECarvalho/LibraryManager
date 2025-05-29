@@ -5,7 +5,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
 
-    public class LoanResponse
+    public sealed record LoanResponse
     {
         public Guid Id { get; init; }
 

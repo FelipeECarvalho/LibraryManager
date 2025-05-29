@@ -1,7 +1,11 @@
 ﻿namespace LibraryManager.API.Controllers
 {
     using Asp.Versioning;
-    using LibraryManager.Application.Queries.Author;
+    using LibraryManager.Application.Commands.Category.CreateCategory;
+    using LibraryManager.Application.Commands.Category.DeleteCategory;
+    using LibraryManager.Application.Queries.Category;
+    using LibraryManager.Application.Queries.Category.GetCategories;
+    using LibraryManager.Application.Queries.Category.GetCategoryById;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +23,13 @@
         /// <response code="200">Categories retrieved successfully.</response>
         /// <returns>A list containing all categories.</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(IList<object>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IList<CategoryResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var response = await _mediator.Send(new GetCategoriesQuery(), ct);
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -34,13 +40,20 @@
         /// <response code="404">Category not found.</response>
         /// <returns>Returns the category if found.</returns>
         [HttpGet("{id:guid}")]
-        [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
             Guid id,
             CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var response = await _mediator.Send(new GetCategoryById(id), ct);
+
+            if (response.IsFailure)
+            {
+                return HandleFailure(response);
+            }
+
+            return Ok(response);
         }
 
         /// <summary>
@@ -51,13 +64,21 @@
         /// <response code="400">Validation error.</response>
         /// <returns>The newly created category.</returns>
         [HttpPost]
-        [ProducesResponseType(typeof(AuthorResponse), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(CategoryResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
-            object categoryRequest,
+            CreateCategoryCommand categoryRequest,
             CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var response = await _mediator.Send(categoryRequest, ct);
+
+            if (response.IsFailure)
+            {
+                return HandleFailure(response);
+            }
+
+            var category = response.Value;
+            return Ok(category);
         }
 
         /// <summary>
@@ -73,7 +94,14 @@
             Guid id,
             CancellationToken ct)
         {
-            throw new NotImplementedException();
+            var response = await _mediator.Send(new DeleteCategoryCommand(id), ct);
+
+            if (response.IsFailure)
+            {
+                return HandleFailure(response);
+            }
+
+            return NoContent();
         }
     }
 }
