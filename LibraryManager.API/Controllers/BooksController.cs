@@ -89,7 +89,7 @@
         /// <param name="bookRequest">An object containing the book's data.</param>
         /// <response code="201">Book created successfully.</response>
         /// <response code="400">Validation error.</response>
-        /// <returns>The newly book author.</returns>
+        /// <returns>The newly created book.</returns>
         [HttpPost]
         [ProducesResponseType(typeof(BookResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
