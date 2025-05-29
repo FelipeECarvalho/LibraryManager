@@ -45,7 +45,7 @@
         [ProducesResponseType(typeof(BookResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
-            Guid id, 
+            Guid id,
             CancellationToken ct)
         {
             var query = new GetBookByIdQuery(id);
@@ -173,7 +173,7 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(
             Guid id,
-            [FromQuery] int stockNumber, 
+            [FromQuery] int stockNumber,
             CancellationToken ct)
         {
             var result = await _mediator.Send(new UpdateBookStockCommand(id, stockNumber), ct);

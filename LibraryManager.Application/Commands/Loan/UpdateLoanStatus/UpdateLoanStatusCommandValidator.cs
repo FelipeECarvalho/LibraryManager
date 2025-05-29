@@ -9,7 +9,7 @@
     internal class UpdateLoanStatusCommandValidator
         : AbstractValidator<UpdateLoanStatusCommand>
     {
-        public UpdateLoanStatusCommandValidator() 
+        public UpdateLoanStatusCommandValidator()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);

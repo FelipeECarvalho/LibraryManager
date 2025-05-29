@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Core.Common
 {
-    public sealed class ValidationResult<TValue> 
+    public sealed class ValidationResult<TValue>
         : Result<TValue>, IValidationResult
     {
         public ValidationResult(Error[] errors)

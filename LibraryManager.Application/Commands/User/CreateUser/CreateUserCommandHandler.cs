@@ -27,7 +27,7 @@
         {
             var validationResult = await ValidateAsync(request, ct);
 
-            if (validationResult.IsFailure) 
+            if (validationResult.IsFailure)
             {
                 return Result.Failure<UserResponse>(validationResult.Error);
             }
@@ -40,12 +40,12 @@
 
             return UserResponse.FromEntity(user);
         }
-        
+
         private async Task<Result> ValidateAsync(CreateUserCommand request, CancellationToken ct)
         {
             var isEmailUnique = await _userRepository.IsEmailUnique(request.Email, ct);
 
-            if (!isEmailUnique) 
+            if (!isEmailUnique)
             {
                 return Result.Failure(DomainErrors.User.EmailAlreadyExists);
             }

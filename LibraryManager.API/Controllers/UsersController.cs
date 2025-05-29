@@ -44,7 +44,7 @@
         [ProducesResponseType(typeof(UserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
-            Guid id, 
+            Guid id,
             CancellationToken ct)
         {
             var result = await _mediator.Send(new GetUserByIdQuery(id), ct);
@@ -132,7 +132,6 @@
 
             return NoContent();
         }
-
 
         /// <summary>
         /// Updates an user.

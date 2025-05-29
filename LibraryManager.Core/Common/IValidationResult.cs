@@ -4,9 +4,9 @@
 
     public interface IValidationResult
     {
-        public static readonly Error ValidationError = new (
-            "ValidationError", 
-            "A validation problem occorred.", 
+        public static readonly Error ValidationError = new(
+            "ValidationError",
+            "A validation problem occorred.",
             ErrorType.Validation);
 
         Error[] Errors { get; }

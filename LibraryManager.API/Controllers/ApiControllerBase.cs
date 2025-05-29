@@ -6,7 +6,7 @@
 
     public class ApiControllerBase : ControllerBase
     {
-        protected IActionResult HandleFailure(Result result) 
+        protected IActionResult HandleFailure(Result result)
         {
             if (result.IsSuccess)
             {

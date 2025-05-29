@@ -3,7 +3,7 @@
     public sealed class ValidationResult
         : Result, IValidationResult
     {
-        public ValidationResult(Error[] errors) 
+        public ValidationResult(Error[] errors)
             : base(false, IValidationResult.ValidationError)
         {
             Errors = errors;

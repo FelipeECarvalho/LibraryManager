@@ -7,7 +7,7 @@
     internal sealed class UpdateBookCommandValidator
         : AbstractValidator<UpdateBookCommand>
     {
-        public UpdateBookCommandValidator() 
+        public UpdateBookCommandValidator()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);

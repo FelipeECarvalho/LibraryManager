@@ -39,7 +39,7 @@
 
         public Result Update(DateTimeOffset endDate)
         {
-            if (StartDate > endDate) 
+            if (StartDate > endDate)
             {
                 return Result.Failure(DomainErrors.Loan.InvalidStartDate);
             }
@@ -47,7 +47,7 @@
             EndDate = endDate;
 
             if (Status == LoanStatus.Overdue &&
-                EndDate > DateTimeOffset.UtcNow) 
+                EndDate > DateTimeOffset.UtcNow)
             {
                 Status = LoanStatus.Borrowed;
             }

@@ -33,7 +33,7 @@
 
             var result = book.UpdateStock(request.StockNumber);
 
-            if (result.IsFailure) 
+            if (result.IsFailure)
             {
                 return result;
             }

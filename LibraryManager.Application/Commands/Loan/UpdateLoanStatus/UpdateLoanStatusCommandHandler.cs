@@ -2,9 +2,7 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Extensions;
     using LibraryManager.Core.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
@@ -38,7 +36,7 @@
             {
                 return result;
             }
-            
+
             await _unitOfWork.SaveChangesAsync(ct);
 
             return Result.Success();

@@ -30,11 +30,11 @@
         {
             var validationResult = await Validate(request, ct);
 
-            if (validationResult.IsFailure) 
+            if (validationResult.IsFailure)
             {
                 return Result.Failure<BookResponse>(validationResult.Error);
             }
-            
+
             var author = await _authorRepository.GetByIdAsync(request.AuthorId, ct);
 
             if (author == null)

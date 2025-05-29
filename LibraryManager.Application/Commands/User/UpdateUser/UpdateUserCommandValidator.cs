@@ -5,10 +5,10 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
 
-    internal sealed class UpdateUserCommandValidator 
+    internal sealed class UpdateUserCommandValidator
         : AbstractValidator<UpdateUserCommand>
     {
-        public UpdateUserCommandValidator() 
+        public UpdateUserCommandValidator()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);

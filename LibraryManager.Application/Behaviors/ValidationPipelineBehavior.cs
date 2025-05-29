@@ -7,10 +7,10 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class ValidationPipelineBehavior<TRequest, TResponse> 
-        : IPipelineBehavior<TRequest, TResponse> 
+    internal sealed class ValidationPipelineBehavior<TRequest, TResponse>
+        : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
-        where TResponse : Result 
+        where TResponse : Result
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
@@ -37,7 +37,7 @@
                 .Distinct()
                 .ToArray();
 
-            if (errors.Length != 0) 
+            if (errors.Length != 0)
             {
                 return CreateValidationResult<TResponse>(errors);
             }

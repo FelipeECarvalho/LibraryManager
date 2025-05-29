@@ -7,7 +7,7 @@
     internal sealed class CreateLoanCommandValidator
         : AbstractValidator<CreateLoanCommand>
     {
-        public CreateLoanCommandValidator() 
+        public CreateLoanCommandValidator()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);

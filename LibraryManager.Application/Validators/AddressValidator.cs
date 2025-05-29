@@ -6,7 +6,7 @@
 
     internal sealed class AddressValidator : AbstractValidator<Address>
     {
-        public AddressValidator() 
+        public AddressValidator()
         {
             RuleFor(x => x.Street)
                 .NotEmpty().WithMessage(DomainErrors.Address.StreetRequired)

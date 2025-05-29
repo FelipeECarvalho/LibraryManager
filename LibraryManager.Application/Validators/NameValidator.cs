@@ -6,7 +6,7 @@
 
     internal sealed class NameValidator : AbstractValidator<Name>
     {
-        public NameValidator() 
+        public NameValidator()
         {
             RuleFor(x => x.FirstName)
                .NotEmpty().WithMessage(DomainErrors.Name.FirstNameRequired)

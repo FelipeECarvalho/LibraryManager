@@ -2,11 +2,11 @@
 {
     using LibraryManager.Core.Enums;
 
-    public static class LoanStatusExtension 
+    public static class LoanStatusExtension
     {
         public static IList<LoanStatus> BookUnavailable()
         {
-            return 
+            return
             [
                 LoanStatus.Requested,
                 LoanStatus.Approved,
@@ -26,17 +26,17 @@
 
         public static bool CanBeCancelled(this LoanStatus status)
         {
-            return new[] 
+            return new[]
             {
-                LoanStatus.Requested, 
-                LoanStatus.Approved 
+                LoanStatus.Requested,
+                LoanStatus.Approved
             }.Contains(status);
         }
 
         public static bool IsWithUser(this LoanStatus status)
             => BookInUserHands().Contains(status);
 
-        public static bool IsBookUnavailable(this LoanStatus status) 
+        public static bool IsBookUnavailable(this LoanStatus status)
             => BookUnavailable().Contains(status);
 
         public static bool CanApproveFrom(this LoanStatus newStatus, LoanStatus currentStatus)
