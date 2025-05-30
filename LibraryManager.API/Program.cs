@@ -3,6 +3,7 @@ namespace LibraryManager.API
     using LibraryManager.API.Middleware;
     using LibraryManager.Application;
     using LibraryManager.Persistence;
+    using System.Reflection;
 
     public class Program
     {
@@ -17,7 +18,12 @@ namespace LibraryManager.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+            });
 
             var app = builder.Build();
 

@@ -8,7 +8,7 @@
         string ZipCode,
         string State,
         string CountryCode,
-        string? Observation)
+        string Observation)
     {
         public override string ToString()
         {

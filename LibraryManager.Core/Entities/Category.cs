@@ -8,7 +8,7 @@
         {
         }
 
-        public Category(string name, string? description)
+        public Category(string name, string description)
             : base()
         {
             Name = name;
@@ -17,8 +17,8 @@
 
         public string Name { get; private set; }
 
-        public string? Description { get; private set; }
+        public string Description { get; private set; }
 
-        public IList<BookCategory>? BookCategories { get; private set; }
+        public IList<BookCategory> BookCategories { get; private set; }
     }
 }

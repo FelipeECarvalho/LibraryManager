@@ -13,6 +13,9 @@
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
 
+    /// <summary>
+    /// An user
+    /// </summary>
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]

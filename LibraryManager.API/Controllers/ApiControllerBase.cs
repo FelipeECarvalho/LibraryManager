@@ -37,7 +37,7 @@
             string title,
             int status,
             Error error,
-            Error[]? errors = null)
+            Error[] errors = null)
         {
             return new()
             {

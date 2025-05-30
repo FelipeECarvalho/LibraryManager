@@ -25,7 +25,7 @@
 
         public string Title { get; private set; }
 
-        public string? Description { get; private set; }
+        public string Description { get; private set; }
 
         public DateTimeOffset PublicationDate { get; private set; }
 
@@ -39,7 +39,7 @@
 
         public IList<BookCategory> BookCategories { get; private set; }
 
-        public IList<Loan>? Loans { get; private set; }
+        public IList<Loan> Loans { get; private set; }
 
         public void Update(string title, string description, DateTimeOffset publicationDate)
         {
