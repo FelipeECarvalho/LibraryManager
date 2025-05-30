@@ -3,7 +3,9 @@
     using LibraryManager.Core.Common;
     using MediatR;
 
-    public interface ICommand : IRequest<Result>;
+    public interface IBaseCommand;
 
-    public interface ICommand<TResponse> : IRequest<Result<TResponse>>;
+    public interface ICommand : IBaseCommand, IRequest<Result>;
+
+    public interface ICommand<TResponse> : IBaseCommand, IRequest<Result<TResponse>>;
 }
