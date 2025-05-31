@@ -2,7 +2,7 @@
 {
     using LibraryManager.Core.Enums;
 
-    public static class LoanStatusExtension
+    public static class LoanStatusExtensions
     {
         public static IList<LoanStatus> BookUnavailable()
         {

@@ -19,7 +19,7 @@
 
         public async Task<Result<IList<AuthorResponse>>> Handle(GetAuthorsQuery request, CancellationToken ct)
         {
-            var authors = await _authorRepository.GetAllAsync(ct);
+            var authors = await _authorRepository.GetAllAsync(request.ToFilter(), ct);
 
             var response = authors?
                 .Select(AuthorResponse.FromEntity)?

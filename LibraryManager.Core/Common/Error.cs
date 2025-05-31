@@ -8,7 +8,7 @@
 
         public static readonly Error NullValue = new("General.Null", "Null value was provided", ErrorType.Failure);
 
-        public Error(string code, string? description = null, ErrorType? type = null)
+        public Error(string code, string description = null, ErrorType? type = null)
         {
             Code = code;
             Description = description;
@@ -17,11 +17,11 @@
 
         public string Code { get; }
 
-        public string? Description { get; }
+        public string Description { get; }
 
         public ErrorType? Type { get; }
 
-        public static implicit operator string?(Error error)
+        public static implicit operator string(Error error)
         {
             return error != null ? error.Description : default;
         }

@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Extensions;
     using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.ValueObjects.Filters;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,10 +17,12 @@
             _context = context;
         }
 
-        public async Task<IList<Author>> GetAllAsync(CancellationToken ct)
+        public async Task<IList<Author>> GetAllAsync(AuthorFilter filter, CancellationToken ct)
         {
             return await _context.Authors
                 .AsNoTracking()
+                .OrderBy(x => x.CreateDate)
+                .SetPagination(filter)
                 .ToListAsync(ct);
         }
 

@@ -31,7 +31,7 @@
 
         public Address Address { get; private set; }
 
-        public IList<Loan>? Loans { get; private set; } = [];
+        public IList<Loan> Loans { get; private set; } = [];
 
         public bool CanLoan(Book book)
         {
