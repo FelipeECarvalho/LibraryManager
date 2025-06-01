@@ -27,9 +27,10 @@
         [HttpGet]
         [ProducesResponseType(typeof(IList<BookResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
+            [FromQuery] GetBooksQuery query,
             CancellationToken ct)
         {
-            var result = await _mediator.Send(new GetBooksQuery(), ct);
+            var result = await _mediator.Send(query, ct);
 
             return Ok(result.Value);
         }
@@ -58,30 +59,6 @@
 
             return Ok(result.Value);
         }
-
-        ///// <summary>
-        ///// Retrieves all books containing the given title
-        ///// </summary>
-        ///// <response code="200">Books retrieved successfully.</response>
-        ///// <response code="400">The title is empty.</response>
-        ///// <returns>A list containing with the books.</returns>
-        //[HttpGet]
-        //[ProducesResponseType(typeof(IList<BookResponse>), StatusCodes.Status200OK)]
-        //[ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-        //public async Task<IActionResult> GetByTitle(
-        //    [FromQuery] string title, 
-        //    CancellationToken ct)
-        //{
-        //    var query = new GetBooksByTitleQuery(title);
-        //    var result = await _mediator.Send(query, ct);
-
-        //    if (result.IsFailure)
-        //    {
-        //        return HandleFailure(result);
-        //    }
-
-        //    return Ok(result.Value);
-        //}
 
         /// <summary>
         /// Creates a new book

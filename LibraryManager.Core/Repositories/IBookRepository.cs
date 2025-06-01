@@ -4,10 +4,9 @@
 
     public interface IBookRepository
     {
-        Task<IList<Book>> GetAllAsync(CancellationToken ct = default);
+        Task<IList<Book>> GetAllAsync(int limit, int offset, string title = null, CancellationToken ct = default);
         Task<Book> GetByIdAsync(Guid id, CancellationToken ct = default);
         Task<IList<Book>> GetByIdAsync(IList<Guid> ids, CancellationToken ct = default);
-        Task<IList<Book>> GetByTitleAsync(string title, CancellationToken ct = default);
         Task<bool> IsIsbnUnique(string isbn, CancellationToken ct = default);
 
         void Add(Book book);

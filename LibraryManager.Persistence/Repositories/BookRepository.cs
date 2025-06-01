@@ -15,11 +15,14 @@
             _context = context;
         }
 
-        public async Task<IList<Book>> GetAllAsync(CancellationToken ct)
+        public async Task<IList<Book>> GetAllAsync(int limit, int offset, string title, CancellationToken ct)
         {
             return await _context.Books
                 .AsNoTracking()
                 .Include(x => x.Author)
+                .Where(x => string.IsNullOrEmpty(title) || x.Title == title)
+                .Skip((offset - 1) * limit) 
+                .Take(limit)
                 .ToListAsync(ct);
         }
 
@@ -37,15 +40,6 @@
                 .AsNoTracking()
                 .Include(x => x.Author)
                 .Where(x => ids.Contains(x.Id))
-                .ToListAsync(ct);
-        }
-
-        public async Task<IList<Book>> GetByTitleAsync(string title, CancellationToken ct)
-        {
-            return await _context.Books
-                .Include(x => x.Author)
-                .Where(x => EF.Functions.Like(x.Title, $"%{title}%"))
-                .AsNoTracking()
                 .ToListAsync(ct);
         }
 

@@ -4,7 +4,7 @@
 
     public interface ICategoryRepository
     {
-        Task<IList<Category>> GetAllAsync(CancellationToken ct = default);
+        Task<IList<Category>> GetAllAsync(int limit, int offset, CancellationToken ct = default);
         Task<Category> GetById(Guid id, CancellationToken ct = default);
 
         public void Add(Category category);

@@ -18,10 +18,12 @@
             _context = context;
         }
 
-        public async Task<IList<Category>> GetAllAsync(CancellationToken ct)
+        public async Task<IList<Category>> GetAllAsync(int limit, int offset, CancellationToken ct)
         {
             return await _context.Categories
                 .AsNoTracking()
+                .Skip((offset - 1) * limit)
+                .Take(offset)
                 .ToListAsync(ct);
         }
 

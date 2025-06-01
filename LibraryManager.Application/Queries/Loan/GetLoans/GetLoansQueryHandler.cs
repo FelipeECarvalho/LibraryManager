@@ -20,7 +20,10 @@
 
         public async Task<Result<IList<LoanResponse>>> Handle(GetLoansQuery request, CancellationToken ct)
         {
-            var loans = await _loanRepository.GetAllAsync(ct);
+            var loans = await _loanRepository.GetAllAsync(
+                request.Limit,
+                request.Offset,
+                ct);
 
             var loansResponse = loans?
                 .Select(LoanResponse.FromEntity)?

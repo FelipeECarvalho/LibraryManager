@@ -18,9 +18,12 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result<IList<CategoryResponse>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IList<CategoryResponse>>> Handle(GetCategoriesQuery request, CancellationToken ct)
         {
-            var categories = await _categoryRepository.GetAllAsync(cancellationToken);
+            var categories = await _categoryRepository.GetAllAsync(
+                request.Limit,
+                request.Offset,
+                ct);
             
             var response = categories?
                 .Select(CategoryResponse.FromEntity)?

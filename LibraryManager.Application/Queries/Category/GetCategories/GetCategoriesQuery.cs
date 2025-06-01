@@ -2,6 +2,6 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
 
-    public sealed record GetCategoriesQuery
+    public sealed record GetCategoriesQuery(int Limit = 10, int Offset = 1)
         : IQuery<IList<CategoryResponse>>;
 }

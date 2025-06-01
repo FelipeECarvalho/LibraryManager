@@ -4,6 +4,9 @@
     using LibraryManager.Application.Queries.Book;
     using System.Collections.Generic;
 
-    public sealed record GetBooksQuery
+    public sealed record GetBooksQuery(
+        int Limit = 10,
+        int Offset = 1,
+        string Title = null)
         : IQuery<IList<BookResponse>>;
 }

@@ -15,13 +15,15 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(CancellationToken ct)
+        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, CancellationToken ct)
         {
             return await _context.Loans
+                .AsNoTracking()
                 .Include(x => x.User)
                 .Include(x => x.Book)
                     .ThenInclude(x => x.Author)
-                .AsNoTracking()
+                .Skip((offset - 1) * limit)
+                .Take(offset)
                 .ToListAsync(ct);
         }
 
