@@ -22,6 +22,7 @@
                 .Include(x => x.User)
                 .Include(x => x.Book)
                     .ThenInclude(x => x.Author)
+                .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(offset)
                 .ToListAsync(ct);

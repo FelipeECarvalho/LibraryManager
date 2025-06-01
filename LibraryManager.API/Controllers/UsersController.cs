@@ -16,6 +16,7 @@
     /// <summary>
     /// An user
     /// </summary>
+    [Obsolete("Delete later because I don't want to expose user functionalities through API")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]

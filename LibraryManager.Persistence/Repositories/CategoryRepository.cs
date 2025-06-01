@@ -22,6 +22,7 @@
         {
             return await _context.Categories
                 .AsNoTracking()
+                .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(offset)
                 .ToListAsync(ct);

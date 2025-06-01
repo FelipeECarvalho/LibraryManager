@@ -17,10 +17,18 @@
 
         public async Task<IList<Book>> GetAllAsync(int limit, int offset, string title, CancellationToken ct)
         {
-            return await _context.Books
-                .AsNoTracking()
+            var query = _context.Books
+                .AsNoTracking();
+
+            if (!string.IsNullOrEmpty(title))
+            {
+                query = query
+                    .Where(x => EF.Functions.Like(x.Title, $"%{title}%"));
+            }
+
+            return await query
                 .Include(x => x.Author)
-                .Where(x => string.IsNullOrEmpty(title) || x.Title == title)
+                .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit) 
                 .Take(limit)
                 .ToListAsync(ct);

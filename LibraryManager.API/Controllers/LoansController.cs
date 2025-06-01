@@ -26,9 +26,9 @@
         /// <returns>A list containing all loans.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IList<LoanResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] GetLoansQuery query)
         {
-            var result = await _mediator.Send(new GetLoansQuery());
+            var result = await _mediator.Send(query);
 
             return Ok(result.Value);
         }
