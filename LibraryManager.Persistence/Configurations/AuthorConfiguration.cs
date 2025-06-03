@@ -21,8 +21,8 @@
             builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
             builder.OwnsOne(x => x.Name, c =>
             {
-                c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100);
-                c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100);
+                c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired(true);
+                c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired(true);
             });
 
             builder.HasMany(x => x.Books)
