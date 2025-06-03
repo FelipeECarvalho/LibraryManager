@@ -1,0 +1,54 @@
+﻿namespace LibraryManager.Persistence.Configurations
+{
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Persistence.Constants;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    internal sealed class LibraryConfiguration : IEntityTypeConfiguration<Library>
+    {
+        public void Configure(EntityTypeBuilder<Library> builder)
+        {
+            builder.ToTable(TableNames.Libraries);
+
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).ValueGeneratedNever();
+            builder.Property(x => x.CreateDate);
+            builder.Property(x => x.UpdateDate);
+            builder.Property(x => x.IsDeleted).HasDefaultValue(false);
+
+            builder.Property(x => x.Name).HasMaxLength(50);
+            builder.Property(x => x.OpeningTime);
+            builder.Property(x => x.ClosingTime);
+
+            builder.OwnsOne(x => x.Address, c =>
+            {
+                c.Property(a => a.Street).HasColumnName("Street").HasMaxLength(50);
+                c.Property(a => a.Number).HasColumnName("Number").HasMaxLength(15);
+                c.Property(a => a.District).HasColumnName("District").HasMaxLength(50);
+                c.Property(a => a.City).HasColumnName("City").HasMaxLength(50);
+                c.Property(a => a.State).HasColumnName("State").HasMaxLength(50);
+                c.Property(a => a.CountryCode).HasColumnName("CountryCode").HasMaxLength(5);
+                c.Property(a => a.ZipCode).HasColumnName("ZipCode").HasMaxLength(20);
+            });
+
+            builder.HasMany(x => x.Users)
+                .WithOne(x => x.Library)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.Books)
+                .WithOne(x => x.Library)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(x => x.Categories)
+                .WithOne(x => x.Library)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
+        }
+    }
+}

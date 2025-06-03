@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Library.Persistence.Migrations
+namespace LibraryManager.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Book_category_added : Migration

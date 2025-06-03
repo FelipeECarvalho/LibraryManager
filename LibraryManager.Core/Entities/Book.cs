@@ -41,6 +41,10 @@
 
         public IList<Loan> Loans { get; private set; }
 
+        public Guid LibraryId { get; private set; }
+
+        public Library Library { get; private set; }
+
         public void Update(string title, string description, DateTimeOffset publicationDate)
         {
             Title = title;

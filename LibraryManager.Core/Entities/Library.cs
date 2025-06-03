@@ -21,5 +21,7 @@
         public IList<Book> Books { get; private set; }
 
         public IList<User> Users { get; private set; }
+
+        public IList<Category> Categories { get; private set; }
     }
 }
