@@ -23,6 +23,7 @@
             var loans = await _loanRepository.GetAllAsync(
                 request.Limit,
                 request.Offset,
+                request.UserId,
                 ct);
 
             var loansResponse = loans?

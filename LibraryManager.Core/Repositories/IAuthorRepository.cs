@@ -4,7 +4,7 @@
 
     public interface IAuthorRepository
     {
-        Task<IList<Author>> GetAllAsync(int limit, int offset, CancellationToken ct = default);
+        Task<IList<Author>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken ct = default);
         Task<Author> GetByIdAsync(Guid id, CancellationToken ct = default);
 
         void Add(Author author);

@@ -15,10 +15,18 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, CancellationToken ct)
+        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, Guid? UserId, CancellationToken ct)
         {
-            return await _context.Loans
-                .AsNoTracking()
+            var query = _context.Loans
+                .AsNoTracking();
+
+            if (UserId.HasValue)
+            {
+                query = query
+                    .Where(x => x.UserId == UserId);
+            }
+
+            return await query
                 .Include(x => x.User)
                 .Include(x => x.Book)
                     .ThenInclude(x => x.Author)

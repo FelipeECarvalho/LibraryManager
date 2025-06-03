@@ -1,9 +1,7 @@
 **TODO**
 
-- Adicionar a entidade biblioteca
-	- Ela vai ter seus usuários, livros, etc.
-- Implementar melhorias no UnitOfWork
 - Autenticação e autorização dos usuários
+- Implementar melhorias no UnitOfWork
 - Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar

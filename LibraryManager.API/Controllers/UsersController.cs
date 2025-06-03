@@ -5,10 +5,8 @@
     using LibraryManager.Application.Commands.User.DeleteUser;
     using LibraryManager.Application.Commands.User.UpdateUser;
     using LibraryManager.Application.Queries.Author;
-    using LibraryManager.Application.Queries.Loan;
     using LibraryManager.Application.Queries.User;
     using LibraryManager.Application.Queries.User.GetUserById;
-    using LibraryManager.Application.Queries.User.GetUserLoans;
     using LibraryManager.Application.Queries.User.GetUsers;
     using MediatR;
     using Microsoft.AspNetCore.Mvc;
@@ -16,7 +14,6 @@
     /// <summary>
     /// An user
     /// </summary>
-    [Obsolete("Delete later because I don't want to expose user functionalities through API")]
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
@@ -61,32 +58,6 @@
             var user = result.Value;
 
             return Ok(user);
-        }
-
-        /// <summary>
-        /// Retrieves the user loans with the specified ID.
-        /// </summary>
-        /// <param name="id">The unique identifier of the user.</param>
-        /// <response code="200">User retrieved successfully.</response>
-        /// <response code="404">User not found.</response>
-        /// <returns>Returns the user loans if found.</returns>
-        [HttpGet("{id:guid}/loans")]
-        [ProducesResponseType(typeof(IList<LoanResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetLoans(
-            Guid id,
-            CancellationToken ct)
-        {
-            var result = await _mediator.Send(new GetUserLoansQuery(id), ct);
-
-            if (result.IsFailure)
-            {
-                return NotFound(result.Error);
-            }
-
-            var loans = result.Value;
-
-            return Ok(loans);
         }
 
         /// <summary>
