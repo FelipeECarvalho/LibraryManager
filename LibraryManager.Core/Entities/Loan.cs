@@ -13,7 +13,7 @@
         {
         }
 
-        public Loan(Guid userId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate)
+        public Loan(Guid userId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate, string observation)
             : base()
         {
             UserId = userId;
@@ -21,6 +21,7 @@
             StartDate = startDate;
             EndDate = endDate;
             Status = LoanStatus.Requested;
+            Observation = observation;
         }
 
         public Guid UserId { get; private set; }
@@ -30,6 +31,8 @@
         public Guid BookId { get; private set; }
 
         public Book Book { get; private set; }
+
+        public string Observation { get; set; }
 
         public DateTimeOffset StartDate { get; private set; }
 

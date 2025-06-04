@@ -7,5 +7,6 @@
         Guid UserId,
         Guid BookId,
         DateTimeOffset StartDate,
-        DateTimeOffset EndDate) : ICommand<LoanResponse>;
+        DateTimeOffset EndDate,
+        string Observation) : ICommand<LoanResponse>;
 }

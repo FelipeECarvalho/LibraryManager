@@ -21,6 +21,7 @@
             builder.Property(x => x.StartDate);
             builder.Property(x => x.EndDate);
             builder.Property(x => x.Status);
+            builder.Property(x => x.Observation).HasMaxLength(256).IsRequired(false);
 
             builder.HasOne(x => x.User)
                 .WithMany(x => x.Loans)
