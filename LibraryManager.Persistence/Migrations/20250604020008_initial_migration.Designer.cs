@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManager.Persistence.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20250530005728_improve_category")]
-    partial class improve_category
+    [Migration("20250604020008_initial_migration")]
+    partial class initial_migration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,9 @@ namespace LibraryManager.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset>("PublicationDate")
                         .HasColumnType("datetimeoffset");
 
@@ -93,6 +96,8 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasIndex("Isbn")
                         .IsUnique()
                         .HasFilter("[Isbn] IS NOT NULL");
+
+                    b.HasIndex("LibraryId");
 
                     b.HasIndex("Title");
 
@@ -126,7 +131,8 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("BookId", "CategoryId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
 
                     b.ToTable("BookCategory", (string)null);
                 });
@@ -148,6 +154,9 @@ namespace LibraryManager.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -157,11 +166,44 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LibraryId");
+
                     b.HasIndex("Name")
                         .IsUnique()
                         .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Category", (string)null);
+                });
+
+            modelBuilder.Entity("LibraryManager.Core.Entities.Library", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeOnly>("ClosingTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTimeOffset>("CreateDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<TimeOnly>("OpeningTime")
+                        .HasColumnType("time");
+
+                    b.Property<DateTimeOffset>("UpdateDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Library", (string)null);
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Loan", b =>
@@ -230,6 +272,9 @@ namespace LibraryManager.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("datetimeoffset");
 
@@ -243,6 +288,8 @@ namespace LibraryManager.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
+                    b.HasIndex("LibraryId");
+
                     b.ToTable("User", (string)null);
                 });
 
@@ -254,11 +301,13 @@ namespace LibraryManager.Persistence.Migrations
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<string>("FirstName")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)")
                                 .HasColumnName("FirstName");
 
                             b1.Property<string>("LastName")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)")
                                 .HasColumnName("LastName");
@@ -282,7 +331,15 @@ namespace LibraryManager.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
+                        .WithMany("Books")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Author");
+
+                    b.Navigation("Library");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.BookCategory", b =>
@@ -301,6 +358,86 @@ namespace LibraryManager.Persistence.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("LibraryManager.Core.Entities.Category", b =>
+                {
+                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
+                        .WithMany("Categories")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Library");
+                });
+
+            modelBuilder.Entity("LibraryManager.Core.Entities.Library", b =>
+                {
+                    b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("LibraryId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("CountryCode")
+                                .HasMaxLength(5)
+                                .HasColumnType("nvarchar(5)")
+                                .HasColumnName("CountryCode");
+
+                            b1.Property<string>("District")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("District");
+
+                            b1.Property<decimal?>("Latitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<decimal?>("Longitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Longitude");
+
+                            b1.Property<string>("Number")
+                                .HasMaxLength(15)
+                                .HasColumnType("nvarchar(15)")
+                                .HasColumnName("Number");
+
+                            b1.Property<string>("Observation")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("Observation");
+
+                            b1.Property<string>("State")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("Street")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("Street");
+
+                            b1.Property<string>("ZipCode")
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("ZipCode");
+
+                            b1.HasKey("LibraryId");
+
+                            b1.ToTable("Library");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LibraryId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Loan", b =>
@@ -324,28 +461,11 @@ namespace LibraryManager.Persistence.Migrations
 
             modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
                 {
-                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("FirstName")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("FirstName");
-
-                            b1.Property<string>("LastName")
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("LastName");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("User");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
+                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
+                        .WithMany("Users")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
                         {
@@ -367,13 +487,25 @@ namespace LibraryManager.Persistence.Migrations
                                 .HasColumnType("nvarchar(50)")
                                 .HasColumnName("District");
 
+                            b1.Property<decimal?>("Latitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<decimal?>("Longitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Longitude");
+
                             b1.Property<string>("Number")
                                 .HasMaxLength(15)
                                 .HasColumnType("nvarchar(15)")
                                 .HasColumnName("Number");
 
                             b1.Property<string>("Observation")
-                                .HasColumnType("nvarchar(max)");
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("Observation");
 
                             b1.Property<string>("State")
                                 .HasMaxLength(50)
@@ -398,7 +530,35 @@ namespace LibraryManager.Persistence.Migrations
                                 .HasForeignKey("UserId");
                         });
 
-                    b.Navigation("Address");
+                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("FirstName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("LastName");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("User");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Library");
 
                     b.Navigation("Name");
                 });
@@ -418,6 +578,15 @@ namespace LibraryManager.Persistence.Migrations
             modelBuilder.Entity("LibraryManager.Core.Entities.Category", b =>
                 {
                     b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("LibraryManager.Core.Entities.Library", b =>
+                {
+                    b.Navigation("Books");
+
+                    b.Navigation("Categories");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>

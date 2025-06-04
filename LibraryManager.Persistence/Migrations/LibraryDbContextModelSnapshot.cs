@@ -128,7 +128,8 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("BookId", "CategoryId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = 0");
 
                     b.ToTable("BookCategory", (string)null);
                 });
@@ -330,7 +331,7 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasOne("LibraryManager.Core.Entities.Library", "Library")
                         .WithMany("Books")
                         .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -361,7 +362,7 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasOne("LibraryManager.Core.Entities.Library", "Library")
                         .WithMany("Categories")
                         .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Library");
@@ -460,7 +461,7 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasOne("LibraryManager.Core.Entities.Library", "Library")
                         .WithMany("Users")
                         .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>

@@ -25,9 +25,10 @@
         [HttpGet]
         [ProducesResponseType(typeof(IList<CategoryResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
+            [FromQuery] GetCategoriesQuery query,
             CancellationToken ct)
         {
-            var response = await _mediator.Send(new GetCategoriesQuery(), ct);
+            var response = await _mediator.Send(query, ct);
 
             return Ok(response.Value);
         }

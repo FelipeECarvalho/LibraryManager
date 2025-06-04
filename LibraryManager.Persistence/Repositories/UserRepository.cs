@@ -15,10 +15,13 @@
             _context = context;
         }
 
-        public async Task<IList<User>> GetAllAsync(CancellationToken ct)
+        public async Task<IList<User>> GetAllAsync(int limit, int offset, CancellationToken ct)
         {
             return await _context.Users
                 .AsNoTracking()
+                .OrderBy(x => x.CreateDate)
+                .Skip((offset - 1) * limit)
+                .Take(limit)
                 .ToListAsync(ct);
         }
 

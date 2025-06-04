@@ -30,7 +30,9 @@
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(x => new { x.BookId, x.CategoryId }).IsUnique();
+            builder.HasIndex(x => new { x.BookId, x.CategoryId })
+                .HasFilter("[IsDeleted] = 0")
+                .IsUnique();
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

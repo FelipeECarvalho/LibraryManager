@@ -19,7 +19,7 @@
 
         public async Task<Result<IList<UserResponse>>> Handle(GetUsersQuery request, CancellationToken ct)
         {
-            var users = await _userRepository.GetAllAsync(ct);
+            var users = await _userRepository.GetAllAsync(request.Limit, request.Offset, ct);
 
             var usersResponse = users?
                 .Select(UserResponse.FromEntity)?
