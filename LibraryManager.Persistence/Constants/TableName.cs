@@ -6,6 +6,8 @@
     {
         internal const string Borrowers = nameof(Borrower);
 
+        internal const string Operators = nameof(Operator);
+
         internal const string Books = nameof(Book);
 
         internal const string Loans = nameof(Loan);
@@ -16,6 +18,6 @@
 
         internal const string Libraries = nameof(Library);
 
-        internal const string BookCategory = "BookCategory";
+        internal const string BookCategory = nameof(Core.Entities.BookCategory);
     }
 }

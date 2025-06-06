@@ -43,8 +43,8 @@
 
             builder.Navigation(x => x.Address).IsRequired(true);
 
-            builder.HasIndex(x => x.Email).IsUnique();
-            builder.HasIndex(x => x.Document).IsUnique();
+            builder.HasIndex(x => new { x.Email, x.LibraryId }).IsUnique();
+            builder.HasIndex(x => new { x.Document, x.LibraryId }).IsUnique();
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

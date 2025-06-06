@@ -3,7 +3,7 @@
     using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;
 
-    public class Borrower : BaseEntity
+    public class Borrower : User
     {
         [Obsolete("EntityFrameworkCore constructor")]
         private Borrower()
@@ -21,11 +21,7 @@
             BirthDate = birthDate;
         }
 
-        public Name Name { get; private set; }
-
         public string Document { get; private set; }
-
-        public string Email { get; private set; }
 
         public DateTimeOffset BirthDate { get; private set; }
 
