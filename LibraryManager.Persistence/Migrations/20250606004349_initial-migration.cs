@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LibraryManager.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class initial_migration : Migration
+    public partial class initialmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -89,30 +89,7 @@ namespace LibraryManager.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Category", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Category_Library_LibraryId",
-                        column: x => x.LibraryId,
-                        principalTable: "Library",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
+                name: "Borrower",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -138,13 +115,68 @@ namespace LibraryManager.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Borrower", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Library_LibraryId",
+                        name: "FK_Borrower_Library_LibraryId",
                         column: x => x.LibraryId,
                         principalTable: "Library",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Category",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Category_Library_LibraryId",
+                        column: x => x.LibraryId,
+                        principalTable: "Library",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Loan",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BorrowerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Observation = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Loan", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Loan_Book_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Book",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Loan_Borrower_BorrowerId",
+                        column: x => x.BorrowerId,
+                        principalTable: "Borrower",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -173,37 +205,6 @@ namespace LibraryManager.Persistence.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Loan",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StartDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    EndDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Loan", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Loan_Book_BookId",
-                        column: x => x.BookId,
-                        principalTable: "Book",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Loan_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -241,6 +242,25 @@ namespace LibraryManager.Persistence.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Borrower_Document",
+                table: "Borrower",
+                column: "Document",
+                unique: true,
+                filter: "[Document] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Borrower_Email",
+                table: "Borrower",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Borrower_LibraryId",
+                table: "Borrower",
+                column: "LibraryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Category_LibraryId",
                 table: "Category",
                 column: "LibraryId");
@@ -258,30 +278,11 @@ namespace LibraryManager.Persistence.Migrations
                 column: "BookId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Loan_UserId_BookId_Status",
+                name: "IX_Loan_BorrowerId_BookId_Status",
                 table: "Loan",
-                columns: new[] { "UserId", "BookId", "Status" },
+                columns: new[] { "BorrowerId", "BookId", "Status" },
                 unique: true,
                 filter: "Status in (0, 1, 2, 4)");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_Document",
-                table: "User",
-                column: "Document",
-                unique: true,
-                filter: "[Document] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_Email",
-                table: "User",
-                column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_LibraryId",
-                table: "User",
-                column: "LibraryId");
         }
 
         /// <inheritdoc />
@@ -300,7 +301,7 @@ namespace LibraryManager.Persistence.Migrations
                 name: "Book");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Borrower");
 
             migrationBuilder.DropTable(
                 name: "Author");

@@ -4,7 +4,7 @@
 
     internal static class TableNames
     {
-        internal const string Users = nameof(User);
+        internal const string Borrowers = nameof(Borrower);
 
         internal const string Books = nameof(Book);
 

@@ -3,15 +3,15 @@
     using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;
 
-    public class User : BaseEntity
+    public class Borrower : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
-        private User()
+        private Borrower()
             : base()
         {
         }
 
-        public User(Name name, string document, string email, DateTimeOffset birthDate, Address address)
+        public Borrower(Name name, string document, string email, DateTimeOffset birthDate, Address address)
             : base()
         {
             Name = name;

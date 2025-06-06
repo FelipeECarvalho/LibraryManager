@@ -5,19 +5,19 @@
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
-    internal sealed class UserRepository 
-        : IUserRepository
+    internal sealed class BorrowerRepository 
+        : IBorrowerRepository
     {
         private readonly LibraryDbContext _context;
 
-        public UserRepository(LibraryDbContext context)
+        public BorrowerRepository(LibraryDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IList<User>> GetAllAsync(int limit, int offset, CancellationToken ct)
+        public async Task<IList<Borrower>> GetAllAsync(int limit, int offset, CancellationToken ct)
         {
-            return await _context.Users
+            return await _context.Borrowers
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
@@ -25,30 +25,30 @@
                 .ToListAsync(ct);
         }
 
-        public async Task<User> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Borrower> GetByIdAsync(Guid id, CancellationToken ct)
         {
-            return await _context.Users
+            return await _context.Borrowers
                 .SingleOrDefaultAsync(x => x.Id == id, ct);
         }
 
         public async Task<bool> IsEmailUnique(string email, CancellationToken ct)
         {
-            return !await _context.Users.AnyAsync(x => x.Email == email, ct);
+            return !await _context.Borrowers.AnyAsync(x => x.Email == email, ct);
         }
 
         public async Task<bool> IsDocumentUnique(string document, CancellationToken ct)
         {
-            return !await _context.Users.AnyAsync(x => x.Document == document, ct);
+            return !await _context.Borrowers.AnyAsync(x => x.Document == document, ct);
         }
 
-        public void Add(User user)
+        public void Add(Borrower borrower)
         {
-            _context.Users.Add(user);
+            _context.Borrowers.Add(borrower);
         }
 
-        public void Update(User user)
+        public void Update(Borrower borrower)
         {
-            _context.Users.Update(user);
+            _context.Borrowers.Update(borrower);
         }
     }
 }

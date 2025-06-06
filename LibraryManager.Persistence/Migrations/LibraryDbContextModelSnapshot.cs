@@ -134,6 +134,51 @@ namespace LibraryManager.Persistence.Migrations
                     b.ToTable("BookCategory", (string)null);
                 });
 
+            modelBuilder.Entity("LibraryManager.Core.Entities.Borrower", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("BirthDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset>("CreateDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Document")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("UpdateDate")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Document")
+                        .IsUnique()
+                        .HasFilter("[Document] IS NOT NULL");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasFilter("[Email] IS NOT NULL");
+
+                    b.HasIndex("LibraryId");
+
+                    b.ToTable("Borrower", (string)null);
+                });
+
             modelBuilder.Entity("LibraryManager.Core.Entities.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -211,6 +256,9 @@ namespace LibraryManager.Persistence.Migrations
                     b.Property<Guid>("BookId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BorrowerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTimeOffset>("CreateDate")
                         .HasColumnType("datetimeoffset");
 
@@ -222,6 +270,10 @@ namespace LibraryManager.Persistence.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<string>("Observation")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
                     b.Property<DateTimeOffset>("StartDate")
                         .HasColumnType("datetimeoffset");
 
@@ -231,63 +283,15 @@ namespace LibraryManager.Persistence.Migrations
                     b.Property<DateTimeOffset>("UpdateDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
-                    b.HasIndex("UserId", "BookId", "Status")
+                    b.HasIndex("BorrowerId", "BookId", "Status")
                         .IsUnique()
                         .HasFilter("Status in (0, 1, 2, 4)");
 
                     b.ToTable("Loan", (string)null);
-                });
-
-            modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("BirthDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Document")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<Guid>("LibraryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTimeOffset>("UpdateDate")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Document")
-                        .IsUnique()
-                        .HasFilter("[Document] IS NOT NULL");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("LibraryId");
-
-                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Author", b =>
@@ -355,6 +359,110 @@ namespace LibraryManager.Persistence.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("LibraryManager.Core.Entities.Borrower", b =>
+                {
+                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
+                        .WithMany("Borrowers")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
+                        {
+                            b1.Property<Guid>("BorrowerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("City")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("City");
+
+                            b1.Property<string>("CountryCode")
+                                .HasMaxLength(5)
+                                .HasColumnType("nvarchar(5)")
+                                .HasColumnName("CountryCode");
+
+                            b1.Property<string>("District")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("District");
+
+                            b1.Property<decimal?>("Latitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<decimal?>("Longitude")
+                                .HasPrecision(9, 6)
+                                .HasColumnType("decimal(9,6)")
+                                .HasColumnName("Longitude");
+
+                            b1.Property<string>("Number")
+                                .HasMaxLength(15)
+                                .HasColumnType("nvarchar(15)")
+                                .HasColumnName("Number");
+
+                            b1.Property<string>("Observation")
+                                .HasMaxLength(256)
+                                .HasColumnType("nvarchar(256)")
+                                .HasColumnName("Observation");
+
+                            b1.Property<string>("State")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("State");
+
+                            b1.Property<string>("Street")
+                                .HasMaxLength(50)
+                                .HasColumnType("nvarchar(50)")
+                                .HasColumnName("Street");
+
+                            b1.Property<string>("ZipCode")
+                                .HasMaxLength(20)
+                                .HasColumnType("nvarchar(20)")
+                                .HasColumnName("ZipCode");
+
+                            b1.HasKey("BorrowerId");
+
+                            b1.ToTable("Borrower");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BorrowerId");
+                        });
+
+                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("BorrowerId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("FirstName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("FirstName");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)")
+                                .HasColumnName("LastName");
+
+                            b1.HasKey("BorrowerId");
+
+                            b1.ToTable("Borrower");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BorrowerId");
+                        });
+
+                    b.Navigation("Address")
+                        .IsRequired();
+
+                    b.Navigation("Library");
+
+                    b.Navigation("Name");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Category", b =>
@@ -445,119 +553,15 @@ namespace LibraryManager.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LibraryManager.Core.Entities.User", "User")
+                    b.HasOne("LibraryManager.Core.Entities.Borrower", "Borrower")
                         .WithMany("Loans")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("BorrowerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Book");
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
-                {
-                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
-                        .WithMany("Users")
-                        .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("City")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
-                                .HasColumnName("City");
-
-                            b1.Property<string>("CountryCode")
-                                .HasMaxLength(5)
-                                .HasColumnType("nvarchar(5)")
-                                .HasColumnName("CountryCode");
-
-                            b1.Property<string>("District")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
-                                .HasColumnName("District");
-
-                            b1.Property<decimal?>("Latitude")
-                                .HasPrecision(9, 6)
-                                .HasColumnType("decimal(9,6)")
-                                .HasColumnName("Latitude");
-
-                            b1.Property<decimal?>("Longitude")
-                                .HasPrecision(9, 6)
-                                .HasColumnType("decimal(9,6)")
-                                .HasColumnName("Longitude");
-
-                            b1.Property<string>("Number")
-                                .HasMaxLength(15)
-                                .HasColumnType("nvarchar(15)")
-                                .HasColumnName("Number");
-
-                            b1.Property<string>("Observation")
-                                .HasMaxLength(256)
-                                .HasColumnType("nvarchar(256)")
-                                .HasColumnName("Observation");
-
-                            b1.Property<string>("State")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
-                                .HasColumnName("State");
-
-                            b1.Property<string>("Street")
-                                .HasMaxLength(50)
-                                .HasColumnType("nvarchar(50)")
-                                .HasColumnName("Street");
-
-                            b1.Property<string>("ZipCode")
-                                .HasMaxLength(20)
-                                .HasColumnType("nvarchar(20)")
-                                .HasColumnName("ZipCode");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("User");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("FirstName")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("FirstName");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("LastName");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("User");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Address")
-                        .IsRequired();
-
-                    b.Navigation("Library");
-
-                    b.Navigation("Name");
+                    b.Navigation("Borrower");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Author", b =>
@@ -572,6 +576,11 @@ namespace LibraryManager.Persistence.Migrations
                     b.Navigation("Loans");
                 });
 
+            modelBuilder.Entity("LibraryManager.Core.Entities.Borrower", b =>
+                {
+                    b.Navigation("Loans");
+                });
+
             modelBuilder.Entity("LibraryManager.Core.Entities.Category", b =>
                 {
                     b.Navigation("BookCategories");
@@ -581,14 +590,9 @@ namespace LibraryManager.Persistence.Migrations
                 {
                     b.Navigation("Books");
 
+                    b.Navigation("Borrowers");
+
                     b.Navigation("Categories");
-
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
-                {
-                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

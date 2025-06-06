@@ -18,45 +18,45 @@
                 ErrorType.Validation);
         }
 
-        public static class User
+        public static class Borrower
         {
             public static readonly Func<Guid, Error> NotFound = id => new(
-                "User.NotFound",
-                $"The user with the ID {id} was not found.",
+                "Borrower.NotFound",
+                $"The borrower with the ID {id} was not found.",
                 ErrorType.NotFound);
 
             public static Error DocumentInvalidLength => new(
-                "User.DocumentInvalidLength",
+                "Borrower.DocumentInvalidLength",
                 "The document must be between 2 and 30 characters long.",
                 ErrorType.Validation);
 
             public static Error DocumentRequired => new(
-                "User.DocumentRequired",
+                "Borrower.DocumentRequired",
                 "The document is required.",
                 ErrorType.Validation);
 
             public static Error EmailAlreadyExists => new(
-                "User.EmailAlreadyExists",
-                "A user with this email already exists.",
+                "Borrower.EmailAlreadyExists",
+                "A borrower with this email already exists.",
                 ErrorType.Validation);
 
             public static Error DocumentAlreadyExists => new(
-                "User.DocumentAlreadyExists",
-                "A user with this document already exists.",
+                "Borrower.DocumentAlreadyExists",
+                "A borrower with this document already exists.",
                 ErrorType.Validation);
 
             public static Error EmailInvalidLength => new(
-                "User.EmailInvalidLength",
+                "Borrower.EmailInvalidLength",
                 "The email must be between 2 and 50 characters long",
                 ErrorType.Validation);
 
             public static Error EmailRequired => new(
-                "User.EmailRequired",
+                "Borrower.EmailRequired",
                 "The email is required.",
                 ErrorType.Validation);
 
             public static Error InvalidEmail => new(
-                "User.EmailInvalid",
+                "Borrower.EmailInvalid",
                 "Invalid email format.",
                 ErrorType.Validation);
         }
@@ -68,9 +68,9 @@
                 $"The loan with the ID {id} was not found.",
                 ErrorType.NotFound);
 
-            public static Error UserIdRequired => new(
-                "Loan.UserIdRequired",
-                "The user ID is required.",
+            public static Error BorrowerIdRequired => new(
+                "Loan.BorrowerIdRequired",
+                "The borrower ID is required.",
                 ErrorType.Validation);
 
             public static Error BookIdRequired => new(
@@ -90,12 +90,12 @@
 
             public static Error CannotReturnWhenNotBorrowed => new(
                 "Loan.CannotReturnWhenNotBorrowed",
-                "Cannot return a loan when the book is not currently borrowed by the user.",
+                "Cannot return a loan when the book is not currently borrowed by the borrower.",
                 ErrorType.Conflict);
 
             public static Error BookAlreadyLoaned => new(
                 "Loan.BookAlreadyLoaned",
-                "This book is already loaned to the user.",
+                "This book is already loaned to the borrower.",
                 ErrorType.Validation);
 
             public static Error CannotApproveWhenNotRequested => new(

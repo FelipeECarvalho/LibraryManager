@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Queries.Loan
 {
     using LibraryManager.Application.Queries.Book;
-    using LibraryManager.Application.Queries.User;
+    using LibraryManager.Application.Queries.Borrower;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
 
@@ -11,7 +11,7 @@
 
         public BookResponse Book { get; init; }
 
-        public UserResponse User { get; init; }
+        public BorrowerResponse Borrower { get; init; }
 
         public DateTimeOffset StartDate { get; init; }
 
@@ -26,7 +26,7 @@
             StartDate = loan.StartDate,
             Status = loan.Status,
             Book = BookResponse.FromEntity(loan.Book),
-            User = UserResponse.FromEntity(loan.User)
+            Borrower = BorrowerResponse.FromEntity(loan.Borrower)
         };
     }
 }

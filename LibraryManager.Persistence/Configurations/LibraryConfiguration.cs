@@ -38,7 +38,7 @@
 
             builder.Navigation(x => x.Address).IsRequired(true);
 
-            builder.HasMany(x => x.Users)
+            builder.HasMany(x => x.Borrowers)
                 .WithOne(x => x.Library)
                 .HasForeignKey(x => x.LibraryId)
                 .OnDelete(DeleteBehavior.Restrict);

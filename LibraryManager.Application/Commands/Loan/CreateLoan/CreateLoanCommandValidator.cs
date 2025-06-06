@@ -12,8 +12,8 @@
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);
 
-            RuleFor(x => x.UserId)
-                .NotEmpty().WithMessage(DomainErrors.Loan.UserIdRequired);
+            RuleFor(x => x.BorrowerId)
+                .NotEmpty().WithMessage(DomainErrors.Loan.BorrowerIdRequired);
 
             RuleFor(x => x.BookId)
                 .NotEmpty().WithMessage(DomainErrors.Loan.BookIdRequired);

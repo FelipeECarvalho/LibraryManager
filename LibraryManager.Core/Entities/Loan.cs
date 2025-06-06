@@ -13,10 +13,10 @@
         {
         }
 
-        public Loan(Guid userId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate, string observation)
+        public Loan(Guid borrowerId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate, string observation)
             : base()
         {
-            UserId = userId;
+            BorrowerId = borrowerId;
             BookId = bookId;
             StartDate = startDate;
             EndDate = endDate;
@@ -24,9 +24,9 @@
             Observation = observation;
         }
 
-        public Guid UserId { get; private set; }
+        public Guid BorrowerId { get; private set; }
 
-        public User User { get; private set; }
+        public Borrower Borrower { get; private set; }
 
         public Guid BookId { get; private set; }
 

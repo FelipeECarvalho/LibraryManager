@@ -23,9 +23,9 @@
             builder.Property(x => x.Status);
             builder.Property(x => x.Observation).HasMaxLength(256).IsRequired(false);
 
-            builder.HasOne(x => x.User)
+            builder.HasOne(x => x.Borrower)
                 .WithMany(x => x.Loans)
-                .HasForeignKey(x => x.UserId)
+                .HasForeignKey(x => x.BorrowerId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Book)
@@ -33,7 +33,7 @@
                 .HasForeignKey(x => x.BookId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasIndex(x => new { x.UserId, x.BookId, x.Status })
+            builder.HasIndex(x => new { x.BorrowerId, x.BookId, x.Status })
                 .IsUnique()
                 .HasFilter("Status in (0, 1, 2, 4)");
 

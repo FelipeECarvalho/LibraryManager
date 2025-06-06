@@ -1,14 +1,14 @@
-﻿namespace LibraryManager.Application.Commands.User.UpdateUser
+﻿namespace LibraryManager.Application.Commands.Borrower.UpdateBorrower
 {
     using FluentValidation;
     using LibraryManager.Application.Validators;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
 
-    internal sealed class UpdateUserCommandValidator
-        : AbstractValidator<UpdateUserCommand>
+    internal sealed class UpdateBorrowerCommandValidator
+        : AbstractValidator<UpdateBorrowerCommand>
     {
-        public UpdateUserCommandValidator()
+        public UpdateBorrowerCommandValidator()
         {
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);

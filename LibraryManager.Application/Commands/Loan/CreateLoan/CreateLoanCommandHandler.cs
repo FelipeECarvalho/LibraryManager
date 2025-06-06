@@ -12,30 +12,30 @@
     internal sealed class CreateLoanCommandHandler
         : ICommandHandler<CreateLoanCommand, LoanResponse>
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IBorrowerRepository _borrowerRepository;
         private readonly ILoanRepository _loanRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public CreateLoanCommandHandler(
             IUnitOfWork unitOfWork,
-            IUserRepository userRepository,
+            IBorrowerRepository borrowerRepository,
             ILoanRepository loanRepository,
             IBookRepository bookRepository)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
+            _borrowerRepository = borrowerRepository;
             _loanRepository = loanRepository;
             _bookRepository = bookRepository;
         }
 
         public async Task<Result<LoanResponse>> Handle(CreateLoanCommand request, CancellationToken ct)
         {
-            var user = await _userRepository.GetByIdAsync(request.UserId, ct);
+            var borrower = await _borrowerRepository.GetByIdAsync(request.BorrowerId, ct);
 
-            if (user == null)
+            if (borrower == null)
             {
-                return Result.Failure<LoanResponse>(DomainErrors.User.NotFound(request.UserId));
+                return Result.Failure<LoanResponse>(DomainErrors.Borrower.NotFound(request.BorrowerId));
             }
 
             var book = await _bookRepository.GetByIdAsync(request.BookId, ct);
@@ -50,12 +50,12 @@
                 return Result.Failure<LoanResponse>(DomainErrors.Book.NotAvaliableForLoan);
             }
 
-            if (!user.CanLoan(book))
+            if (!borrower.CanLoan(book))
             {
                 return Result.Failure<LoanResponse>(DomainErrors.Loan.BookAlreadyLoaned);
             }
 
-            var loan = new Loan(user.Id, book.Id, request.StartDate, request.EndDate, request.Observation);
+            var loan = new Loan(borrower.Id, book.Id, request.StartDate, request.EndDate, request.Observation);
 
             _loanRepository.Add(loan);
 

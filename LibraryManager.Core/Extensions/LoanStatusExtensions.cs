@@ -15,7 +15,7 @@
             ];
         }
 
-        public static IList<LoanStatus> BookInUserHands()
+        public static IList<LoanStatus> BookInBorrowerHands()
         {
             return
             [
@@ -33,8 +33,8 @@
             }.Contains(status);
         }
 
-        public static bool IsWithUser(this LoanStatus status)
-            => BookInUserHands().Contains(status);
+        public static bool IsWithBorrower(this LoanStatus status)
+            => BookInBorrowerHands().Contains(status);
 
         public static bool IsBookUnavailable(this LoanStatus status)
             => BookUnavailable().Contains(status);
@@ -49,6 +49,6 @@
             => newStatus == LoanStatus.Borrowed && currentStatus == LoanStatus.Approved;
 
         public static bool CanReturnFrom(this LoanStatus newStatus, LoanStatus currentStatus)
-            => newStatus == LoanStatus.Returned && currentStatus.IsWithUser();
+            => newStatus == LoanStatus.Returned && currentStatus.IsWithBorrower();
     }
 }

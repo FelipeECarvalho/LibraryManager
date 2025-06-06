@@ -5,11 +5,11 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class UserConfiguration : IEntityTypeConfiguration<User>
+    internal sealed class BorrowerConfiguration : IEntityTypeConfiguration<Borrower>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Borrower> builder)
         {
-            builder.ToTable(TableNames.Users);
+            builder.ToTable(TableNames.Borrowers);
 
             builder.HasKey(a => a.Id);
 
