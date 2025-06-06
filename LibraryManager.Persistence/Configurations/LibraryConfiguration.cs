@@ -11,14 +11,7 @@
         {
             builder.ToTable(TableNames.Libraries);
 
-            builder.HasKey(a => a.Id);
-
-            builder.Property(a => a.Id).ValueGeneratedNever();
-            builder.Property(x => x.CreateDate);
-            builder.Property(x => x.UpdateDate);
-            builder.Property(x => x.IsDeleted).HasDefaultValue(false);
-
-            builder.Property(x => x.Name).HasMaxLength(50);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.OpeningTime);
             builder.Property(x => x.ClosingTime);
 
@@ -36,7 +29,7 @@
                 c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false);
             });
 
-            builder.Navigation(x => x.Address).IsRequired(true);
+            builder.Navigation(x => x.Address).IsRequired();
 
             builder.HasMany(x => x.Borrowers)
                 .WithOne(x => x.Library)
@@ -52,8 +45,6 @@
                 .WithOne(x => x.Library)
                 .HasForeignKey(x => x.LibraryId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

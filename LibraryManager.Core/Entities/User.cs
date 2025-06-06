@@ -10,6 +10,6 @@
 
         public string PasswordHash { get; protected set; }
 
-        public DateTimeOffset LastLogin { get; protected set; }
+        public DateTimeOffset? LastLogin { get; protected set; }
     }
 }
