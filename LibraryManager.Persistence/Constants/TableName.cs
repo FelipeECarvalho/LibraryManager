@@ -4,10 +4,6 @@
 
     internal static class TableNames
     {
-        internal const string Borrowers = nameof(Borrower);
-
-        internal const string Operators = nameof(Operator);
-
         internal const string Books = nameof(Book);
 
         internal const string Loans = nameof(Loan);

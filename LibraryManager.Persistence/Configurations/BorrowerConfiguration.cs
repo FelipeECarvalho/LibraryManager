@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,8 +8,6 @@
     {
         public void Configure(EntityTypeBuilder<Borrower> builder)
         {
-            //builder.ToTable(TableNames.Borrowers);
-
             builder.Property(x => x.Document).HasMaxLength(30);
 
             builder.OwnsOne(x => x.Address, c =>

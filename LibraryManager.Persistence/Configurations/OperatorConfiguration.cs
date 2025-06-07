@@ -9,8 +9,6 @@
         public void Configure(EntityTypeBuilder<Operator> builder)
         {
             builder.Property(x => x.Permissions).IsRequired();
-
-            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }
