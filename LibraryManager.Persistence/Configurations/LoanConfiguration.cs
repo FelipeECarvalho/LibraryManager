@@ -5,18 +5,13 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class LoanConfiguration : IEntityTypeConfiguration<Loan>
+    internal sealed class LoanConfiguration : BaseEntityConfiguration<Loan>
     {
-        public void Configure(EntityTypeBuilder<Loan> builder)
+        public override void Configure(EntityTypeBuilder<Loan> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable(TableNames.Loans);
-
-            builder.HasKey(a => a.Id);
-
-            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
-            builder.Property(x => x.CreateDate).IsRequired();
-            builder.Property(x => x.UpdateDate).IsRequired();
-            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
 
             builder.Property(x => x.StartDate).IsRequired();
             builder.Property(x => x.EndDate).IsRequired();
@@ -38,8 +33,6 @@
             builder.HasIndex(x => new { x.BorrowerId, x.BookId, x.Status })
                 .IsUnique()
                 .HasFilter("Status in (0, 1, 2, 4)");
-
-            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

@@ -5,18 +5,13 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class BookConfiguration : IEntityTypeConfiguration<Book>
+    internal sealed class BookConfiguration : BaseEntityConfiguration<Book>
     {
-        public void Configure(EntityTypeBuilder<Book> builder)
+        public override void Configure(EntityTypeBuilder<Book> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable(TableNames.Books);
-
-            builder.HasKey(a => a.Id);
-
-            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
-            builder.Property(x => x.CreateDate).IsRequired();
-            builder.Property(x => x.UpdateDate).IsRequired();
-            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
 
             builder.Property(x => x.PublicationDate).IsRequired();
             builder.Property(x => x.StockNumber).IsRequired(false);
@@ -31,8 +26,6 @@
 
             builder.HasIndex(x => x.Title);
             builder.HasIndex(x => new { x.Isbn, x.LibraryId }).IsUnique();
-
-            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

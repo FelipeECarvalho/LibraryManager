@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Application.Queries.Borrower
 {
+    using LibraryManager.Core.Entities.Users;
     using LibraryManager.Core.ValueObjects;
 
     public sealed record BorrowerResponse
@@ -14,7 +15,7 @@
 
         public Address Address { get; set; }
 
-        public static BorrowerResponse FromEntity(Core.Entities.Borrower borrower)
+        public static BorrowerResponse FromEntity(Borrower borrower)
             => new()
             {
                 Id = borrower.Id,

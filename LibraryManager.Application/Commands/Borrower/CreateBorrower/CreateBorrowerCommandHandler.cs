@@ -3,7 +3,6 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Borrower;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
     using System.Threading;
@@ -32,7 +31,7 @@
                 return Result.Failure<BorrowerResponse>(validationResult.Error);
             }
 
-            var borrower = new Borrower(request.Name, request.Document, request.Email, request.BirthDate, request.Address);
+            var borrower = new Core.Entities.Users.Borrower(request.Name, request.Document, request.Email, request.BirthDate, request.Address);
 
             _borrowerRepository.Add(borrower);
 

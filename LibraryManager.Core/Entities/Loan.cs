@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Core.Entities
 {
     using LibraryManager.Core.Common;
+    using LibraryManager.Core.Entities.Users;
     using LibraryManager.Core.Enums;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Extensions;

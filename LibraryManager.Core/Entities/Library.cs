@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Entities.Users;
     using LibraryManager.Core.ValueObjects;
 
     public class Library : BaseEntity

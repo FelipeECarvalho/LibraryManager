@@ -1,7 +1,10 @@
-﻿namespace LibraryManager.Core.Entities
+﻿namespace LibraryManager.Core.Entities.Users
 {
     using LibraryManager.Core.ValueObjects;
 
+    /// <summary>
+    /// Base user, responsible for storing common user's data
+    /// </summary>
     public abstract class User : BaseEntity
     {
         public Name Name { get; protected set; }

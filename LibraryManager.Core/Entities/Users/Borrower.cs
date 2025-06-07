@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Entities
+﻿namespace LibraryManager.Core.Entities.Users
 {
     using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;

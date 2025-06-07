@@ -1,20 +1,18 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
-    using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Entities.Users;
     using LibraryManager.Core.Enums;
+    using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal class UserConfiguration : IEntityTypeConfiguration<User>
+    internal class UserConfiguration : BaseEntityConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public override void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasKey(a => a.Id);
+            base.Configure(builder);
 
-            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
-            builder.Property(x => x.CreateDate).IsRequired();
-            builder.Property(x => x.UpdateDate).IsRequired();
-            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+            builder.ToTable(TableNames.Users);
 
             builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);
@@ -35,8 +33,6 @@
             builder.HasIndex(u => u.Email)
                 .IsUnique()
                 .HasFilter($"[UserType] = 1");
-
-            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }
