@@ -1,8 +1,10 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Enums;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using System.Reflection.Emit;
 
     internal class UserConfiguration : IEntityTypeConfiguration<User>
     {
@@ -26,6 +28,16 @@
             });
 
             builder.Navigation(x => x.Name).IsRequired();
+
+            builder
+                .HasDiscriminator<UserType>(nameof(UserType))
+                .HasValue<Borrower>(UserType.Borrower)
+                .HasValue<Operator>(UserType.Operator);
+
+            builder
+                .HasIndex(u => u.Email)
+                .IsUnique()
+                .HasFilter($"[UserType] = 1");
 
             builder.HasQueryFilter(x => !x.IsDeleted);
         }

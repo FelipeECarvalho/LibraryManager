@@ -21,6 +21,11 @@
             builder.Property(x => x.Name).HasMaxLength(50);
             builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
+            builder.HasOne(x => x.Library)
+                .WithMany(x => x.Categories)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasIndex(x => new { x.Name, x.LibraryId }).IsUnique();
 
             builder.HasQueryFilter(x => !x.IsDeleted);

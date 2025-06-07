@@ -38,21 +38,6 @@
 
             builder.Navigation(x => x.Address).IsRequired();
 
-            builder.HasMany(x => x.Borrowers)
-                .WithOne(x => x.Library)
-                .HasForeignKey(x => x.LibraryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.Books)
-                .WithOne(x => x.Library)
-                .HasForeignKey(x => x.LibraryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasMany(x => x.Categories)
-                .WithOne(x => x.Library)
-                .HasForeignKey(x => x.LibraryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }

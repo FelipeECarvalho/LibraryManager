@@ -24,6 +24,11 @@
             builder.Property(x => x.Title).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Description).HasColumnType("text").IsRequired(false);
 
+            builder.HasOne(x => x.Library)
+                .WithMany(x => x.Books)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasIndex(x => x.Title);
             builder.HasIndex(x => new { x.Isbn, x.LibraryId }).IsUnique();
 
