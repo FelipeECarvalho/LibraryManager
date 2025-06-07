@@ -11,6 +11,13 @@
         {
             builder.ToTable(TableNames.Libraries);
 
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.OpeningTime);
             builder.Property(x => x.ClosingTime);
@@ -45,6 +52,8 @@
                 .WithOne(x => x.Library)
                 .HasForeignKey(x => x.LibraryId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

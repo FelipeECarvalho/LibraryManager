@@ -11,6 +11,13 @@
         {
             builder.ToTable(TableNames.Books);
 
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
             builder.Property(x => x.PublicationDate).IsRequired();
             builder.Property(x => x.StockNumber).IsRequired(false);
             builder.Property(x => x.Isbn).IsRequired().HasMaxLength(50);
@@ -19,6 +26,8 @@
 
             builder.HasIndex(x => x.Title);
             builder.HasIndex(x => new { x.Isbn, x.LibraryId }).IsUnique();
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

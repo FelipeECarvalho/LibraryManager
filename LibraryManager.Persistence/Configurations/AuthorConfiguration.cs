@@ -11,6 +11,13 @@
         {
             builder.ToTable(TableNames.Authors);
 
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
             builder.Property(x => x.Description).HasMaxLength(256);
             
             builder.OwnsOne(x => x.Name, c =>
@@ -25,6 +32,8 @@
                 .WithOne(x => x.Author)
                 .HasForeignKey(x => x.AuthorId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

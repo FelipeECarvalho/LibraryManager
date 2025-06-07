@@ -8,7 +8,12 @@
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.UseTpcMappingStrategy();
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
 
             builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);
@@ -21,6 +26,8 @@
             });
 
             builder.Navigation(x => x.Name).IsRequired();
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

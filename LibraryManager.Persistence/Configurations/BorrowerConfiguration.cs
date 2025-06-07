@@ -11,6 +11,13 @@
         {
             builder.ToTable(TableNames.Borrowers);
 
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
             builder.Property(x => x.Document).HasMaxLength(30);
 
             builder.OwnsOne(x => x.Address, c =>
@@ -31,6 +38,8 @@
 
             builder.HasIndex(x => new { x.Email, x.LibraryId }).IsUnique();
             builder.HasIndex(x => new { x.Document, x.LibraryId }).IsUnique();
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }

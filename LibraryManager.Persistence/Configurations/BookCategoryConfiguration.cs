@@ -11,6 +11,13 @@
         {
             builder.ToTable(TableNames.BookCategory);
 
+            builder.HasKey(a => a.Id);
+
+            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
+            builder.Property(x => x.CreateDate).IsRequired();
+            builder.Property(x => x.UpdateDate).IsRequired();
+            builder.Property(x => x.IsDeleted).IsRequired().HasDefaultValue(false);
+
             builder.HasOne(x => x.Book)
                 .WithMany(x => x.BookCategories)
                 .HasForeignKey(x => x.BookId)
@@ -26,6 +33,8 @@
             builder.HasIndex(x => new { x.BookId, x.CategoryId })
                 .HasFilter("[IsDeleted] = 0")
                 .IsUnique();
+
+            builder.HasQueryFilter(x => !x.IsDeleted);
         }
     }
 }
