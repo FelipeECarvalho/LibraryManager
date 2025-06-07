@@ -24,9 +24,9 @@
                 c.Property(a => a.State).HasColumnName("State").HasMaxLength(50).IsRequired();
                 c.Property(a => a.CountryCode).HasColumnName("CountryCode").HasMaxLength(5).IsRequired();
                 c.Property(a => a.ZipCode).HasColumnName("ZipCode").HasMaxLength(20).IsRequired();
-                c.Property(a => a.Latitude).HasColumnName("Latitude").HasPrecision(9, 6).IsRequired(false).IsRequired();
-                c.Property(a => a.Longitude).HasColumnName("Longitude").HasPrecision(9, 6).IsRequired(false).IsRequired();
-                c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false).IsRequired();
+                c.Property(a => a.Latitude).HasColumnName("Latitude").HasPrecision(9, 6).IsRequired(false);
+                c.Property(a => a.Longitude).HasColumnName("Longitude").HasPrecision(9, 6).IsRequired(false);
+                c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false);
             });
 
             builder.Navigation(x => x.Address).IsRequired();

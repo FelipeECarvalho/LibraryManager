@@ -15,8 +15,8 @@
             
             builder.OwnsOne(x => x.Name, c =>
             {
-                c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired(true);
-                c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired(true);
+                c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired();
+                c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired();
             });
 
             builder.Navigation(x => x.Name).IsRequired(true);

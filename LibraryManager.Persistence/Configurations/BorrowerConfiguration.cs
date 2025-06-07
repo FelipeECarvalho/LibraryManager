@@ -15,13 +15,13 @@
 
             builder.OwnsOne(x => x.Address, c =>
             {
-                c.Property(a => a.Street).HasColumnName("Street").HasMaxLength(50);
-                c.Property(a => a.Number).HasColumnName("Number").HasMaxLength(15);
-                c.Property(a => a.District).HasColumnName("District").HasMaxLength(50);
-                c.Property(a => a.City).HasColumnName("City").HasMaxLength(50);
-                c.Property(a => a.State).HasColumnName("State").HasMaxLength(50);
-                c.Property(a => a.CountryCode).HasColumnName("CountryCode").HasMaxLength(5);
-                c.Property(a => a.ZipCode).HasColumnName("ZipCode").HasMaxLength(20);
+                c.Property(a => a.Street).HasColumnName("Street").HasMaxLength(50).IsRequired();
+                c.Property(a => a.Number).HasColumnName("Number").HasMaxLength(15).IsRequired();
+                c.Property(a => a.District).HasColumnName("District").HasMaxLength(50).IsRequired();
+                c.Property(a => a.City).HasColumnName("City").HasMaxLength(50).IsRequired();
+                c.Property(a => a.State).HasColumnName("State").HasMaxLength(50).IsRequired();
+                c.Property(a => a.CountryCode).HasColumnName("CountryCode").HasMaxLength(5).IsRequired();
+                c.Property(a => a.ZipCode).HasColumnName("ZipCode").HasMaxLength(20).IsRequired();
                 c.Property(a => a.Latitude).HasColumnName("Latitude").HasPrecision(9, 6).IsRequired(false);
                 c.Property(a => a.Longitude).HasColumnName("Longitude").HasPrecision(9, 6).IsRequired(false);
                 c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false);
