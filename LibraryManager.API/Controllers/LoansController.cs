@@ -8,6 +8,7 @@
     using LibraryManager.Application.Queries.Loan.GetLoanById;
     using LibraryManager.Application.Queries.Loan.GetLoans;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -17,6 +18,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class LoansController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

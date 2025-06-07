@@ -11,12 +11,10 @@
         {
         }
 
-        public Borrower(Name name, string document, string email, DateTimeOffset birthDate, Address address)
-            : base()
+        public Borrower(Name name, string email, string passwordHash, string document, DateTimeOffset birthDate, Address address)
+            : base(name, email, passwordHash)
         {
-            Name = name;
             Document = document;
-            Email = email;
             Address = address;
             BirthDate = birthDate;
         }

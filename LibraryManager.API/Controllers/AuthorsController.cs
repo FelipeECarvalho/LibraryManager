@@ -8,6 +8,7 @@
     using LibraryManager.Application.Queries.Author.GetAuthorById;
     using LibraryManager.Application.Queries.Author.GetAuthors;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -16,6 +17,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class AuthorsController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

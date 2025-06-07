@@ -3,6 +3,7 @@ namespace LibraryManager.API
     using LibraryManager.API.Middleware;
     using LibraryManager.Application;
     using LibraryManager.Persistence;
+    using LibraryManager.Infrastructure;
     using System.Reflection;
 
     public class Program
@@ -13,6 +14,7 @@ namespace LibraryManager.API
 
             builder.Services
                 .AddPersistence(builder.Configuration)
+                .AddInfrastructure(builder.Configuration)
                 .AddVersioning()
                 .AddApplication();
 

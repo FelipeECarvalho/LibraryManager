@@ -7,6 +7,19 @@
     /// </summary>
     public abstract class User : BaseEntity
     {
+        [Obsolete("EntityFrameworkCore constructor")]
+        protected User()
+        {
+        }
+
+        protected User(Name name, string email, string passwordHash)
+            : base()
+        {
+            Name = name;
+            Email = email;
+            PasswordHash = passwordHash;
+        }
+
         public Name Name { get; protected set; }
 
         public string Email { get; protected set; }

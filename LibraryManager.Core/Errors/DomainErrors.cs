@@ -35,6 +35,16 @@
                 "The document is required.",
                 ErrorType.Validation);
 
+            public static Error PasswordInvalidLength => new(
+                "Borrower.PasswordInvalidLength",
+                "The password must be between 8 and 512 characters long.",
+                ErrorType.Validation);
+
+            public static Error PasswordRequired => new(
+                "Borrower.PasswordRequired",
+                "The password is required.",
+                ErrorType.Validation);
+
             public static Error EmailAlreadyExists => new(
                 "Borrower.EmailAlreadyExists",
                 "A borrower with this email already exists.",

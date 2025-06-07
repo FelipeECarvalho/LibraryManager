@@ -5,6 +5,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
+    using LibraryManager.Infrastructure.Auth;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -13,12 +14,15 @@
     {
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuthService _authService;
 
         public CreateBorrowerCommandHandler(
             IUnitOfWork unitOfWork,
+            IAuthService authService,
             IBorrowerRepository borrowerRepository)
         {
             _unitOfWork = unitOfWork;
+            _authService = authService;
             _borrowerRepository = borrowerRepository;
         }
 
@@ -31,7 +35,16 @@
                 return Result.Failure<BorrowerResponse>(validationResult.Error);
             }
 
-            var borrower = new Core.Entities.Users.Borrower(request.Name, request.Document, request.Email, request.BirthDate, request.Address);
+            var password = request.Password;
+
+            if (string.IsNullOrWhiteSpace(password))
+            {
+                password = "newPassword";
+            }
+
+            password = _authService.ComputeHash(password);
+
+            var borrower = new Core.Entities.Users.Borrower(request.Name, request.Email, password, request.Document, request.BirthDate, request.Address);
 
             _borrowerRepository.Add(borrower);
 

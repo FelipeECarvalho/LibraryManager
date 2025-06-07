@@ -9,5 +9,6 @@
         string Document,
         string Email,
         DateTimeOffset BirthDate,
-        Address Address) : ICommand<BorrowerResponse>;
+        Address Address,
+        string Password = null) : ICommand<BorrowerResponse>;
 }

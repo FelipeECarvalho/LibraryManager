@@ -7,6 +7,7 @@
     using LibraryManager.Application.Queries.Category.GetCategories;
     using LibraryManager.Application.Queries.Category.GetCategoryById;
     using MediatR;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
@@ -15,6 +16,7 @@
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

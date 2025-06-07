@@ -21,6 +21,9 @@
                 .NotEmpty().WithMessage(DomainErrors.Borrower.DocumentRequired)
                 .Length(2, 30).WithMessage(DomainErrors.Borrower.DocumentInvalidLength);
 
+            RuleFor(x => x.Password)
+                .Length(8, 512).WithMessage(DomainErrors.Borrower.PasswordInvalidLength);
+
             RuleFor(x => x.Address)
                 .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
                 .SetValidator(new AddressValidator());
