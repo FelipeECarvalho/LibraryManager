@@ -1,9 +1,10 @@
 ﻿namespace LibraryManager.Core.ValueObjects
 {
     using System;
+    using System.Collections;
     using System.Text.RegularExpressions;
 
-    public sealed class Email
+    public sealed record Email : IEqualityComparer
     {
         public string Address { get; }
 
@@ -16,5 +17,15 @@
         }
 
         public override string ToString() => Address;
+
+        public new bool Equals(object x, object y)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetHashCode(object obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

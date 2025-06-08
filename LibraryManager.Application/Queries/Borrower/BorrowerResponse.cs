@@ -21,7 +21,7 @@
                 Id = borrower.Id,
                 Name = borrower.Name,
                 Document = borrower.Document,
-                Email = borrower.Email,
+                Email = borrower.Email.ToString(),
                 Address = borrower.Address
             };
     }

@@ -16,7 +16,7 @@
         public async Task<User> GetByEmail(string email, CancellationToken ct)
         {
             return await _context.Users
-                .SingleOrDefaultAsync(x => string.Equals(x.Email, email, StringComparison.OrdinalIgnoreCase), ct);
+                .SingleOrDefaultAsync(x => x.Email.Equals(email), ct);
         }
 
         public void Update(User user)

@@ -45,7 +45,7 @@
 
             await _unitOfWork.SaveChangesAsync(ct);
 
-            return _authService.GenerateToken(user.Email, user.GetType().Name);
+            return _authService.GenerateToken(user.Email.ToString(), user.GetType().Name);
         }
     }
 }

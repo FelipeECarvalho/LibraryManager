@@ -5,6 +5,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.ValueObjects;
     using LibraryManager.Infrastructure.Auth;
     using System.Threading;
     using System.Threading.Tasks;
@@ -41,7 +42,7 @@
 
             password = _authService.ComputeHash(password);
 
-            var borrower = new Core.Entities.Users.Borrower(request.Name, request.Email, password, request.Document, request.BirthDate, request.Address);
+            var borrower = new Core.Entities.Users.Borrower(request.Name, new Email(request.Email), password, request.Document, request.BirthDate, request.Address);
 
             _borrowerRepository.Add(borrower);
 

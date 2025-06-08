@@ -29,9 +29,9 @@
                 .Length(8, 512).WithMessage(DomainErrors.User.PasswordInvalidLength);
 
             RuleFor(x => x.Email)
-                .EmailAddress().WithMessage(DomainErrors.User.InvalidEmail)
-                .NotEmpty().WithMessage(DomainErrors.User.EmailRequired)
-                .Length(2, 50).WithMessage(DomainErrors.User.EmailInvalidLength);
+                .EmailAddress().WithMessage(DomainErrors.Email.InvalidEmail)
+                .NotEmpty().WithMessage(DomainErrors.Email.EmailRequired)
+                .Length(2, 50).WithMessage(DomainErrors.Email.EmailInvalidLength);
         }
     }
 }

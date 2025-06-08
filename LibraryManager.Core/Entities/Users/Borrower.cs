@@ -11,7 +11,7 @@
         {
         }
 
-        public Borrower(Name name, string email, string passwordHash, string document, DateTimeOffset birthDate, Address address)
+        public Borrower(Name name, Email email, string passwordHash, string document, DateTimeOffset birthDate, Address address)
             : base(name, email, passwordHash)
         {
             Document = document;

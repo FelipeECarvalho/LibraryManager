@@ -12,7 +12,7 @@
         {
         }
 
-        protected User(Name name, string email, string passwordHash)
+        protected User(Name name, Email email, string passwordHash)
             : base()
         {
             Name = name;
@@ -22,7 +22,7 @@
 
         public Name Name { get; protected set; }
 
-        public string Email { get; protected set; }
+        public Email Email { get; protected set; }
 
         public string PasswordHash { get; protected set; }
 

@@ -35,21 +35,6 @@
                 "A user with this email already exists.",
                 ErrorType.Validation);
 
-            public static Error EmailInvalidLength => new(
-                "User.EmailInvalidLength",
-                "The email must be between 2 and 50 characters long",
-                ErrorType.Validation);
-
-            public static Error EmailRequired => new(
-                "User.EmailRequired",
-                "The email is required.",
-                ErrorType.Validation);
-
-            public static Error InvalidEmail => new(
-                "User.EmailInvalid",
-                "Invalid email format.",
-                ErrorType.Validation);
-
             public static Error LoginFailedInvalidEmailOrPassword => new(
                 "User.LoginFailedInvalidEmailOrPassword",
                 "Login failed: no user found with the provided email and password combination.",
@@ -132,6 +117,84 @@
                 ErrorType.Validation);
         }
 
+        public static class Book
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new(
+                "Book.NotFound",
+                $"The book with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static readonly Func<IList<Guid>, Error> NotFoundList = ids => new(
+                "Book.NotFound",
+                $"The following book IDs were not found: {string.Join(", ", ids)}.",
+                ErrorType.NotFound);
+
+            public static Error TitleRequired => new(
+                "Book.TitleRequired",
+                "The book title is required.",
+                ErrorType.Validation);
+
+            public static Error TitleInvalidLength => new(
+                "Book.TitleInvalidLength",
+                "The book title must be between 2 and 100 characters long.",
+                ErrorType.Validation);
+
+            public static Error IsbnRequired => new(
+                "Book.IsbnRequired",
+                "The book ISBN is required.",
+                ErrorType.Validation);
+
+            public static Error IsbnInvalidLength => new(
+                "Book.IsbnInvalidLength",
+                "The book ISBN must be between 2 and 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error IsbnAlreadyExists => new(
+                "Book.IsbnAlreadyExists",
+                "A book with this ISBN already exists.",
+                ErrorType.Validation);
+
+            public static Error PublicationDateRequired => new(
+                "Book.PublicationDateRequired",
+                "The book Publication Date is required.",
+                ErrorType.Validation);
+
+            public static Error StockNumberInvalid => new(
+                "Book.StockNumberInvalid",
+                "The book Stock number is invalid.",
+                ErrorType.Validation);
+
+            public static Error NotAvaliableForLoan => new(
+                "Book.NotAvaliableForLoan",
+                "The book is not currently avaliable for loan.",
+                ErrorType.Validation);
+        }
+
+        public static class Category
+        {
+            public static readonly Func<Guid, Error> NotFound = id => new(
+                "Category.NotFound",
+                $"The category with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static Error NameRequired => new(
+                "Category.NameRequired",
+                "The category name is required.",
+                ErrorType.Validation);
+
+            public static Error NameInvalidLength => new(
+                "Category.NameInvalidLength",
+                "The category name must be between 2 and 50 characters long.",
+                ErrorType.Validation);
+
+            public static Error DescriptionInvalidLength => new(
+                "Category.DescriptionInvalidLength",
+                "The category description must be at most 256 characters long.",
+                ErrorType.Validation);
+        }
+
+        #region ValueObjects
+
         public static class Address
         {
             public static Error AddressRequired => new(
@@ -210,6 +273,24 @@
                 ErrorType.Validation);
         }
 
+        public static class Email
+        {
+            public static Error EmailInvalidLength => new(
+                "Email.EmailInvalidLength",
+                "The email must be between 2 and 50 characters long",
+                ErrorType.Validation);
+
+            public static Error EmailRequired => new(
+                "Email.EmailRequired",
+                "The email is required.",
+                ErrorType.Validation);
+
+            public static Error InvalidEmail => new(
+                "Email.EmailInvalid",
+                "Invalid email format.",
+                ErrorType.Validation);
+        }
+
         public static class Name
         {
             public static Error NameRequired => new(
@@ -238,80 +319,6 @@
                 ErrorType.Validation);
         }
 
-        public static class Book
-        {
-            public static readonly Func<Guid, Error> NotFound = id => new(
-                "Book.NotFound",
-                $"The book with the ID {id} was not found.",
-                ErrorType.NotFound);
-
-            public static readonly Func<IList<Guid>, Error> NotFoundList = ids => new(
-                "Book.NotFound",
-                $"The following book IDs were not found: {string.Join(", ", ids)}.",
-                ErrorType.NotFound);
-
-            public static Error TitleRequired => new(
-                "Book.TitleRequired",
-                "The book title is required.",
-                ErrorType.Validation);
-
-            public static Error TitleInvalidLength => new(
-                "Book.TitleInvalidLength",
-                "The book title must be between 2 and 100 characters long.",
-                ErrorType.Validation);
-
-            public static Error IsbnRequired => new(
-                "Book.IsbnRequired",
-                "The book ISBN is required.",
-                ErrorType.Validation);
-
-            public static Error IsbnInvalidLength => new(
-                "Book.IsbnInvalidLength",
-                "The book ISBN must be between 2 and 50 characters long.",
-                ErrorType.Validation);
-
-            public static Error IsbnAlreadyExists => new(
-                "Book.IsbnAlreadyExists",
-                "A book with this ISBN already exists.",
-                ErrorType.Validation);
-
-            public static Error PublicationDateRequired => new(
-                "Book.PublicationDateRequired",
-                "The book Publication Date is required.",
-                ErrorType.Validation);
-
-            public static Error StockNumberInvalid => new(
-                "Book.StockNumberInvalid",
-                "The book Stock number is invalid.",
-                ErrorType.Validation);
-
-            public static Error NotAvaliableForLoan => new(
-                "Book.NotAvaliableForLoan",
-                "The book is not currently avaliable for loan.",
-                ErrorType.Validation);
-        }
-
-        public static class Category
-        {
-            public static readonly Func<Guid, Error> NotFound = id => new(
-                "Category.NotFound",
-                $"The category with the ID {id} was not found.",
-                ErrorType.NotFound);
-
-            public static Error NameRequired => new(
-                "Category.NameRequired",
-                "The category name is required.",
-                ErrorType.Validation);
-
-            public static Error NameInvalidLength => new(
-                "Category.NameInvalidLength",
-                "The category name must be between 2 and 50 characters long.",
-                ErrorType.Validation);
-
-            public static Error DescriptionInvalidLength => new(
-                "Category.DescriptionInvalidLength",
-                "The category description must be at most 256 characters long.",
-                ErrorType.Validation);
-        }
+        #endregion
     }
 }

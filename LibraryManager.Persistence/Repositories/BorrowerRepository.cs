@@ -33,7 +33,7 @@
 
         public async Task<bool> IsEmailUnique(string email, CancellationToken ct)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Email == email, ct);
+            return !await _context.Borrowers.AnyAsync(x => x.Email.Equals(email), ct);
         }
 
         public async Task<bool> IsDocumentUnique(string document, CancellationToken ct)
