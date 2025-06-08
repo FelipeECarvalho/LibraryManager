@@ -16,6 +16,7 @@
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IBorrowerRepository, BorrowerRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ILoanRepository, LoanRepository>();

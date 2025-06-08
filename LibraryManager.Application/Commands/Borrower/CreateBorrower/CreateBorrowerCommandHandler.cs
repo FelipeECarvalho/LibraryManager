@@ -35,12 +35,9 @@
                 return Result.Failure<BorrowerResponse>(validationResult.Error);
             }
 
-            var password = request.Password;
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                password = "newPassword";
-            }
+            var password = string.IsNullOrWhiteSpace(request.Password) 
+                ? _authService.GeneratePassword(length: 10)
+                : request.Password;
 
             password = _authService.ComputeHash(password);
 
@@ -59,7 +56,7 @@
 
             if (!isEmailUnique)
             {
-                return Result.Failure(DomainErrors.Borrower.EmailAlreadyExists);
+                return Result.Failure(DomainErrors.User.EmailAlreadyExists);
             }
 
             var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, ct);

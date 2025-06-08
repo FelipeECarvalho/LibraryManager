@@ -7,7 +7,7 @@
     /// </summary>
     public abstract class User : BaseEntity
     {
-        [Obsolete("EntityFrameworkCore constructor")]
+        [Obsolete("EntityFrameworkCore constructor", true)]
         protected User()
         {
         }
@@ -27,5 +27,10 @@
         public string PasswordHash { get; protected set; }
 
         public DateTimeOffset? LastLogin { get; protected set; }
+
+        public void UpdateLastLogin()
+        {
+            LastLogin = DateTimeOffset.UtcNow;
+        }
     }
 }

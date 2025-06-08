@@ -18,6 +18,44 @@
                 ErrorType.Validation);
         }
 
+        public static class User
+        {
+            public static Error PasswordInvalidLength => new(
+               "User.PasswordInvalidLength",
+               "The password must be between 8 and 512 characters long.",
+               ErrorType.Validation);
+
+            public static Error PasswordRequired => new(
+                "User.PasswordRequired",
+                "The password is required.",
+                ErrorType.Validation);
+
+            public static Error EmailAlreadyExists => new(
+                "User.EmailAlreadyExists",
+                "A user with this email already exists.",
+                ErrorType.Validation);
+
+            public static Error EmailInvalidLength => new(
+                "User.EmailInvalidLength",
+                "The email must be between 2 and 50 characters long",
+                ErrorType.Validation);
+
+            public static Error EmailRequired => new(
+                "User.EmailRequired",
+                "The email is required.",
+                ErrorType.Validation);
+
+            public static Error InvalidEmail => new(
+                "User.EmailInvalid",
+                "Invalid email format.",
+                ErrorType.Validation);
+
+            public static Error LoginFailedInvalidEmailOrPassword => new(
+                "User.LoginFailedInvalidEmailOrPassword",
+                "Login failed: no user found with the provided email and password combination.",
+                ErrorType.NotFound);
+        }
+
         public static class Borrower
         {
             public static readonly Func<Guid, Error> NotFound = id => new(
@@ -35,39 +73,9 @@
                 "The document is required.",
                 ErrorType.Validation);
 
-            public static Error PasswordInvalidLength => new(
-                "Borrower.PasswordInvalidLength",
-                "The password must be between 8 and 512 characters long.",
-                ErrorType.Validation);
-
-            public static Error PasswordRequired => new(
-                "Borrower.PasswordRequired",
-                "The password is required.",
-                ErrorType.Validation);
-
-            public static Error EmailAlreadyExists => new(
-                "Borrower.EmailAlreadyExists",
-                "A borrower with this email already exists.",
-                ErrorType.Validation);
-
             public static Error DocumentAlreadyExists => new(
                 "Borrower.DocumentAlreadyExists",
-                "A borrower with this document already exists.",
-                ErrorType.Validation);
-
-            public static Error EmailInvalidLength => new(
-                "Borrower.EmailInvalidLength",
-                "The email must be between 2 and 50 characters long",
-                ErrorType.Validation);
-
-            public static Error EmailRequired => new(
-                "Borrower.EmailRequired",
-                "The email is required.",
-                ErrorType.Validation);
-
-            public static Error InvalidEmail => new(
-                "Borrower.EmailInvalid",
-                "Invalid email format.",
+                "The email or password you entered is incorrect. Please try again.",
                 ErrorType.Validation);
         }
 

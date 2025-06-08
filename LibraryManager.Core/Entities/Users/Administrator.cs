@@ -2,5 +2,10 @@
 {
     public class Administrator : User
     {
+        [Obsolete("EntityFrameworkCore constructor")]
+        public Administrator()
+            : base()
+        {
+        }
     }
 }

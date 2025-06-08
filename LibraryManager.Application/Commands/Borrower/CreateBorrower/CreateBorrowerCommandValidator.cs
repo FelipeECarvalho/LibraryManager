@@ -21,17 +21,17 @@
                 .NotEmpty().WithMessage(DomainErrors.Borrower.DocumentRequired)
                 .Length(2, 30).WithMessage(DomainErrors.Borrower.DocumentInvalidLength);
 
-            RuleFor(x => x.Password)
-                .Length(8, 512).WithMessage(DomainErrors.Borrower.PasswordInvalidLength);
-
             RuleFor(x => x.Address)
                 .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
                 .SetValidator(new AddressValidator());
 
+            RuleFor(x => x.Password)
+                .Length(8, 512).WithMessage(DomainErrors.User.PasswordInvalidLength);
+
             RuleFor(x => x.Email)
-                .EmailAddress().WithMessage(DomainErrors.Borrower.InvalidEmail)
-                .NotEmpty().WithMessage(DomainErrors.Borrower.EmailRequired)
-                .Length(2, 50).WithMessage(DomainErrors.Borrower.EmailInvalidLength);
+                .EmailAddress().WithMessage(DomainErrors.User.InvalidEmail)
+                .NotEmpty().WithMessage(DomainErrors.User.EmailRequired)
+                .Length(2, 50).WithMessage(DomainErrors.User.EmailInvalidLength);
         }
     }
 }

@@ -32,6 +32,21 @@
             return builder.ToString();
         }
 
+        public string GeneratePassword(int length)
+        {
+            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+
+            var rnd = new Random();
+            var res = new StringBuilder();
+
+            while (0 < length--)
+            {
+                res.Append(valid[rnd.Next(valid.Length)]);
+            }
+
+            return res.ToString();
+        }
+
         public string GenerateToken(string email, string role)
         {
             var key = new SymmetricSecurityKey(
