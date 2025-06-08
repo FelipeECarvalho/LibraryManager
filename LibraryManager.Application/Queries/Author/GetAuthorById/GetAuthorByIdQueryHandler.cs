@@ -17,9 +17,9 @@
             _authorRepository = authorRepository;
         }
 
-        public async Task<Result<AuthorResponse>> Handle(GetAuthorByIdQuery request, CancellationToken ct)
+        public async Task<Result<AuthorResponse>> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
         {
-            var author = await _authorRepository.GetByIdAsync(request.Id, ct);
+            var author = await _authorRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (author is null)
             {

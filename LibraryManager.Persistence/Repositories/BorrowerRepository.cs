@@ -15,30 +15,30 @@
             _context = context;
         }
 
-        public async Task<IList<Borrower>> GetAllAsync(int limit, int offset, CancellationToken ct)
+        public async Task<IList<Borrower>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
         {
             return await _context.Borrowers
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(limit)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Borrower> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Borrower> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Borrowers
-                .SingleOrDefaultAsync(x => x.Id == id, ct);
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<bool> IsEmailUnique(string email, CancellationToken ct)
+        public async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Email.Equals(email), ct);
+            return !await _context.Borrowers.AnyAsync(x => x.Email.Equals(email), cancellationToken);
         }
 
-        public async Task<bool> IsDocumentUnique(string document, CancellationToken ct)
+        public async Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Document == document, ct);
+            return !await _context.Borrowers.AnyAsync(x => x.Document == document, cancellationToken);
         }
 
         public void Add(Borrower borrower)

@@ -22,7 +22,9 @@
             };
 
             if (!string.IsNullOrWhiteSpace(Observation))
+            {
                 parts.Add(Observation);
+            }
 
             parts.Add(District);
             parts.Add($"{ZipCode} {City} - {State}");

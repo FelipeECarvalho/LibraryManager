@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Auth
 {
+    using LibraryManager.Core.Common;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
@@ -11,25 +12,33 @@
         : IAuthService
     {
         private readonly JwtInfoOptions _options;
+        private const int SaltSize = 16;
+        private const int HashSize = 32;
+        private const int Iterations = 100000;
+
+        private static readonly HashAlgorithmName Algorithm = HashAlgorithmName.SHA512;
 
         public AuthService(IOptions<JwtInfoOptions> options)
         {
-            _options = options.Value;
-        }
-
-        public string ComputeHash(string password)
-        {
-            var passwordBytes = Encoding.UTF8.GetBytes(password);
-            var hashBytes = SHA256.HashData(passwordBytes);
-
-            var builder = new StringBuilder();
-
-            for (int i = 0; i < hashBytes.Length; i++)
+            if (options is null)
             {
-                builder.Append(hashBytes[i].ToString("x2"));
+                throw new ArgumentException(Error.NullValue);
             }
 
-            return builder.ToString();
+            _options = options.Value;
+        }
+        
+        public string ComputeHash(string password)
+        {
+            var salt = RandomNumberGenerator.GetBytes(SaltSize);
+            byte[] hash = Rfc2898DeriveBytes.Pbkdf2(password, salt, Iterations, Algorithm, HashSize);
+
+            return $"{Convert.ToHexString(hash)}-{Convert.ToHexString(salt)}";
+        }
+
+        public bool Verify(string password, string passwordHash)
+        {
+            string[] parts = passwordHash.Split("-");
         }
 
         public string GeneratePassword(int length)

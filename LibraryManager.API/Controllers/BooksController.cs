@@ -30,9 +30,9 @@
         [ProducesResponseType(typeof(IList<BookResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             [FromQuery] GetBooksQuery query,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(query, ct);
+            var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
         }
@@ -49,10 +49,10 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             var query = new GetBookByIdQuery(id);
-            var result = await _mediator.Send(query, ct);
+            var result = await _mediator.Send(query, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -74,9 +74,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
             [FromBody] CreateBookCommand bookRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(bookRequest, ct);
+            var result = await _mediator.Send(bookRequest, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -98,9 +98,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new DeleteBookCommand(id), ct);
+            var result = await _mediator.Send(new DeleteBookCommand(id), cancellationToken);
 
             if (result.IsFailure)
             {
@@ -153,9 +153,9 @@
         public async Task<IActionResult> Put(
             Guid id,
             [FromQuery] int stockNumber,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new UpdateBookStockCommand(id, stockNumber), ct);
+            var result = await _mediator.Send(new UpdateBookStockCommand(id, stockNumber), cancellationToken);
 
             if (result.IsFailure)
             {

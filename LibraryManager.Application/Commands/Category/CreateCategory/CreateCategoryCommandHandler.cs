@@ -22,13 +22,13 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result<CategoryResponse>> Handle(CreateCategoryCommand request, CancellationToken ct)
+        public async Task<Result<CategoryResponse>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
             var category = new Category(request.Name, request.Description);
 
             _categoryRepository.Add(category);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return CategoryResponse.FromEntity(category);
         }

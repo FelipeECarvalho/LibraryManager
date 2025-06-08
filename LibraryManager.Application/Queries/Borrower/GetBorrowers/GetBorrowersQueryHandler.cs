@@ -17,9 +17,9 @@
             _borrowerRepository = borrowerRepository;
         }
 
-        public async Task<Result<IList<BorrowerResponse>>> Handle(GetBorrowersQuery request, CancellationToken ct)
+        public async Task<Result<IList<BorrowerResponse>>> Handle(GetBorrowersQuery request, CancellationToken cancellationToken)
         {
-            var borrowers = await _borrowerRepository.GetAllAsync(request.Limit, request.Offset, ct);
+            var borrowers = await _borrowerRepository.GetAllAsync(request.Limit, request.Offset, cancellationToken);
 
             var borrowersResponse = borrowers?
                 .Select(BorrowerResponse.FromEntity)?

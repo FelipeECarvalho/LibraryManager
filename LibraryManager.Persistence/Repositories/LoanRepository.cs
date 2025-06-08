@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, Guid? BorrowerId, CancellationToken ct)
+        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, Guid? BorrowerId, CancellationToken cancellationToken)
         {
             var query = _context.Loans
                 .AsNoTracking();
@@ -33,25 +33,25 @@
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(offset)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<IList<Loan>> GetByBorrowerAsync(Guid borrowerId, CancellationToken ct)
+        public async Task<IList<Loan>> GetByBorrowerAsync(Guid borrowerId, CancellationToken cancellationToken)
         {
             return await _context.Loans
                 .Where(x => x.Borrower.Id == borrowerId)
                 .Include(x => x.Borrower)
                 .Include(x => x.Book)
                 .AsNoTracking()
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Loan> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Loan> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Loans
                 .Include(x => x.Borrower)
                 .Include(x => x.Book)
-                .SingleOrDefaultAsync(x => x.Id == id, ct);
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public void Add(Loan loan)

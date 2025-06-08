@@ -26,16 +26,16 @@
             _bookRepository = bookRepository;
         }
 
-        public async Task<Result<BookResponse>> Handle(CreateBookCommand request, CancellationToken ct)
+        public async Task<Result<BookResponse>> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = await Validate(request, ct);
+            var validationResult = await Validate(request, cancellationToken);
 
             if (validationResult.IsFailure)
             {
                 return Result.Failure<BookResponse>(validationResult.Error);
             }
 
-            var author = await _authorRepository.GetByIdAsync(request.AuthorId, ct);
+            var author = await _authorRepository.GetByIdAsync(request.AuthorId, cancellationToken);
 
             if (author == null)
             {
@@ -52,14 +52,14 @@
 
             _bookRepository.Add(book);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return BookResponse.FromEntity(book);
         }
 
-        private async Task<Result> Validate(CreateBookCommand request, CancellationToken ct)
+        private async Task<Result> Validate(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var isIsbnUnique = await _bookRepository.IsIsbnUnique(request.Isbn, ct);
+            var isIsbnUnique = await _bookRepository.IsIsbnUnique(request.Isbn, cancellationToken);
 
             if (!isIsbnUnique)
             {

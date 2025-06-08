@@ -13,10 +13,10 @@
             _context = context;
         }
 
-        public async Task<User> GetByEmail(string email, CancellationToken ct)
+        public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
         {
             return await _context.Users
-                .SingleOrDefaultAsync(x => x.Email.Equals(email), ct);
+                .SingleOrDefaultAsync(x => x.Email.Equals(email), cancellationToken);
         }
 
         public void Update(User user)

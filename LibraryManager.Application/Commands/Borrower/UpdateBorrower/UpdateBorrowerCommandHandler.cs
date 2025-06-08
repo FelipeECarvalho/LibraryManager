@@ -21,9 +21,9 @@
             _borrowerRepository = borrowerRepository;
         }
 
-        public async Task<Result> Handle(UpdateBorrowerCommand request, CancellationToken ct)
+        public async Task<Result> Handle(UpdateBorrowerCommand request, CancellationToken cancellationToken)
         {
-            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, ct);
+            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (borrower == null)
             {
@@ -32,7 +32,7 @@
 
             borrower.Update(request.Name, request.Address);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

@@ -21,9 +21,9 @@
             _borrowerRepository = borrowerRepository;
         }
 
-        public async Task<Result> Handle(DeleteBorrowerCommand request, CancellationToken ct)
+        public async Task<Result> Handle(DeleteBorrowerCommand request, CancellationToken cancellationToken)
         {
-            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, ct);
+            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (borrower == null)
             {
@@ -31,7 +31,7 @@
             }
 
             borrower.SetDeleted();
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

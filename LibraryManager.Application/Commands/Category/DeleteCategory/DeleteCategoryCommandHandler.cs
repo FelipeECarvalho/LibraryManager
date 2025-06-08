@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class DeleteCategoryCommandHandler
+    internal sealed class DeleteCategoryCommandHandler
         : ICommandHandler<DeleteCategoryCommand>
     {
         private readonly IUnitOfWork _unityOfWork;
@@ -21,9 +21,9 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result> Handle(DeleteCategoryCommand request, CancellationToken ct)
+        public async Task<Result> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetById(request.Id, ct);
+            var category = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
             if (category == null)
             {
@@ -31,7 +31,7 @@
             }
 
             category.SetDeleted();
-            await _unityOfWork.SaveChangesAsync(ct);
+            await _unityOfWork.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
             return Result.Success();
         }

@@ -19,9 +19,9 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(UpdateAuthorCommand request, CancellationToken ct)
+        public async Task<Result> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
         {
-            var author = await _authorRepository.GetByIdAsync(request.Id, ct);
+            var author = await _authorRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (author == null)
             {
@@ -29,7 +29,7 @@
             }
 
             author.Update(request.Name, request.Description);
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

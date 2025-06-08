@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class GetBookByIdQueryHandler
+    internal sealed class GetBookByIdQueryHandler
         : IQueryHandler<GetBookByIdQuery, BookResponse>
     {
         private readonly IBookRepository _bookRepository;
@@ -17,9 +17,9 @@
             _bookRepository = bookRepository;
         }
 
-        public async Task<Result<BookResponse>> Handle(GetBookByIdQuery request, CancellationToken ct)
+        public async Task<Result<BookResponse>> Handle(GetBookByIdQuery request, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetByIdAsync(request.Id, ct);
+            var book = await _bookRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (book == null)
             {

@@ -30,9 +30,9 @@
         [ProducesResponseType(typeof(IList<BorrowerResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             [FromQuery] GetBorrowersQuery query,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(query, ct);
+            var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
         }
@@ -49,9 +49,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetBorrowerByIdQuery(id), ct);
+            var result = await _mediator.Send(new GetBorrowerByIdQuery(id), cancellationToken);
 
             if (result.IsFailure)
             {
@@ -75,9 +75,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
             [FromBody] CreateBorrowerCommand borrowerRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(borrowerRequest, ct);
+            var result = await _mediator.Send(borrowerRequest, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -99,9 +99,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new DeleteBorrowerCommand(id), ct);
+            var result = await _mediator.Send(new DeleteBorrowerCommand(id), cancellationToken);
 
             if (result.IsFailure)
             {
@@ -126,10 +126,10 @@
         public async Task<IActionResult> Put(
             Guid id,
             [FromBody] UpdateBorrowerCommand borrowerRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             borrowerRequest.Id = id;
-            var result = await _mediator.Send(borrowerRequest, ct);
+            var result = await _mediator.Send(borrowerRequest, cancellationToken);
 
             if (result.IsFailure)
             {

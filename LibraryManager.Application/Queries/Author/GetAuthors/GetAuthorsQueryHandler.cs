@@ -17,12 +17,12 @@
             _authorRepository = authorRepository;
         }
 
-        public async Task<Result<IList<AuthorResponse>>> Handle(GetAuthorsQuery request, CancellationToken ct)
+        public async Task<Result<IList<AuthorResponse>>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
         {
             var authors = await _authorRepository.GetAllAsync(
                 request.Limit,
                 request.Offset,
-                ct);
+                cancellationToken);
 
             var response = authors?
                 .Select(AuthorResponse.FromEntity)?

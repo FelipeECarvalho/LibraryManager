@@ -29,16 +29,16 @@
             _bookRepository = bookRepository;
         }
 
-        public async Task<Result<LoanResponse>> Handle(CreateLoanCommand request, CancellationToken ct)
+        public async Task<Result<LoanResponse>> Handle(CreateLoanCommand request, CancellationToken cancellationToken)
         {
-            var borrower = await _borrowerRepository.GetByIdAsync(request.BorrowerId, ct);
+            var borrower = await _borrowerRepository.GetByIdAsync(request.BorrowerId, cancellationToken);
 
             if (borrower == null)
             {
                 return Result.Failure<LoanResponse>(DomainErrors.Borrower.NotFound(request.BorrowerId));
             }
 
-            var book = await _bookRepository.GetByIdAsync(request.BookId, ct);
+            var book = await _bookRepository.GetByIdAsync(request.BookId, cancellationToken);
 
             if (book == null)
             {
@@ -59,7 +59,7 @@
 
             _loanRepository.Add(loan);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return LoanResponse.FromEntity(loan);
         }

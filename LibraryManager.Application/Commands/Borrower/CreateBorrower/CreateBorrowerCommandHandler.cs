@@ -27,9 +27,9 @@
             _borrowerRepository = borrowerRepository;
         }
 
-        public async Task<Result<BorrowerResponse>> Handle(CreateBorrowerCommand request, CancellationToken ct)
+        public async Task<Result<BorrowerResponse>> Handle(CreateBorrowerCommand request, CancellationToken cancellationToken)
         {
-            var validationResult = await ValidateAsync(request, ct);
+            var validationResult = await ValidateAsync(request, cancellationToken);
 
             if (validationResult.IsFailure)
             {
@@ -46,21 +46,21 @@
 
             _borrowerRepository.Add(borrower);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return BorrowerResponse.FromEntity(borrower);
         }
 
-        private async Task<Result> ValidateAsync(CreateBorrowerCommand request, CancellationToken ct)
+        private async Task<Result> ValidateAsync(CreateBorrowerCommand request, CancellationToken cancellationToken)
         {
-            var isEmailUnique = await _borrowerRepository.IsEmailUnique(request.Email, ct);
+            var isEmailUnique = await _borrowerRepository.IsEmailUnique(request.Email, cancellationToken);
 
             if (!isEmailUnique)
             {
                 return Result.Failure(DomainErrors.User.EmailAlreadyExists);
             }
 
-            var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, ct);
+            var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, cancellationToken);
 
             if (isDocumentUnique)
             {

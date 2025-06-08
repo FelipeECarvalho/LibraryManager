@@ -19,11 +19,11 @@
             _validators = validators;
         }
 
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (!_validators.Any())
             {
-                return await next(ct);
+                return await next(cancellationToken);
             }
 
             var errors = _validators
@@ -42,7 +42,7 @@
                 return CreateValidationResult<TResponse>(errors);
             }
 
-            return await next(ct);
+            return await next(cancellationToken);
         }
 
         private static TResult CreateValidationResult<TResult>(Error[] errors)

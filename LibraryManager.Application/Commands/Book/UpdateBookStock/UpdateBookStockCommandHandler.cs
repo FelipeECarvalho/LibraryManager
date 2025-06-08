@@ -22,9 +22,9 @@
         }
 
 
-        public async Task<Result> Handle(UpdateBookStockCommand request, CancellationToken ct)
+        public async Task<Result> Handle(UpdateBookStockCommand request, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetByIdAsync(request.Id, ct);
+            var book = await _bookRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (book == null)
             {
@@ -38,7 +38,7 @@
                 return result;
             }
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

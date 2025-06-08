@@ -19,13 +19,13 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<AuthorResponse>> Handle(CreateAuthorCommand command, CancellationToken ct)
+        public async Task<Result<AuthorResponse>> Handle(CreateAuthorCommand command, CancellationToken cancellationToken)
         {
             var author = new Author(command.Name, command.Description);
 
             _repository.Add(author);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return AuthorResponse.FromEntity(author);
         }

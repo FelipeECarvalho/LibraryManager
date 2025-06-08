@@ -6,7 +6,7 @@
     using System;
     using System.Linq;
 
-    internal class UpdateLoanStatusCommandValidator
+    internal sealed class UpdateLoanStatusCommandValidator
         : AbstractValidator<UpdateLoanStatusCommand>
     {
         public UpdateLoanStatusCommandValidator()

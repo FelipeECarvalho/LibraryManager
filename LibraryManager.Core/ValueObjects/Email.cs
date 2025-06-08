@@ -11,21 +11,41 @@
         public Email(string address)
         {
             if (string.IsNullOrWhiteSpace(address) || !Regex.IsMatch(address, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
                 throw new ArgumentException("Invalid email format.", nameof(address));
+            }
 
             Address = address;
         }
 
-        public override string ToString() => Address;
-
-        public new bool Equals(object x, object y)
+        public override string ToString()
         {
-            throw new NotImplementedException();
+            return Address;
+        }
+
+        public new bool Equals(object? x, object? y)
+        {
+            if (x is null && y is null)
+            {
+                return true;
+            }
+
+            if (x is null || y is null)
+            {
+                return false;
+            }
+
+            return x.Equals(y);
         }
 
         public int GetHashCode(object obj)
         {
-            throw new NotImplementedException();
+            if (obj == null)
+            {
+                return 0;
+            }
+
+            return obj.GetHashCode();
         }
     }
 }

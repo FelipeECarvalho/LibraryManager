@@ -19,11 +19,11 @@
             _unityOfWork = unitOfWork;
         }
 
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken ct)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            var response = await next(ct);
+            var response = await next(cancellationToken);
 
-            await _unityOfWork.SaveChangesAsync(ct);
+            await _unityOfWork.SaveChangesAsync(cancellationToken);
 
             return response;
         }

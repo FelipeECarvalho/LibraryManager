@@ -17,13 +17,13 @@
             _bookRepository = bookRepository;
         }
 
-        public async Task<Result<IList<BookResponse>>> Handle(GetBooksQuery request, CancellationToken ct)
+        public async Task<Result<IList<BookResponse>>> Handle(GetBooksQuery request, CancellationToken cancellationToken)
         {
             var books = await _bookRepository.GetAllAsync(
                 request.Limit,
                 request.Offset,
                 request.Title,
-                ct);
+                cancellationToken);
 
             var bookResponse = books?
                 .Select(BookResponse.FromEntity)?

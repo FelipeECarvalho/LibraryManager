@@ -72,9 +72,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
             [FromBody] CreateLoanCommand loanRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(loanRequest, ct);
+            var result = await _mediator.Send(loanRequest, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -101,10 +101,10 @@
         public async Task<IActionResult> Put(
             Guid id,
             [FromBody] UpdateLoanCommand loanRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             loanRequest.Id = id;
-            var result = await _mediator.Send(loanRequest, ct);
+            var result = await _mediator.Send(loanRequest, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -129,10 +129,10 @@
         public async Task<IActionResult> Status(
             Guid id,
             [FromBody] UpdateLoanStatusCommand loanRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             loanRequest.Id = id;
-            var result = await _mediator.Send(loanRequest, ct);
+            var result = await _mediator.Send(loanRequest, cancellationToken);
 
             if (result.IsFailure)
             {

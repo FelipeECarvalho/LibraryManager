@@ -7,7 +7,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class GetCategoryByIdQueryHandler
+    internal sealed class GetCategoryByIdQueryHandler
         : IQueryHandler<GetCategoryByIdQuery, CategoryResponse>
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -18,9 +18,9 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result<CategoryResponse>> Handle(GetCategoryByIdQuery request, CancellationToken ct)
+        public async Task<Result<CategoryResponse>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetById(request.Id, ct);
+            var category = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
 
             if (category == null)
             {

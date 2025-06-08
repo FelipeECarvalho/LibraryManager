@@ -19,9 +19,9 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result> Handle(DeleteBookCommand request, CancellationToken ct)
+        public async Task<Result> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
-            var book = await _bookRepository.GetByIdAsync(request.Id, ct);
+            var book = await _bookRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (book == null)
             {
@@ -29,7 +29,7 @@
             }
 
             book.SetDeleted();
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

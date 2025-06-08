@@ -7,8 +7,8 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal class GetCategoriesQueryHandler
-        : IQueryHandler<GetCategoriesQuery, IList<CategoryResponse>>
+    internal sealed class GetCategoriesQueryHandler
+        : IQueryHandler<GetCategoriesQuery, IList<CategoryResponse>?>
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -18,12 +18,12 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result<IList<CategoryResponse>>> Handle(GetCategoriesQuery request, CancellationToken ct)
+        public async Task<Result<IList<CategoryResponse>?>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categories = await _categoryRepository.GetAllAsync(
                 request.Limit,
                 request.Offset,
-                ct);
+                cancellationToken).ConfigureAwait(false);
 
             var response = categories?
                 .Select(CategoryResponse.FromEntity)?

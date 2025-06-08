@@ -28,9 +28,9 @@
         [ProducesResponseType(typeof(IList<CategoryResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             [FromQuery] GetCategoriesQuery query,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(query, ct);
+            var response = await _mediator.Send(query, cancellationToken);
 
             return Ok(response.Value);
         }
@@ -47,9 +47,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(new GetCategoryByIdQuery(id), ct);
+            var response = await _mediator.Send(new GetCategoryByIdQuery(id), cancellationToken);
 
             if (response.IsFailure)
             {
@@ -72,9 +72,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
             CreateCategoryCommand categoryRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(categoryRequest, ct);
+            var response = await _mediator.Send(categoryRequest, cancellationToken);
 
             if (response.IsFailure)
             {
@@ -96,9 +96,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(new DeleteCategoryCommand(id), ct);
+            var response = await _mediator.Send(new DeleteCategoryCommand(id), cancellationToken);
 
             if (response.IsFailure)
             {

@@ -17,9 +17,9 @@
             _loanRepository = loanRepository;
         }
 
-        public async Task<Result<LoanResponse>> Handle(GetLoanByIdQuery request, CancellationToken ct)
+        public async Task<Result<LoanResponse>> Handle(GetLoanByIdQuery request, CancellationToken cancellationToken)
         {
-            var loan = await _loanRepository.GetByIdAsync(request.Id, ct);
+            var loan = await _loanRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (loan is null)
             {

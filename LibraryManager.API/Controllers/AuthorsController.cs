@@ -29,9 +29,9 @@
         [ProducesResponseType(typeof(IList<AuthorResponse>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAll(
             [FromQuery] GetAuthorsQuery query,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(query, ct);
+            var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
         }
@@ -48,11 +48,11 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             var query = new GetAuthorByIdQuery(id);
 
-            var result = await _mediator.Send(query, ct);
+            var result = await _mediator.Send(query, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -74,9 +74,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post(
             [FromBody] CreateAuthorCommand authorRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(authorRequest, ct);
+            var result = await _mediator.Send(authorRequest, cancellationToken);
 
             if (result.IsFailure)
             {
@@ -98,9 +98,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(
             Guid id,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new DeleteAuthorCommand(id), ct);
+            var result = await _mediator.Send(new DeleteAuthorCommand(id), cancellationToken);
 
             if (result.IsFailure)
             {
@@ -125,10 +125,10 @@
         public async Task<IActionResult> Put(
             Guid id,
             [FromBody] UpdateAuthorCommand authorRequest,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
             authorRequest.Id = id;
-            var result = await _mediator.Send(authorRequest, ct);
+            var result = await _mediator.Send(authorRequest, cancellationToken);
 
             if (result.IsFailure)
             {

@@ -17,9 +17,9 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Login(
             LoginCommand command,
-            CancellationToken ct)
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(command, ct);
+            var result = await _mediator.Send(command, cancellationToken);
 
             if (result.IsFailure)
             {

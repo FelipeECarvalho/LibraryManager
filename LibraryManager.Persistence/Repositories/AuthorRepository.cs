@@ -15,21 +15,21 @@
             _context = context;
         }
 
-        public async Task<IList<Author>> GetAllAsync(int limit, int offset, CancellationToken ct)
+        public async Task<IList<Author>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
         {
             return await _context.Authors
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(limit)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Author> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Author> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Authors
                 .Include(x => x.Books)
-                .SingleOrDefaultAsync(x => x.Id == id, ct);
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public void Add(Author author)

@@ -4,10 +4,10 @@
 
     public interface ICategoryRepository
     {
-        Task<IList<Category>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken ct = default);
-        Task<Category> GetById(Guid id, CancellationToken ct = default);
+        Task<IList<Category>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default);
+        Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
-        public void Add(Category category);
-        public void Update(Category category);
+        void Add(Category category);
+        void Update(Category category);
     }
 }

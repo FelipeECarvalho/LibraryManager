@@ -17,9 +17,9 @@
             _borrowerRepository = borrowerRepository;
         }
 
-        public async Task<Result<BorrowerResponse>> Handle(GetBorrowerByIdQuery request, CancellationToken ct)
+        public async Task<Result<BorrowerResponse>> Handle(GetBorrowerByIdQuery request, CancellationToken cancellationToken)
         {
-            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, ct);
+            var borrower = await _borrowerRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (borrower == null)
             {

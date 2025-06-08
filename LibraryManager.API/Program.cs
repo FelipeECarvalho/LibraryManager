@@ -6,7 +6,7 @@ namespace LibraryManager.API
     using LibraryManager.Persistence;
     using System.Reflection;
 
-    public class Program
+    internal static class Program
     {
         public static void Main(string[] args)
         {

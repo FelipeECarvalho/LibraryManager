@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Book>> GetAllAsync(int limit, int offset, string title, CancellationToken ct)
+        public async Task<IList<Book>> GetAllAsync(int limit, int offset, string title, CancellationToken cancellationToken)
         {
             var query = _context.Books
                 .AsNoTracking();
@@ -31,29 +31,29 @@
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(limit)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Book> GetByIdAsync(Guid id, CancellationToken ct)
+        public async Task<Book> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Books
                 .Include(x => x.Author)
                 .Include(x => x.Loans)
-                .SingleOrDefaultAsync(x => x.Id == id, ct);
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<IList<Book>> GetByIdAsync(IList<Guid> ids, CancellationToken ct)
+        public async Task<IList<Book>> GetByIdAsync(IList<Guid> ids, CancellationToken cancellationToken)
         {
             return await _context.Books
                 .AsNoTracking()
                 .Include(x => x.Author)
                 .Where(x => ids.Contains(x.Id))
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<bool> IsIsbnUnique(string isbn, CancellationToken ct = default)
+        public async Task<bool> IsIsbnUnique(string isbn, CancellationToken cancellationToken = default)
         {
-            return !await _context.Books.AnyAsync(x => x.Isbn == isbn, ct);
+            return !await _context.Books.AnyAsync(x => x.Isbn == isbn, cancellationToken);
         }
 
         public void Add(Book book)

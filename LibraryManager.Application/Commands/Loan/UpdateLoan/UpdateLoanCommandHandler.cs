@@ -21,9 +21,9 @@
             _loanRepository = loanRepository;
         }
 
-        public async Task<Result> Handle(UpdateLoanCommand request, CancellationToken ct)
+        public async Task<Result> Handle(UpdateLoanCommand request, CancellationToken cancellationToken)
         {
-            var loan = await _loanRepository.GetByIdAsync(request.Id, ct);
+            var loan = await _loanRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (loan == null)
             {
@@ -37,7 +37,7 @@
                 return Result.Failure(result.Error);
             }
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
         }

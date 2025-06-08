@@ -18,20 +18,20 @@
             _context = context;
         }
 
-        public async Task<IList<Category>> GetAllAsync(int limit, int offset, CancellationToken ct)
+        public async Task<IList<Category>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
         {
             return await _context.Categories
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
                 .Skip((offset - 1) * limit)
                 .Take(offset)
-                .ToListAsync(ct);
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<Category> GetById(Guid id, CancellationToken ct)
+        public async Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _context.Categories
-                .SingleOrDefaultAsync(x => x.Id == id, ct);
+                .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
         public void Add(Category category)

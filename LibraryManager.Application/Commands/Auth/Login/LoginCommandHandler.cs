@@ -25,9 +25,9 @@
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<string>> Handle(LoginCommand request, CancellationToken ct)
+        public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByEmail(request.Email, ct);
+            var user = await _userRepository.GetByEmail(request.Email, cancellationToken);
 
             if (user == null)
             {
@@ -43,7 +43,7 @@
 
             _userRepository.Update(user);
 
-            await _unitOfWork.SaveChangesAsync(ct);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return _authService.GenerateToken(user.Email.ToString(), user.GetType().Name);
         }
