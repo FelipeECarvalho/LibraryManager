@@ -1,6 +1,8 @@
 ﻿namespace LibraryManager.Infrastructure
 {
+    using LibraryManager.Core.Interfaces;
     using LibraryManager.Infrastructure.Auth;
+    using LibraryManager.Infrastructure.Options;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +16,9 @@
             services.Configure<JwtInfoOptions>(
                 configuration.GetSection("JwtInfo"));
 
-            services
-                .AddAuth(configuration);
+            services.AddAuth(configuration);
+
+            services.AddScoped<IPasswordHasher, PasswordHasher.PasswordHasher>();
 
             return services;
         }

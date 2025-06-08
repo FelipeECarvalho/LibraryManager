@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Core.Entities.Users;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Borrower>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
+        public async Task<IList<Borrower>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
         {
             return await _context.Borrowers
                 .AsNoTracking()
@@ -25,18 +25,18 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Borrower> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Borrower> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Borrowers
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken)
+        public async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken = default)
         {
             return !await _context.Borrowers.AnyAsync(x => x.Email.Equals(email), cancellationToken);
         }
 
-        public async Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken)
+        public async Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken = default)
         {
             return !await _context.Borrowers.AnyAsync(x => x.Document == document, cancellationToken);
         }

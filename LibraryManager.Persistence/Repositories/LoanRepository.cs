@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(int limit, int offset, Guid? BorrowerId, CancellationToken cancellationToken)
+        public async Task<IList<Loan>> GetAllAsync(int limit = 100, int offset = 1, Guid? BorrowerId = null, CancellationToken cancellationToken = default)
         {
             var query = _context.Loans
                 .AsNoTracking();
@@ -36,7 +36,7 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<IList<Loan>> GetByBorrowerAsync(Guid borrowerId, CancellationToken cancellationToken)
+        public async Task<IList<Loan>> GetByBorrowerAsync(Guid borrowerId, CancellationToken cancellationToken = default)
         {
             return await _context.Loans
                 .Where(x => x.Borrower.Id == borrowerId)
@@ -46,7 +46,7 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Loan> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Loan> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Loans
                 .Include(x => x.Borrower)

@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Repositories
+﻿namespace LibraryManager.Core.Interfaces.Repositories
 {
     using LibraryManager.Core.Entities.Users;
 
@@ -6,8 +6,8 @@
     {
         Task<IList<Borrower>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default);
         Task<Borrower> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-        Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken);
-        Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken);
+        Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken = default);
+        Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken = default);
 
         void Add(Borrower borrower);
         void Update(Borrower borrower);

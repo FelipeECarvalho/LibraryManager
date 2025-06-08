@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.Auth
+﻿namespace LibraryManager.Infrastructure.Options
 {
     public class JwtInfoOptions
     {

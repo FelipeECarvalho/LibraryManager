@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Author>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
+        public async Task<IList<Author>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
         {
             return await _context.Authors
                 .AsNoTracking()
@@ -25,7 +25,7 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Author> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Author> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Authors
                 .Include(x => x.Books)

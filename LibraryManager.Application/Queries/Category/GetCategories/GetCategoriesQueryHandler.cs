@@ -2,13 +2,13 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     internal sealed class GetCategoriesQueryHandler
-        : IQueryHandler<GetCategoriesQuery, IList<CategoryResponse>?>
+        : IQueryHandler<GetCategoriesQuery, IList<CategoryResponse>>
     {
         private readonly ICategoryRepository _categoryRepository;
 
@@ -18,12 +18,12 @@
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<Result<IList<CategoryResponse>?>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
+        public async Task<Result<IList<CategoryResponse>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categories = await _categoryRepository.GetAllAsync(
                 request.Limit,
                 request.Offset,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
 
             var response = categories?
                 .Select(CategoryResponse.FromEntity)?

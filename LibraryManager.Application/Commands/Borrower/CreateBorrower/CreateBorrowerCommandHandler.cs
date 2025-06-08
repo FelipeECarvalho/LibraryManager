@@ -4,9 +4,9 @@
     using LibraryManager.Application.Queries.Borrower;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces;
+    using LibraryManager.Core.Interfaces.Repositories;
     using LibraryManager.Core.ValueObjects;
-    using LibraryManager.Infrastructure.Auth;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -15,15 +15,15 @@
     {
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAuthService _authService;
+        private readonly IPasswordHasher _passwordHasher;
 
         public CreateBorrowerCommandHandler(
             IUnitOfWork unitOfWork,
-            IAuthService authService,
+            IPasswordHasher passwordHasher,
             IBorrowerRepository borrowerRepository)
         {
             _unitOfWork = unitOfWork;
-            _authService = authService;
+            _passwordHasher = passwordHasher;
             _borrowerRepository = borrowerRepository;
         }
 
@@ -37,10 +37,10 @@
             }
 
             var password = string.IsNullOrWhiteSpace(request.Password)
-                ? _authService.GeneratePassword(length: 10)
+                ? _passwordHasher.(length: 10)
                 : request.Password;
 
-            password = _authService.ComputeHash(password);
+            password = _passwordHasher.ComputeHash(password);
 
             var borrower = new Core.Entities.Users.Borrower(request.Name, new Email(request.Email), password, request.Document, request.BirthDate, request.Address);
 

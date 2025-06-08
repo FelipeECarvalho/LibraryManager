@@ -4,7 +4,7 @@
     using LibraryManager.Application.Queries.Author;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading.Tasks;
 
     internal sealed class CreateAuthorCommandHandler

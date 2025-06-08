@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -18,7 +18,7 @@
             _context = context;
         }
 
-        public async Task<IList<Category>> GetAllAsync(int limit, int offset, CancellationToken cancellationToken)
+        public async Task<IList<Category>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
         {
             return await _context.Categories
                 .AsNoTracking()
@@ -28,7 +28,7 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Categories
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);

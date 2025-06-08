@@ -3,8 +3,8 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Repositories;
-    using LibraryManager.Infrastructure.Auth;
+    using LibraryManager.Core.Interfaces;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -13,15 +13,18 @@
     {
         private readonly IUserRepository _userRepository;
         private readonly IAuthService _authService;
+        private readonly IPasswordHasher _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
 
         public LoginCommandHandler(
             IUnitOfWork unitOfWork,
             IUserRepository userRepository,
-            IAuthService authService)
+            IAuthService authService,
+            IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
             _authService = authService;
+            _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
         }
 
@@ -34,7 +37,7 @@
                 return Result.Failure<string>(DomainErrors.User.LoginFailedInvalidEmailOrPassword);
             }
 
-            if (user.PasswordHash != _authService.ComputeHash(request.Password))
+            if (!user.VerifyPassword(request.Password, _passwordHasher))
             {
                 return Result.Failure<string>(DomainErrors.User.LoginFailedInvalidEmailOrPassword);
             }

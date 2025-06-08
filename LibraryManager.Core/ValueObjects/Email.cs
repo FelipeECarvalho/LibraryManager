@@ -23,7 +23,7 @@
             return Address;
         }
 
-        public new bool Equals(object? x, object? y)
+        public new bool Equals(object x, object y)
         {
             if (x is null && y is null)
             {

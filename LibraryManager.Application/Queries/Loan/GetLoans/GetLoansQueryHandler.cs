@@ -3,7 +3,7 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Loan;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;

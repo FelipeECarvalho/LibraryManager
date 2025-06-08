@@ -3,7 +3,7 @@
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@
 
         public async Task<Result<CategoryResponse>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
         {
-            var category = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken).ConfigureAwait(false);
+            var category = await _categoryRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (category == null)
             {

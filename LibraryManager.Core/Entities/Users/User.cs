@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities.Users
 {
+    using LibraryManager.Core.Interfaces;
     using LibraryManager.Core.ValueObjects;
 
     /// <summary>
@@ -31,6 +32,11 @@
         public void UpdateLastLogin()
         {
             LastLogin = DateTimeOffset.UtcNow;
+        }
+
+        public bool VerifyPassword(string password, IPasswordHasher passwordHasher)
+        {
+            return passwordHasher.Verify(password, PasswordHash);
         }
     }
 }

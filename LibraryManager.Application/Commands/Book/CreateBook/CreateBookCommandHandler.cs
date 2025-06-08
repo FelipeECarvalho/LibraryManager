@@ -5,7 +5,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Repositories;
+    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 
