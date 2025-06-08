@@ -4,7 +4,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
 
-    internal sealed class LoginCommandValidator 
+    internal sealed class LoginCommandValidator
         : AbstractValidator<LoginCommand>
     {
         public LoginCommandValidator()

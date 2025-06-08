@@ -24,7 +24,7 @@
                 request.Limit,
                 request.Offset,
                 ct);
-            
+
             var response = categories?
                 .Select(CategoryResponse.FromEntity)?
                 .ToList();

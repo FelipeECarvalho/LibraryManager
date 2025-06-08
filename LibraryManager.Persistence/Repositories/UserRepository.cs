@@ -19,7 +19,7 @@
                 .SingleOrDefaultAsync(x => string.Equals(x.Email, email, StringComparison.OrdinalIgnoreCase), ct);
         }
 
-        public void Update(User user) 
+        public void Update(User user)
         {
             _context.Update(user);
         }

@@ -11,7 +11,7 @@
         string Observation)
     {
         public decimal? Latitude { get; private set; }
-        
+
         public decimal? Longitude { get; private set; }
 
         public override string ToString()

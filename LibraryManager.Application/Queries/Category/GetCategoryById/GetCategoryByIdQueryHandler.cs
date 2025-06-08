@@ -22,7 +22,7 @@
         {
             var category = await _categoryRepository.GetById(request.Id, ct);
 
-            if (category == null) 
+            if (category == null)
             {
                 return Result.Failure<CategoryResponse>(DomainErrors.Category.NotFound(request.Id));
             }

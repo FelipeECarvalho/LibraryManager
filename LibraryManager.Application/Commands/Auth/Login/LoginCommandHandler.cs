@@ -29,7 +29,7 @@
         {
             var user = await _userRepository.GetByEmail(request.Email, ct);
 
-            if (user == null) 
+            if (user == null)
             {
                 return Result.Failure<string>(DomainErrors.User.LoginFailedInvalidEmailOrPassword);
             }
@@ -40,7 +40,7 @@
             }
 
             user.UpdateLastLogin();
-            
+
             _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync(ct);

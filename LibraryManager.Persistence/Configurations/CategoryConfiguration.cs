@@ -10,7 +10,7 @@
         public override void Configure(EntityTypeBuilder<Category> builder)
         {
             base.Configure(builder);
-            
+
             builder.ToTable(TableNames.Categories);
 
             builder.Property(x => x.Name).HasMaxLength(50);

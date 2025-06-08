@@ -9,7 +9,7 @@
 
     public static class Dependencies
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.Configure<JwtInfoOptions>(
                 configuration.GetSection("JwtInfo"));

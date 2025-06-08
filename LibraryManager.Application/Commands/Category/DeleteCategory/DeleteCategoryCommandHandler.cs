@@ -4,7 +4,6 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using LibraryManager.Core.Repositories;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -26,7 +25,7 @@
         {
             var category = await _categoryRepository.GetById(request.Id, ct);
 
-            if (category == null) 
+            if (category == null)
             {
                 return Result.Failure(DomainErrors.Category.NotFound(request.Id));
             }

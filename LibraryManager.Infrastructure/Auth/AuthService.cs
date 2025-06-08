@@ -7,7 +7,7 @@
     using System.Security.Cryptography;
     using System.Text;
 
-    public sealed class AuthService 
+    public sealed class AuthService
         : IAuthService
     {
         private readonly JwtInfoOptions _options;

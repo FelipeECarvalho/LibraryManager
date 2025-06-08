@@ -29,7 +29,7 @@
             return await query
                 .Include(x => x.Author)
                 .OrderBy(x => x.CreateDate)
-                .Skip((offset - 1) * limit) 
+                .Skip((offset - 1) * limit)
                 .Take(limit)
                 .ToListAsync(ct);
         }

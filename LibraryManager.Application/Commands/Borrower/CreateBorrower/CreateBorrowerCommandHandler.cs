@@ -35,7 +35,7 @@
                 return Result.Failure<BorrowerResponse>(validationResult.Error);
             }
 
-            var password = string.IsNullOrWhiteSpace(request.Password) 
+            var password = string.IsNullOrWhiteSpace(request.Password)
                 ? _authService.GeneratePassword(length: 10)
                 : request.Password;
 

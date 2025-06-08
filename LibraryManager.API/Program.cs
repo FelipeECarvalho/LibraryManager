@@ -2,8 +2,8 @@ namespace LibraryManager.API
 {
     using LibraryManager.API.Middleware;
     using LibraryManager.Application;
-    using LibraryManager.Persistence;
     using LibraryManager.Infrastructure;
+    using LibraryManager.Persistence;
     using System.Reflection;
 
     public class Program
