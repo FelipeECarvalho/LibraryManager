@@ -2,7 +2,6 @@
 {
     using LibraryManager.Core.Interfaces;
     using LibraryManager.Infrastructure.Auth;
-    using LibraryManager.Infrastructure.Options;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;

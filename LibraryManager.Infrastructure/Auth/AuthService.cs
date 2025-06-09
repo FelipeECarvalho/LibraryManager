@@ -2,7 +2,6 @@
 {
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Interfaces;
-    using LibraryManager.Infrastructure.Options;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
