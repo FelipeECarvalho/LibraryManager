@@ -29,6 +29,10 @@
 
         public DateTimeOffset? LastLogin { get; protected set; }
 
+        public Guid LibraryId { get; set; }
+
+        public Library Library { get; set; }
+
         public void UpdateLastLogin()
         {
             LastLogin = DateTimeOffset.UtcNow;

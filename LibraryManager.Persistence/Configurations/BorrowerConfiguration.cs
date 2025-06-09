@@ -26,12 +26,6 @@
 
             builder.Navigation(x => x.Address).IsRequired(true);
 
-            builder.HasOne(x => x.Library)
-                .WithMany(x => x.Borrowers)
-                .HasForeignKey(x => x.LibraryId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.HasIndex(x => new { x.Email, x.LibraryId }).IsUnique();
             builder.HasIndex(x => new { x.Document, x.LibraryId }).IsUnique();
         }
     }

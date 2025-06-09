@@ -1,9 +1,9 @@
 **TODO**
 
 - Autenticação e autorização dos usuários
-- Melhorar auth, deixar mais clean
 - Ajustar User, Category, Book, etc., para trabalhar com libraries
 - Implementar melhorias no UnitOfWork
+- Adicionar logging
 - Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar

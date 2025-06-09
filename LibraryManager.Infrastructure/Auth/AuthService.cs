@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.Auth
+﻿ namespace LibraryManager.Infrastructure.Auth
 {
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Interfaces;

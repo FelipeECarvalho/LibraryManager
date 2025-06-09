@@ -14,8 +14,12 @@
 
             builder.ToTable(TableNames.Users);
 
+            builder.HasDiscriminator<UserType>(nameof(UserType))
+                .HasValue<Borrower>(UserType.Borrower)
+                .HasValue<Operator>(UserType.Operator);
+
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);
-            builder.Property(x => x.LastLogin);
+            builder.Property(x => x.LastLogin).IsRequired(false);
 
             builder.OwnsOne(x => x.Email, c =>
             {
@@ -32,13 +36,14 @@
 
             builder.Navigation(x => x.Name).IsRequired();
 
-            builder.HasDiscriminator<UserType>(nameof(UserType))
-                .HasValue<Borrower>(UserType.Borrower)
-                .HasValue<Operator>(UserType.Operator);
+            builder.HasOne(x => x.Library)
+                .WithMany(x => x.Borrowers)
+                .HasForeignKey(x => x.LibraryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(u => u.Email)
-                .IsUnique()
-                .HasFilter($"[UserType] = 1");
+            builder.HasIndex(x => new { x.Email, x.LibraryId })
+                .HasFilter("[IsDeleted] = false")
+                .IsUnique();
         }
     }
 }

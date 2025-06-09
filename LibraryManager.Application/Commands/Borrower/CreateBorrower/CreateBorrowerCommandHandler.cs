@@ -16,14 +16,17 @@
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly IPasswordGenerator _passwordGenerator;
 
         public CreateBorrowerCommandHandler(
             IUnitOfWork unitOfWork,
             IPasswordHasher passwordHasher,
+            IPasswordGenerator passwordGenerator,
             IBorrowerRepository borrowerRepository)
         {
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
+            _passwordGenerator = passwordGenerator;
             _borrowerRepository = borrowerRepository;
         }
 
@@ -37,12 +40,18 @@
             }
 
             var password = string.IsNullOrWhiteSpace(request.Password)
-                ? _passwordHasher.(length: 10)
+                ? _passwordGenerator.Generate(length: 10)
                 : request.Password;
 
             password = _passwordHasher.ComputeHash(password);
 
-            var borrower = new Core.Entities.Users.Borrower(request.Name, new Email(request.Email), password, request.Document, request.BirthDate, request.Address);
+            var borrower = new Core.Entities.Users.Borrower(
+                request.Name,
+                new Email(request.Email),
+                password,
+                request.Document,
+                request.BirthDate,
+                request.Address);
 
             _borrowerRepository.Add(borrower);
 

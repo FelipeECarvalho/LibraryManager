@@ -32,7 +32,7 @@
 
             builder.HasIndex(x => new { x.BorrowerId, x.BookId, x.Status })
                 .IsUnique()
-                .HasFilter("Status in (0, 1, 2, 4)");
+                .HasFilter("[Status] in (0, 1, 2, 4)");
         }
     }
 }

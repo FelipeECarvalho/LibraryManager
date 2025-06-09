@@ -27,10 +27,6 @@
 
         public IList<Loan> Loans { get; private set; } = [];
 
-        public Guid LibraryId { get; private set; }
-
-        public Library Library { get; private set; }
-
         public bool CanLoan(Book book)
         {
             return !Loans
