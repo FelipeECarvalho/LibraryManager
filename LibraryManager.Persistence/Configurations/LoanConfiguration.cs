@@ -31,8 +31,11 @@
                 .HasForeignKey(x => x.BookId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            var bookUnavailableStatuses = LoanStatusExtensions.BookUnavailable()
+                .Select(x => (int)x);
+
             builder.HasIndex(x => new { x.BorrowerId, x.BookId, x.Status })
-                .HasFilter($"[Status] in ({string.Join(",", LoanStatusExtensions.BookUnavailable().Select(x => (int)x))}")
+                .HasFilter($"[Status] in ({string.Join(",", bookUnavailableStatuses)})")
                 .IsUnique();
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManager.Persistence.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20250610022755_initial_migration")]
+    [Migration("20250610232053_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />
@@ -249,7 +249,7 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasIndex("BorrowerId", "BookId", "Status")
                         .IsUnique()
-                        .HasFilter("[Status] in (0,1,2,4");
+                        .HasFilter("[Status] in (0,1,2,4)");
 
                     b.ToTable("Loan", (string)null);
                 });
@@ -295,7 +295,7 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasIndex("Email", "LibraryId")
                         .IsUnique()
-                        .HasFilter("[IsDeleted] = false");
+                        .HasFilter("[IsDeleted] = 0");
 
                     b.ToTable("User", (string)null);
 

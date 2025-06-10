@@ -265,7 +265,7 @@ namespace LibraryManager.Persistence.Migrations
                 table: "Loan",
                 columns: new[] { "BorrowerId", "BookId", "Status" },
                 unique: true,
-                filter: "[Status] in (0,1,2,4");
+                filter: "[Status] in (0,1,2,4)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_Document_LibraryId",
@@ -279,7 +279,7 @@ namespace LibraryManager.Persistence.Migrations
                 table: "User",
                 columns: new[] { "Email", "LibraryId" },
                 unique: true,
-                filter: "[IsDeleted] = false");
+                filter: "[IsDeleted] = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_User_LibraryId",

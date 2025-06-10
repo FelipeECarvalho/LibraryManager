@@ -3,6 +3,7 @@
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Interfaces;
+    using LibraryManager.Infrastructure;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.JsonWebTokens;
     using Microsoft.IdentityModel.Tokens;
@@ -37,7 +38,7 @@
                 [
                     new(ClaimTypes.Email, user.Email.ToString()),
                     new(ClaimTypes.Role, user.GetType().Name),
-                    new("library_Id", user.LibraryId.ToString())
+                    new("library_id", user.LibraryId.ToString())
                 ]),
                 Expires = DateTime.UtcNow.AddDays(_options.Expires),
                 SigningCredentials = credentials,

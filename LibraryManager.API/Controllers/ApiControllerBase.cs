@@ -57,7 +57,7 @@
 
         private Guid GetLibraryFromRouteAsync()
         {
-            var routeValue = RouteData.Values["libraryId"];
+            var routeValue = User?.FindFirst("library_id")?.Value;
 
             if (routeValue != null && 
                 Guid.TryParse(routeValue.ToString(), out var id))

@@ -43,7 +43,7 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasIndex(x => new { x.Email, x.LibraryId })
-                .HasFilter("[IsDeleted] = false")
+                .HasFilter("[IsDeleted] = 0")
                 .IsUnique();
         }
     }
