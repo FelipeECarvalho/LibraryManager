@@ -16,7 +16,7 @@
             services.AddMediatR(configuration =>
             {
                 configuration.RegisterServicesFromAssemblies(typeof(Dependencies).Assembly);
-                configuration.AddOpenBehavior(typeof(UnityOfWorkBehaviour<,>));
+                //configuration.AddOpenBehavior(typeof(UnityOfWorkBehaviour<,>));
             });
 
             return services;

@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Borrower.CreateBorrower;
     using LibraryManager.Application.Commands.Borrower.DeleteBorrower;
     using LibraryManager.Application.Commands.Borrower.UpdateBorrower;
@@ -15,8 +14,6 @@
     /// <summary>
     /// A borrower
     /// </summary>
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
     public class BorrowersController(IMediator _mediator) : ApiControllerBase

@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Loan.CreateLoan;
     using LibraryManager.Application.Commands.Loan.UpdateLoan;
     using LibraryManager.Application.Commands.Loan.UpdateLoanStatus;
@@ -14,9 +13,6 @@
     /// <summary>
     /// A Loan
     /// </summary>
-    /// <param name="_mediator"></param>
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
     public class LoansController(IMediator _mediator) : ApiControllerBase

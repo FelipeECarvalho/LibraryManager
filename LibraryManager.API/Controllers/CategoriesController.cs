@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Category.CreateCategory;
     using LibraryManager.Application.Commands.Category.DeleteCategory;
     using LibraryManager.Application.Queries.Category;
@@ -13,8 +12,6 @@
     /// <summary>
     /// A category
     /// </summary>
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
     public class CategoriesController(IMediator _mediator) : ApiControllerBase

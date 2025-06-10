@@ -1,11 +1,20 @@
 ﻿namespace LibraryManager.API.Controllers
 {
+    using Asp.Versioning;
     using LibraryManager.Core.Common;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ApiControllerBase : ControllerBase
+    [ApiVersion("1.0")]
+    [Route("v{version:apiVersion}/library/{libraryId:guid}/[controller]")]
+    [ApiController]
+    [Authorize]
+    public abstract class ApiControllerBase : ControllerBase
     {
+        protected Library Library { get => GetLibraryFromRoute(); }
+
         protected IActionResult HandleFailure(Result result)
         {
             if (result.IsSuccess)
@@ -46,6 +55,19 @@
                 Detail = error.Description,
                 Extensions = { { nameof(errors), errors } }
             };
+        }
+
+        private Library GetLibraryFromRoute()
+        {
+            var routeValue = RouteData.Values["libraryId"];
+
+            if (routeValue != null && 
+                Guid.TryParse(routeValue.ToString(), out var id))
+            {
+                return new Library("Teste", null, null, null);
+            }
+
+            throw new InvalidOperationException("libraryId não foi encontrado na rota.");
         }
     }
 }

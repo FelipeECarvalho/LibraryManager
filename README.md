@@ -6,6 +6,7 @@
 - Talvez adicionar Aggregate root
 - Implementar melhorias no UnitOfWork
 - Adicionar logging
+- Adicionar cache
 - Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar

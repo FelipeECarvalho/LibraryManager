@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Book.CreateBook;
     using LibraryManager.Application.Commands.Book.DeleteBook;
     using LibraryManager.Application.Commands.Book.UpdateBook;
@@ -15,8 +14,6 @@
     /// <summary>
     /// A book
     /// </summary>
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
     public class BooksController(IMediator _mediator) : ApiControllerBase

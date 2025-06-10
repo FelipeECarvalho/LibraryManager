@@ -1,13 +1,10 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Auth.Login;
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [AllowAnonymous]
     public class AuthController(IMediator _mediator) : ApiControllerBase

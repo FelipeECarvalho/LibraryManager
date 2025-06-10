@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.API.Controllers
 {
-    using Asp.Versioning;
     using LibraryManager.Application.Commands.Author.CreateAuthor;
     using LibraryManager.Application.Commands.Author.DeleteAuthor;
     using LibraryManager.Application.Commands.Author.UpdateAuthor;
@@ -14,8 +13,6 @@
     /// <summary>
     /// An Author
     /// </summary>
-    [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     [Authorize]
     public class AuthorsController(IMediator _mediator) : ApiControllerBase

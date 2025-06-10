@@ -19,6 +19,7 @@
             services.AddAuth(configuration);
 
             services.AddScoped<IPasswordHasher, PasswordHasher>();
+            services.AddScoped<IPasswordGenerator, PasswordGenerator>();
 
             return services;
         }
