@@ -1,6 +1,8 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Extensions;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -31,8 +33,8 @@
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasIndex(x => new { x.BorrowerId, x.BookId, x.Status })
-                .IsUnique()
-                .HasFilter("[Status] in (0, 1, 2, 4)");
+                .HasFilter($"[Status] in ({string.Join(",", LoanStatusExtensions.BookUnavailable().Select(x => (int)x))}")
+                .IsUnique();
         }
     }
 }

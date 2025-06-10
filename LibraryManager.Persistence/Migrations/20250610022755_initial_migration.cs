@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -43,8 +44,8 @@ namespace LibraryManager.Persistence.Migrations
                     Observation = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Latitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: true),
                     Longitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: true),
-                    OpeningTime = table.Column<TimeOnly>(type: "time", nullable: false),
-                    ClosingTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    OpeningTime = table.Column<TimeOnly>(type: "time", nullable: true),
+                    ClosingTime = table.Column<TimeOnly>(type: "time", nullable: true),
                     CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
@@ -92,7 +93,7 @@ namespace LibraryManager.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -111,15 +112,16 @@ namespace LibraryManager.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     LastLogin = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false),
                     Document = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     BirthDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -133,7 +135,6 @@ namespace LibraryManager.Persistence.Migrations
                     Observation = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Latitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: true),
                     Longitude = table.Column<decimal>(type: "decimal(9,6)", precision: 9, scale: 6, nullable: true),
-                    LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Permissions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -141,9 +142,9 @@ namespace LibraryManager.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Library_LibraryId",
+                        name: "FK_User_Library_LibraryId",
                         column: x => x.LibraryId,
                         principalTable: "Library",
                         principalColumn: "Id",
@@ -203,9 +204,9 @@ namespace LibraryManager.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Loan_Users_BorrowerId",
+                        name: "FK_Loan_User_BorrowerId",
                         column: x => x.BorrowerId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,8 +253,7 @@ namespace LibraryManager.Persistence.Migrations
                 name: "IX_Category_Name_LibraryId",
                 table: "Category",
                 columns: new[] { "Name", "LibraryId" },
-                unique: true,
-                filter: "[Name] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Loan_BookId",
@@ -265,32 +265,25 @@ namespace LibraryManager.Persistence.Migrations
                 table: "Loan",
                 columns: new[] { "BorrowerId", "BookId", "Status" },
                 unique: true,
-                filter: "Status in (0, 1, 2, 4)");
+                filter: "[Status] in (0,1,2,4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Document_LibraryId",
-                table: "Users",
+                name: "IX_User_Document_LibraryId",
+                table: "User",
                 columns: new[] { "Document", "LibraryId" },
                 unique: true,
-                filter: "[Document] IS NOT NULL AND [LibraryId] IS NOT NULL");
+                filter: "[UserType] = 0");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
-                column: "Email",
-                unique: true,
-                filter: "[UserType] = 1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_Email_LibraryId",
-                table: "Users",
+                name: "IX_User_Email_LibraryId",
+                table: "User",
                 columns: new[] { "Email", "LibraryId" },
                 unique: true,
-                filter: "[Email] IS NOT NULL AND [LibraryId] IS NOT NULL");
+                filter: "[IsDeleted] = false");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_LibraryId",
-                table: "Users",
+                name: "IX_User_LibraryId",
+                table: "User",
                 column: "LibraryId");
         }
 
@@ -310,7 +303,7 @@ namespace LibraryManager.Persistence.Migrations
                 name: "Book");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Author");

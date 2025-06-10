@@ -18,6 +18,19 @@
                 ErrorType.Validation);
         }
 
+        public static class Library
+        {
+            public static readonly Func<Guid, Error> IdNotFound = id => new(
+                "Library.NotFound",
+                $"The library with the ID {id} was not found.",
+                ErrorType.NotFound);
+
+            public static Error NotFound => new(
+                "Library.NotFound",
+                $"The library was not found.",
+                ErrorType.NotFound);
+        }
+
         public static class User
         {
             public static Error PasswordInvalidLength => new(

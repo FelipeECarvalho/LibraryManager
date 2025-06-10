@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Application.Queries.Borrower
 {
-    using LibraryManager.Core.Entities.Users;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Core.ValueObjects;
 
     public sealed record BorrowerResponse

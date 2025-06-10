@@ -2,18 +2,16 @@
 {
     using Asp.Versioning;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
-    using Microsoft.AspNetCore.Authorization;
+    using LibraryManager.Core.Exceptions;
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/library/{libraryId:guid}/[controller]")]
     [ApiController]
-    [Authorize]
     public abstract class ApiControllerBase : ControllerBase
     {
-        protected Library Library { get => GetLibraryFromRoute(); }
+        protected Guid LibraryId => GetLibraryFromRouteAsync();
 
         protected IActionResult HandleFailure(Result result)
         {
@@ -57,17 +55,17 @@
             };
         }
 
-        private Library GetLibraryFromRoute()
+        private Guid GetLibraryFromRouteAsync()
         {
             var routeValue = RouteData.Values["libraryId"];
 
             if (routeValue != null && 
                 Guid.TryParse(routeValue.ToString(), out var id))
             {
-                return new Library("Teste", null, null, null);
+                return id;
             }
 
-            throw new InvalidOperationException("libraryId não foi encontrado na rota.");
+            throw new LibraryNotFoundException();
         }
     }
 }

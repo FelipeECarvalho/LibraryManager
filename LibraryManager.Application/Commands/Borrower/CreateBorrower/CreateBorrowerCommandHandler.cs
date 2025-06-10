@@ -45,7 +45,7 @@
 
             password = _passwordHasher.ComputeHash(password);
 
-            var borrower = new Core.Entities.Users.Borrower(
+            var borrower = new Core.Entities.Borrower(
                 request.Name,
                 new Email(request.Email),
                 password,

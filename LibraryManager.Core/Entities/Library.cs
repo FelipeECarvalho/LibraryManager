@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.Core.Entities
 {
-    using LibraryManager.Core.Entities.Users;
     using LibraryManager.Core.ValueObjects;
 
     public class Library : BaseEntity
@@ -29,7 +28,7 @@
 
         public IList<Book> Books { get; private set; }
 
-        public IList<Borrower> Borrowers { get; private set; }
+        public IList<User> Users { get; private set; }
 
         public IList<Category> Categories { get; private set; }
     }

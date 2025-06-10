@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
-    using LibraryManager.Core.Entities.Users;
+    using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Enums;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +9,7 @@
     {
         public void Configure(EntityTypeBuilder<Borrower> builder)
         {
-            builder.Property(x => x.Document).HasMaxLength(30);
+            builder.Property(x => x.Document).HasMaxLength(30).IsRequired();
 
             builder.OwnsOne(x => x.Address, c =>
             {
@@ -24,9 +25,11 @@
                 c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false);
             });
 
-            builder.Navigation(x => x.Address).IsRequired(true);
+            builder.Navigation(x => x.Address).IsRequired();
 
-            builder.HasIndex(x => new { x.Document, x.LibraryId }).IsUnique();
+            builder.HasIndex(x => new { x.Document, x.LibraryId })
+                .HasFilter($"[UserType] = {(int)UserType.Borrower}")
+                .IsUnique();
         }
     }
 }

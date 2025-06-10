@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManager.Persistence.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20250607152410_initial_migration")]
+    [Migration("20250610022755_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />
@@ -159,6 +159,7 @@ namespace LibraryManager.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -170,8 +171,7 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasIndex("LibraryId");
 
                     b.HasIndex("Name", "LibraryId")
-                        .IsUnique()
-                        .HasFilter("[Name] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Category", (string)null);
                 });
@@ -181,7 +181,7 @@ namespace LibraryManager.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<TimeOnly>("ClosingTime")
+                    b.Property<TimeOnly?>("ClosingTime")
                         .HasColumnType("time");
 
                     b.Property<DateTimeOffset>("CreateDate")
@@ -197,7 +197,7 @@ namespace LibraryManager.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<TimeOnly>("OpeningTime")
+                    b.Property<TimeOnly?>("OpeningTime")
                         .HasColumnType("time");
 
                     b.Property<DateTimeOffset>("UpdateDate")
@@ -249,7 +249,7 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasIndex("BorrowerId", "BookId", "Status")
                         .IsUnique()
-                        .HasFilter("Status in (0, 1, 2, 4)");
+                        .HasFilter("[Status] in (0,1,2,4");
 
                     b.ToTable("Loan", (string)null);
                 });
@@ -264,8 +264,8 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("Email");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -274,6 +274,9 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.Property<DateTimeOffset?>("LastLogin")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<Guid>("LibraryId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()
@@ -288,11 +291,13 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[UserType] = 1");
+                    b.HasIndex("LibraryId");
 
-                    b.ToTable("Users");
+                    b.HasIndex("Email", "LibraryId")
+                        .IsUnique()
+                        .HasFilter("[IsDeleted] = false");
+
+                    b.ToTable("User", (string)null);
 
                     b.HasDiscriminator<int>("UserType");
 
@@ -307,21 +312,13 @@ namespace LibraryManager.Persistence.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Document")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.Property<Guid>("LibraryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasIndex("LibraryId");
-
                     b.HasIndex("Document", "LibraryId")
                         .IsUnique()
-                        .HasFilter("[Document] IS NOT NULL AND [LibraryId] IS NOT NULL");
-
-                    b.HasIndex("Email", "LibraryId")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL AND [LibraryId] IS NOT NULL");
+                        .HasFilter("[UserType] = 0");
 
                     b.HasDiscriminator().HasValue(0);
                 });
@@ -513,6 +510,12 @@ namespace LibraryManager.Persistence.Migrations
 
             modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
                 {
+                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
+                        .WithMany("Users")
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("LibraryManager.Core.ValueObjects.Name", "Name", b1 =>
                         {
                             b1.Property<Guid>("UserId")
@@ -532,11 +535,13 @@ namespace LibraryManager.Persistence.Migrations
 
                             b1.HasKey("UserId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
+
+                    b.Navigation("Library");
 
                     b.Navigation("Name")
                         .IsRequired();
@@ -544,12 +549,6 @@ namespace LibraryManager.Persistence.Migrations
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Borrower", b =>
                 {
-                    b.HasOne("LibraryManager.Core.Entities.Library", "Library")
-                        .WithMany("Borrowers")
-                        .HasForeignKey("LibraryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.OwnsOne("LibraryManager.Core.ValueObjects.Address", "Address", b1 =>
                         {
                             b1.Property<Guid>("BorrowerId")
@@ -614,7 +613,7 @@ namespace LibraryManager.Persistence.Migrations
 
                             b1.HasKey("BorrowerId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("User");
 
                             b1.WithOwner()
                                 .HasForeignKey("BorrowerId");
@@ -622,8 +621,6 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
-
-                    b.Navigation("Library");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Author", b =>
@@ -647,9 +644,9 @@ namespace LibraryManager.Persistence.Migrations
                 {
                     b.Navigation("Books");
 
-                    b.Navigation("Borrowers");
-
                     b.Navigation("Categories");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.Borrower", b =>

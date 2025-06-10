@@ -13,7 +13,7 @@
 
             builder.ToTable(TableNames.Categories);
 
-            builder.Property(x => x.Name).HasMaxLength(50);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
             builder.Property(x => x.Description).HasMaxLength(256).IsRequired(false);
 
             builder.HasOne(x => x.Library)

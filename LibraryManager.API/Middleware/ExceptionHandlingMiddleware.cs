@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.API.Middleware
 {
     using LibraryManager.API.Models;
+    using LibraryManager.Core.Exceptions;
     using System.Net;
 
     public class ExceptionHandlingMiddleware
@@ -27,7 +28,9 @@
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode = exception is LibraryNotFoundException
+                ? (int)HttpStatusCode.BadRequest
+                : (int)HttpStatusCode.InternalServerError;
 
             await context.Response.WriteAsync(new ErrorDetails()
             {

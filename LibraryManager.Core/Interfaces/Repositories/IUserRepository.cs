@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Core.Interfaces.Repositories
 {
-    using LibraryManager.Core.Entities.Users;
+    using LibraryManager.Core.Entities;
 
     public interface IUserRepository
     {

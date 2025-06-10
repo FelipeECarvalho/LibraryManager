@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
-    using LibraryManager.Core.Entities.Users;
+    using LibraryManager.Core.Entities;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

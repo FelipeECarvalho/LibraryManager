@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Entities.Users
+﻿namespace LibraryManager.Core.Entities
 {
     /// <summary>
     /// User responsible for making changes within the library scope
