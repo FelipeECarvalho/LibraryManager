@@ -18,15 +18,16 @@
 
             services.AddAuth(configuration);
 
-            services.AddScoped<IPasswordHasher, PasswordHasher>();
-            services.AddScoped<IPasswordGenerator, PasswordGenerator>();
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
+            services.AddSingleton<ITokenProvider, TokenProvider>();
 
             return services;
         }
 
         private static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IAuthService, AuthService>();
+            services.AddAuthorization();
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -41,7 +42,7 @@
                         ValidIssuer = configuration["JwtInfo:Issuer"],
                         ValidAudience = configuration["JwtInfo:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            configuration["JwtInfo:Key"]))
+                            configuration["Jwt:Secret"]))
                     };
                 });
 

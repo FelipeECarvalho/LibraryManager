@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Core.Interfaces
 {
-    public interface IAuthService
+    using LibraryManager.Core.Entities;
+
+    public interface ITokenProvider
     {
-        string GenerateToken(string email, string role);
+        string GenerateToken(User user);
     }
 }

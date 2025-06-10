@@ -12,18 +12,18 @@
         : ICommandHandler<LoginCommand, string>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IAuthService _authService;
+        private readonly ITokenProvider _tokenProvider;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
 
         public LoginCommandHandler(
             IUnitOfWork unitOfWork,
             IUserRepository userRepository,
-            IAuthService authService,
+            ITokenProvider tokenProvider,
             IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
-            _authService = authService;
+            _tokenProvider = tokenProvider;
             _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
         }
@@ -48,7 +48,7 @@
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _authService.GenerateToken(user.Email.ToString(), user.GetType().Name);
+            return _tokenProvider.GenerateToken(user);
         }
     }
 }
