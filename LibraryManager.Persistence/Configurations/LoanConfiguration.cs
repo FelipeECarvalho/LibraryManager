@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Extensions;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;

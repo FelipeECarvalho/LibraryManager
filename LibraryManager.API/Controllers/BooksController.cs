@@ -15,6 +15,7 @@
     /// A book
     /// </summary>
     [ApiController]
+    [Authorize]
     public class BooksController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>
@@ -28,7 +29,6 @@
             [FromQuery] GetBooksQuery query,
             CancellationToken cancellationToken)
         {
-            var library = LibraryId;
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
