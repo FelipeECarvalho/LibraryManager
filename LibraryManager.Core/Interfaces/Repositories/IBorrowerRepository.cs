@@ -10,6 +10,5 @@
         Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken = default);
 
         void Add(Borrower borrower);
-        void Update(Borrower borrower);
     }
 }

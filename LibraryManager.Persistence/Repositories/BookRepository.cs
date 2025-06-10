@@ -60,10 +60,5 @@
         {
             _context.Books.Add(book);
         }
-
-        public void Update(Book book)
-        {
-            _context.Books.Update(book);
-        }
     }
 }

@@ -45,10 +45,5 @@
         {
             _context.Borrowers.Add(borrower);
         }
-
-        public void Update(Borrower borrower)
-        {
-            _context.Borrowers.Update(borrower);
-        }
     }
 }

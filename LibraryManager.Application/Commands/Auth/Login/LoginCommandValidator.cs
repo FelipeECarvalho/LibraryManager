@@ -12,6 +12,9 @@
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);
 
+            RuleFor(x => x.LibraryId)
+                .NotEmpty().WithMessage(DomainErrors.Library.NotFound);
+
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage(DomainErrors.User.PasswordRequired)
                 .Length(8, 512).WithMessage(DomainErrors.User.PasswordInvalidLength);

@@ -7,7 +7,7 @@
     using Microsoft.AspNetCore.Mvc;
 
     [ApiVersion("1.0")]
-    [Route("v{version:apiVersion}/library/{library-id:guid}/[controller]")]
+    [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
     public abstract class ApiControllerBase : ControllerBase
     {

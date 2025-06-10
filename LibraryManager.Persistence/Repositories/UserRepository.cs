@@ -13,15 +13,10 @@
             _context = context;
         }
 
-        public async Task<User> GetByEmail(string email, CancellationToken cancellationToken)
+        public async Task<User> GetByEmail(string email, Guid libraryId, CancellationToken cancellationToken)
         {
             return await _context.Users
-                .SingleOrDefaultAsync(x => x.Email.Equals(email), cancellationToken);
-        }
-
-        public void Update(User user)
-        {
-            _context.Update(user);
+                .SingleOrDefaultAsync(x => x.Email.Equals(email) && x.LibraryId == libraryId, cancellationToken);
         }
     }
 }

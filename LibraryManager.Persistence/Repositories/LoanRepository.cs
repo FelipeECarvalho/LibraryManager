@@ -58,10 +58,5 @@
         {
             _context.Loans.Add(loan);
         }
-
-        public void Update(Loan loan)
-        {
-            _context.Loans.Update(loan);
-        }
     }
 }

@@ -13,6 +13,7 @@
     {
         private readonly IUserRepository _userRepository;
         private readonly ITokenProvider _tokenProvider;
+        private readonly ILibraryRepository _libraryRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -20,9 +21,11 @@
             IUnitOfWork unitOfWork,
             IUserRepository userRepository,
             ITokenProvider tokenProvider,
-            IPasswordHasher passwordHasher)
+            IPasswordHasher passwordHasher,
+            ILibraryRepository libraryRepository)
         {
             _userRepository = userRepository;
+            _libraryRepository = libraryRepository;
             _tokenProvider = tokenProvider;
             _passwordHasher = passwordHasher;
             _unitOfWork = unitOfWork;
@@ -30,7 +33,14 @@
 
         public async Task<Result<string>> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByEmail(request.Email, cancellationToken);
+            var library = await _libraryRepository.GetById(request.LibraryId, cancellationToken);
+
+            if (library == null) 
+            {
+                return Result.Failure<string>(DomainErrors.Library.IdNotFound(request.LibraryId));
+            }
+
+            var user = await _userRepository.GetByEmail(request.Email, library.Id, cancellationToken);
 
             if (user == null)
             {
@@ -43,8 +53,6 @@
             }
 
             user.UpdateLastLogin();
-
-            _userRepository.Update(user);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

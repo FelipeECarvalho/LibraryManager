@@ -14,6 +14,7 @@
                 => c.UseSqlServer(configuration.GetConnectionString("LibraryDbContextConnection")));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ILibraryRepository, LibraryRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
             services.AddScoped<IBorrowerRepository, BorrowerRepository>();
             services.AddScoped<IUserRepository, UserRepository>();

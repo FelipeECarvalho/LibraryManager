@@ -8,6 +8,5 @@
         Task<Category> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         void Add(Category category);
-        void Update(Category category);
     }
 }

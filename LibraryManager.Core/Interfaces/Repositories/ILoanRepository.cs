@@ -9,6 +9,5 @@
         Task<IList<Loan>> GetByBorrowerAsync(Guid borrowerId, CancellationToken cancellationToken = default);
 
         void Add(Loan loan);
-        void Update(Loan loan);
     }
 }

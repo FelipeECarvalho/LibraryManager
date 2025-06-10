@@ -8,6 +8,5 @@
         Task<Author> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
 
         void Add(Author author);
-        void Update(Author author);
     }
 }

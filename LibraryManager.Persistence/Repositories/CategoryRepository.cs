@@ -38,10 +38,5 @@
         {
             _context.Categories.Add(category);
         }
-
-        public void Update(Category category)
-        {
-            _context.Categories.Update(category);
-        }
     }
 }

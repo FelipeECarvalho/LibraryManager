@@ -36,10 +36,5 @@
         {
             _context.Authors.Add(author);
         }
-
-        public void Update(Author author)
-        {
-            _context.Authors.Update(author);
-        }
     }
 }

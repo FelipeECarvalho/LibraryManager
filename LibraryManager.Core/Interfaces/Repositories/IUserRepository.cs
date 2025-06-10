@@ -4,8 +4,6 @@
 
     public interface IUserRepository
     {
-        Task<User> GetByEmail(string email, CancellationToken cancellationToken);
-
-        void Update(User user);
+        Task<User> GetByEmail(string email, Guid libraryId, CancellationToken cancellationToken);
     }
 }

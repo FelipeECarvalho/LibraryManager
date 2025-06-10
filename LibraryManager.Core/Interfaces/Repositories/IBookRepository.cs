@@ -10,6 +10,5 @@
         Task<bool> IsIsbnUnique(string isbn, CancellationToken cancellationToken = default);
 
         void Add(Book book);
-        void Update(Book book);
     }
 }
