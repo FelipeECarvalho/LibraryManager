@@ -14,7 +14,7 @@
     /// An Author
     /// </summary>
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Operator")]
     public class AuthorsController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

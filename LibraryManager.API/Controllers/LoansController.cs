@@ -14,7 +14,7 @@
     /// A Loan
     /// </summary>
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Operator")]
     public class LoansController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

@@ -1,9 +1,9 @@
 **TODO**
 
+- Adicionar suporte de aggregate roots ao sistema
+- Repensar a questão dos usuários
 - Ajustar User, Category, Book, etc., para trabalhar com libraries
 	- Vai envolver regras de negócio :/
-- Autenticação e autorização dos usuários
-- Talvez adicionar Aggregate root
 - Implementar melhorias no UnitOfWork
 - Adicionar logging
 - Adicionar cache

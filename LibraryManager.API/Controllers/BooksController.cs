@@ -15,7 +15,7 @@
     /// A book
     /// </summary>
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Operator")]
     public class BooksController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>
