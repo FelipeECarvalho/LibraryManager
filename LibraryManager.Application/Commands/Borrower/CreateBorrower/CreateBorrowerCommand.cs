@@ -10,5 +10,6 @@
         string Email,
         DateTimeOffset BirthDate,
         Address Address,
+        Guid LibraryId,
         string Password = null) : ICommand<BorrowerResponse>;
 }

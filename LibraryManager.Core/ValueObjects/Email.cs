@@ -11,15 +11,13 @@
         {
             if (string.IsNullOrWhiteSpace(address) || !Regex.IsMatch(address, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                throw new InvalidEmailFormatException(address);
+                throw new InvalidEmailException(address);
             }
 
             Address = address;
         }
 
         public override string ToString()
-        {
-            return Address;
-        }
+            => Address;
     }
 }

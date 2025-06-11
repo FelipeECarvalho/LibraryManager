@@ -27,6 +27,7 @@
                     email => email.Address,
                     value => new Email(value))
                 .HasColumnName("Email")
+                .HasMaxLength(256)
                 .IsRequired();
 
             builder.OwnsOne(x => x.Name, c =>

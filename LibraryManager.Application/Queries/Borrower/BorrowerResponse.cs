@@ -13,6 +13,8 @@
 
         public string Email { get; init; }
 
+        public Guid LibraryId { get; init; }
+
         public Address Address { get; set; }
 
         public static BorrowerResponse FromEntity(Borrower borrower)
@@ -22,7 +24,8 @@
                 Name = borrower.Name,
                 Document = borrower.Document,
                 Email = borrower.Email.ToString(),
-                Address = borrower.Address
+                Address = borrower.Address,
+                LibraryId = borrower.LibraryId
             };
     }
 }

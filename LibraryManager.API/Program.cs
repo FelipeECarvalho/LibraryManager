@@ -4,7 +4,6 @@ namespace LibraryManager.API
     using LibraryManager.Application;
     using LibraryManager.Infrastructure;
     using LibraryManager.Persistence;
-    using System.Reflection;
 
     internal static class Program
     {
@@ -16,16 +15,11 @@ namespace LibraryManager.API
                 .AddPersistence(builder.Configuration)
                 .AddInfrastructure(builder.Configuration)
                 .AddVersioning()
+                .AddSwaggerGenWithAuthentication()
                 .AddApplication();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
-            });
 
             var app = builder.Build();
 

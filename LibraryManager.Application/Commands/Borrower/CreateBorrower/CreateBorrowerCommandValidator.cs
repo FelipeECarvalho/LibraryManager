@@ -21,6 +21,9 @@
                 .NotEmpty().WithMessage(DomainErrors.Borrower.DocumentRequired)
                 .Length(2, 30).WithMessage(DomainErrors.Borrower.DocumentInvalidLength);
 
+            RuleFor(x => x.LibraryId)
+                .NotEmpty().WithMessage(DomainErrors.Library.NotFound);
+
             RuleFor(x => x.Address)
                 .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
                 .SetValidator(new AddressValidator());

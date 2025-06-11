@@ -13,12 +13,13 @@
         {
         }
 
-        protected User(Name name, Email email, string passwordHash)
+        protected User(Name name, Email email, string passwordHash, Guid libraryId)
             : base()
         {
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
+            LibraryId = libraryId;
         }
 
         public Name Name { get; protected set; }

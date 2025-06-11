@@ -15,6 +15,7 @@
     {
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILibraryRepository _libraryRepository;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IPasswordGenerator _passwordGenerator;
 
@@ -22,12 +23,14 @@
             IUnitOfWork unitOfWork,
             IPasswordHasher passwordHasher,
             IPasswordGenerator passwordGenerator,
-            IBorrowerRepository borrowerRepository)
+            IBorrowerRepository borrowerRepository,
+            ILibraryRepository libraryRepository)
         {
             _unitOfWork = unitOfWork;
             _passwordHasher = passwordHasher;
             _passwordGenerator = passwordGenerator;
             _borrowerRepository = borrowerRepository;
+            _libraryRepository = libraryRepository;
         }
 
         public async Task<Result<BorrowerResponse>> Handle(CreateBorrowerCommand request, CancellationToken cancellationToken)
@@ -37,6 +40,13 @@
             if (validationResult.IsFailure)
             {
                 return Result.Failure<BorrowerResponse>(validationResult.Error);
+            }
+
+            var library = await _libraryRepository.GetById(request.LibraryId, cancellationToken);
+
+            if (library == null)
+            {
+                return Result.Failure<BorrowerResponse>(DomainErrors.Library.IdNotFound(request.LibraryId));
             }
 
             var password = string.IsNullOrWhiteSpace(request.Password)
@@ -51,6 +61,7 @@
                 password,
                 request.Document,
                 request.BirthDate,
+                library.Id,
                 request.Address);
 
             _borrowerRepository.Add(borrower);
@@ -71,7 +82,7 @@
 
             var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, cancellationToken);
 
-            if (isDocumentUnique)
+            if (!isDocumentUnique)
             {
                 return Result.Failure(DomainErrors.Borrower.DocumentAlreadyExists);
             }

@@ -42,7 +42,7 @@
                         ValidIssuer = configuration["JwtInfo:Issuer"],
                         ValidAudience = configuration["JwtInfo:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            configuration["Jwt:Secret"]))
+                            configuration["JwtInfo:Secret"]))
                     };
                 });
 
