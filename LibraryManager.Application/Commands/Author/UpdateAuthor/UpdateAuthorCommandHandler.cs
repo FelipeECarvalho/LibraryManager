@@ -1,9 +1,9 @@
 ﻿namespace LibraryManager.Application.Commands.Author.UpdateAuthor
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 

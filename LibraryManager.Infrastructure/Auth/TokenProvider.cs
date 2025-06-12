@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Infrastructure.Auth
 {
+    using LibraryManager.Core.Abstractions;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Interfaces;
     using LibraryManager.Infrastructure;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.JsonWebTokens;

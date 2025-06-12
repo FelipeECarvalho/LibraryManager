@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Interfaces.Repositories;
     using Microsoft.EntityFrameworkCore;
 
     internal sealed class LibraryRepository

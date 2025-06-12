@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Interfaces
+﻿namespace LibraryManager.Core.Abstractions
 {
     public interface IPasswordGenerator
     {

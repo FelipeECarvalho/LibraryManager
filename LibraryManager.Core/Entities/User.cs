@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
-    using LibraryManager.Core.Interfaces;
+    using LibraryManager.Core.Abstractions;
     using LibraryManager.Core.ValueObjects;
 
     /// <summary>

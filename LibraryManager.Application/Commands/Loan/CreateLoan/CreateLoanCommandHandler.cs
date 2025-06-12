@@ -2,10 +2,10 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Loan;
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 

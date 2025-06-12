@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Queries.Category.GetCategories
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
-    using LibraryManager.Core.Interfaces.Repositories;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;

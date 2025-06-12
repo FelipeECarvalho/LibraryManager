@@ -1,9 +1,7 @@
 **TODO**
 
 - Adicionar suporte de aggregate roots ao sistema
-- Repensar a questão dos usuários
 - Ajustar User, Category, Book, etc., para trabalhar com libraries
-	- Vai envolver regras de negócio :/
 - Implementar melhorias no UnitOfWork
 - Adicionar logging
 - Adicionar cache
@@ -13,6 +11,8 @@
 	- Quando o empréstimo estiver atrasado
 	- etc.
 - Adicionar imagem para os livros
+- Multas ao usuário
+	- enquanto não pagar não empresta
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
 	- Cadastrar a foto do usuário para a carteirinha
@@ -20,4 +20,4 @@
 	- Mensalidade para usar os serviços
 		- Modelo gratuito - Até 20 livros. Model pago - Até 100. Seí lá, pensar melhor
 	- Mensalidade dos usuários para ter a carteirinha da biblioteca, compra e aluguel de livros.
-		- Uma parte pra biblioteca, uma parte pra gente. 
+		- Uma parte pra biblioteca, uma parte pra gente.

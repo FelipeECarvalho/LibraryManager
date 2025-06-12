@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Password
 {
-    using LibraryManager.Core.Interfaces;
+    using LibraryManager.Core.Abstractions;
     using System.Security.Cryptography;
 
     internal sealed class PasswordGenerator : IPasswordGenerator

@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Interfaces.Repositories
+﻿namespace LibraryManager.Core.Abstractions.Repositories
 {
     public interface IUnitOfWork
     {

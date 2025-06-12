@@ -2,9 +2,9 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Category;
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Interfaces.Repositories;
     using System.Threading;
     using System.Threading.Tasks;
 

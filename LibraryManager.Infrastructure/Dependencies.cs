@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure
 {
-    using LibraryManager.Core.Interfaces;
+    using LibraryManager.Core.Abstractions;
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
