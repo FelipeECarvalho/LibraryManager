@@ -16,7 +16,6 @@
             builder.ToTable(TableNames.Users);
 
             builder.HasDiscriminator<UserType>(nameof(UserType))
-                .HasValue<Borrower>(UserType.Borrower)
                 .HasValue<Operator>(UserType.Operator);
 
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);

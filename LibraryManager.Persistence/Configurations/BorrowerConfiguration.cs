@@ -1,7 +1,8 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.Enums;
+    using LibraryManager.Core.ValueObjects;
+    using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,25 @@
     {
         public void Configure(EntityTypeBuilder<Borrower> builder)
         {
+            builder.ToTable(TableNames.Borrowers);
+
             builder.Property(x => x.Document).HasMaxLength(30).IsRequired();
+
+            builder.Property(u => u.Email)
+                .HasConversion(
+                    email => email.Address,
+                    value => new Email(value))
+                .HasColumnName("Email")
+                .HasMaxLength(256)
+                .IsRequired();
+
+            builder.OwnsOne(x => x.Name, c =>
+            {
+                c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired();
+                c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired();
+            });
+
+            builder.Navigation(x => x.Name).IsRequired();
 
             builder.OwnsOne(x => x.Address, c =>
             {
@@ -27,8 +46,12 @@
 
             builder.Navigation(x => x.Address).IsRequired();
 
+            builder.HasIndex(x => new { x.Email, x.LibraryId })
+                .HasFilter($"[IsDeleted] = 0")
+                .IsUnique();
+
             builder.HasIndex(x => new { x.Document, x.LibraryId })
-                .HasFilter($"[UserType] = {(int)UserType.Borrower}")
+                .HasFilter($"[IsDeleted] = 0")
                 .IsUnique();
         }
     }

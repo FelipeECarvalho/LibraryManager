@@ -3,7 +3,7 @@
     using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;
 
-    public class Borrower : User
+    public class Borrower : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor")]
         private Borrower()
@@ -11,19 +11,30 @@
         {
         }
 
-        public Borrower(Name name, Email email, string passwordHash, string document, DateTimeOffset birthDate, Guid libraryId, Address address)
-            : base(name, email, passwordHash, libraryId)
+        public Borrower(Name name, Email email, string document, DateTimeOffset birthDate, Guid libraryId, Address address)
         {
             Document = document;
             Address = address;
             BirthDate = birthDate;
+            LibraryId = libraryId;
+            Name = name;
+            Email = email;
+
         }
+
+        public Name Name { get; protected set; }
+
+        public Email Email { get; protected set; }
 
         public string Document { get; private set; }
 
         public DateTimeOffset BirthDate { get; private set; }
 
         public Address Address { get; private set; }
+
+        public Guid LibraryId { get; private set; }
+
+        public Library Library { get; private set; }
 
         public IList<Loan> Loans { get; private set; } = [];
 

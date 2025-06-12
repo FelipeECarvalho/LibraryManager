@@ -16,19 +16,13 @@
         private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILibraryRepository _libraryRepository;
-        private readonly IPasswordHasher _passwordHasher;
-        private readonly IPasswordGenerator _passwordGenerator;
 
         public CreateBorrowerCommandHandler(
             IUnitOfWork unitOfWork,
-            IPasswordHasher passwordHasher,
-            IPasswordGenerator passwordGenerator,
             IBorrowerRepository borrowerRepository,
             ILibraryRepository libraryRepository)
         {
             _unitOfWork = unitOfWork;
-            _passwordHasher = passwordHasher;
-            _passwordGenerator = passwordGenerator;
             _borrowerRepository = borrowerRepository;
             _libraryRepository = libraryRepository;
         }
@@ -49,16 +43,9 @@
                 return Result.Failure<BorrowerResponse>(DomainErrors.Library.IdNotFound(request.LibraryId));
             }
 
-            var password = string.IsNullOrWhiteSpace(request.Password)
-                ? _passwordGenerator.Generate(length: 10)
-                : request.Password;
-
-            password = _passwordHasher.ComputeHash(password);
-
             var borrower = new Core.Entities.Borrower(
                 request.Name,
                 new Email(request.Email),
-                password,
                 request.Document,
                 request.BirthDate,
                 library.Id,

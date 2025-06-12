@@ -28,9 +28,6 @@
                 .NotNull().WithMessage(DomainErrors.Address.AddressRequired)
                 .SetValidator(new AddressValidator());
 
-            RuleFor(x => x.Password)
-                .Length(8, 512).WithMessage(DomainErrors.User.PasswordInvalidLength);
-
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage(DomainErrors.Email.InvalidEmail)
                 .NotEmpty().WithMessage(DomainErrors.Email.EmailRequired)

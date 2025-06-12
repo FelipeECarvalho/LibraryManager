@@ -12,11 +12,7 @@
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
-- Adicionar avaliações(faz sentido para uma biblioteca?)
-	- Acho que sim, pois a aplicação pode integrar com um site e tal.
 - Adicionar imagem para os livros
-- Adicionar aprovação de usuário
-	- Ao se cadastrar, o usuário vai precisar ser aprovado por algum administrador. (pensar se faz sentido)
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
 	- Cadastrar a foto do usuário para a carteirinha
@@ -24,4 +20,4 @@
 	- Mensalidade para usar os serviços
 		- Modelo gratuito - Até 20 livros. Model pago - Até 100. Seí lá, pensar melhor
 	- Mensalidade dos usuários para ter a carteirinha da biblioteca, compra e aluguel de livros.
-		- Uma parte pra biblioteca, uma parte pra gente.
+		- Uma parte pra biblioteca, uma parte pra gente. 

@@ -30,9 +30,9 @@
 
         public DateTimeOffset? LastLogin { get; protected set; }
 
-        public Guid LibraryId { get; set; }
+        public Guid LibraryId { get; protected set; }
 
-        public Library Library { get; set; }
+        public Library Library { get; protected set; }
 
         public void UpdateLastLogin()
         {

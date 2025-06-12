@@ -6,6 +6,8 @@
     {
         internal const string Books = nameof(Book);
 
+        internal const string Borrowers = nameof(Borrower);
+
         internal const string Loans = nameof(Loan);
 
         internal const string Authors = nameof(Author);
