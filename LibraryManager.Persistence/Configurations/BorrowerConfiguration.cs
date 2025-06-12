@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.ValueObjects;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -14,14 +13,13 @@
 
             builder.Property(x => x.Document).HasMaxLength(30).IsRequired();
 
-            builder.Property(u => u.Email)
-                .HasConversion(
-                    email => email.Address,
-                    value => new Email(value))
-                .HasColumnName("Email")
-                .HasMaxLength(256)
-                .IsRequired();
+            builder.OwnsOne(x => x.Email, c =>
+            {
+                c.Property(a => a.Address).HasColumnName("Email").HasMaxLength(256).IsRequired();
+            });
 
+            builder.Navigation(x => x.Email).IsRequired();
+            
             builder.OwnsOne(x => x.Name, c =>
             {
                 c.Property(a => a.FirstName).HasColumnName("FirstName").HasMaxLength(100).IsRequired();

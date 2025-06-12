@@ -1,25 +1,27 @@
 ﻿namespace LibraryManager.Core.Entities
 {
     using LibraryManager.Core.Abstractions;
+    using LibraryManager.Core.Enums;
     using LibraryManager.Core.ValueObjects;
 
     /// <summary>
     /// Base user, responsible for storing common user's data
     /// </summary>
-    public abstract class User : BaseEntity
+    public class User : BaseEntity
     {
         [Obsolete("EntityFrameworkCore constructor", true)]
         protected User()
         {
         }
 
-        protected User(Name name, Email email, string passwordHash, Guid libraryId)
+        protected User(Name name, Email email, string passwordHash, RoleType role, Guid libraryId)
             : base()
         {
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
             LibraryId = libraryId;
+            Role = role;
         }
 
         public Name Name { get; protected set; }
@@ -29,6 +31,8 @@
         public string PasswordHash { get; protected set; }
 
         public DateTimeOffset? LastLogin { get; protected set; }
+
+        public RoleType Role {  get; protected set; }
 
         public Guid LibraryId { get; protected set; }
 
