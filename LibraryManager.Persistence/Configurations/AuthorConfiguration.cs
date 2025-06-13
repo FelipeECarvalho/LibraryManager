@@ -22,8 +22,6 @@
                 c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired();
             });
 
-            builder.Navigation(x => x.Name).IsRequired(true);
-
             builder.HasMany(x => x.Books)
                 .WithOne(x => x.Author)
                 .HasForeignKey(x => x.AuthorId)

@@ -30,6 +30,8 @@
 
         public IList<User> Users { get; private set; }
 
+        public IList<Borrower> Borrowers { get; private set; }
+
         public IList<Category> Categories { get; private set; }
     }
 }

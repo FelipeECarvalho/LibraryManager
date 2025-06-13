@@ -30,8 +30,6 @@
                 c.Property(a => a.Longitude).HasColumnName("Longitude").HasPrecision(9, 6).IsRequired(false);
                 c.Property(a => a.Observation).HasColumnName("Observation").HasMaxLength(256).IsRequired(false);
             });
-
-            builder.Navigation(x => x.Address).IsRequired();
         }
     }
 }

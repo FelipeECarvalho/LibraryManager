@@ -20,9 +20,8 @@
             builder.OwnsOne(x => x.Email, c =>
             {
                 c.Property(a => a.Address).HasColumnName("Email").HasMaxLength(256).IsRequired();
+                c.HasIndex(x => x.Address);
             });
-
-            builder.Navigation(x => x.Email).IsRequired();
 
             builder.OwnsOne(x => x.Name, c =>
             {
@@ -30,16 +29,14 @@
                 c.Property(a => a.LastName).HasColumnName("LastName").HasMaxLength(100).IsRequired();
             });
 
-            builder.Navigation(x => x.Name).IsRequired();
-
             builder.HasOne(x => x.Library)
                 .WithMany(x => x.Users)
                 .HasForeignKey(x => x.LibraryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasIndex(x => new { x.Email, x.LibraryId })
-                .HasFilter("[IsDeleted] = 0")
-                .IsUnique();
+            //builder.HasIndex("Email", "LibraryId")
+            //    .HasFilter("[IsDeleted] = 0")
+            //    .IsUnique();
         }
     }
 }

@@ -17,7 +17,6 @@
             Address = address;
         }
 
-        public override string ToString()
-            => Address;
+        public override string ToString() => Address;
     }
 }
