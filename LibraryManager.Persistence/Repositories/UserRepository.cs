@@ -16,10 +16,8 @@
 
         public async Task<User> GetByEmail(string email, Guid libraryId, CancellationToken cancellationToken)
         {
-            var normalizedEmailToFind = new Email(email.ToLower());
-
             return await _context.Users
-                .SingleOrDefaultAsync(x => x.Email == normalizedEmailToFind && x.LibraryId == libraryId, cancellationToken);
+                .SingleOrDefaultAsync(x => x.Email == email && x.LibraryId == libraryId, cancellationToken);
         }
     }
 }

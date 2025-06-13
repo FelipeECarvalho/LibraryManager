@@ -2,6 +2,7 @@
 {
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
+    using LibraryManager.Core.ValueObjects;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -33,7 +34,7 @@
 
         public async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken = default)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Email.Equals(email), cancellationToken);
+            return !await _context.Borrowers.AnyAsync(x => x.Email == email, cancellationToken);
         }
 
         public async Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken = default)

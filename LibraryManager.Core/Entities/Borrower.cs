@@ -11,7 +11,7 @@
         {
         }
 
-        public Borrower(Name name, Email email, string document, DateTimeOffset birthDate, Guid libraryId, Address address)
+        public Borrower(Name name, string email, string document, DateTimeOffset birthDate, Guid libraryId, Address address)
         {
             Document = document;
             Address = address;
@@ -24,7 +24,7 @@
 
         public Name Name { get; protected set; }
 
-        public Email Email { get; protected set; }
+        public string Email { get; protected set; }
 
         public string Document { get; private set; }
 

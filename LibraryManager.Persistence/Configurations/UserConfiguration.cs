@@ -16,12 +16,7 @@
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);
             builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.LastLogin).IsRequired(false);
-
-            builder.OwnsOne(x => x.Email, c =>
-            {
-                c.Property(a => a.Address).HasColumnName("Email").HasMaxLength(256).IsRequired();
-                c.HasIndex(x => x.Address);
-            });
+            builder.Property(x => x.Email).HasMaxLength(256).IsRequired();
 
             builder.OwnsOne(x => x.Name, c =>
             {
@@ -34,9 +29,10 @@
                 .HasForeignKey(x => x.LibraryId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //builder.HasIndex("Email", "LibraryId")
-            //    .HasFilter("[IsDeleted] = 0")
-            //    .IsUnique();
+            builder.HasIndex(x => x.Email);
+            builder.HasIndex(x => new { x.Email, x.LibraryId })
+                 .HasFilter("[IsDeleted] = 0")
+                 .IsUnique();
         }
     }
 }

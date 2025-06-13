@@ -44,7 +44,7 @@
 
             var borrower = new Core.Entities.Borrower(
                 request.Name,
-                new Email(request.Email),
+                request.Email,
                 request.Document,
                 request.BirthDate,
                 library.Id,
