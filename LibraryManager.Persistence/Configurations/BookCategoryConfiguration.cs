@@ -5,13 +5,13 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class BookCategoryConfiguration : BaseEntityConfiguration<BookCategory>
+    internal sealed class BookCategoryConfiguration : IEntityTypeConfiguration<BookCategory>
     {
-        public override void Configure(EntityTypeBuilder<BookCategory> builder)
+        public void Configure(EntityTypeBuilder<BookCategory> builder)
         {
-            base.Configure(builder);
+            builder.ToTable(TableNames.BookCategories);
 
-            builder.ToTable(TableNames.BookCategory);
+            builder.HasKey(t => new { t.BookId, t.CategoryId });
 
             builder.HasOne(x => x.Book)
                 .WithMany(x => x.BookCategories)

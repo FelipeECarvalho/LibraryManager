@@ -14,7 +14,6 @@
             builder.ToTable(TableNames.Users);
 
             builder.Property(x => x.PasswordHash).IsRequired().HasMaxLength(512);
-            builder.Property(x => x.Role).IsRequired();
             builder.Property(x => x.LastLogin).IsRequired(false);
             builder.Property(x => x.Email).HasMaxLength(256).IsRequired();
 

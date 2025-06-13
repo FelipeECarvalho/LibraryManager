@@ -4,6 +4,6 @@
 
     public interface IUserRepository
     {
-        Task<User> GetByEmail(string email, Guid libraryId, CancellationToken cancellationToken);
+        Task<User> GetByEmailLoadRole(string email, Guid libraryId, CancellationToken cancellationToken);
     }
 }

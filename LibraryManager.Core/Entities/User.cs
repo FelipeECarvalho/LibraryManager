@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
     using LibraryManager.Core.Abstractions;
-    using LibraryManager.Core.Enums;
     using LibraryManager.Core.ValueObjects;
 
     /// <summary>
@@ -14,14 +13,13 @@
         {
         }
 
-        protected User(Name name, string email, string passwordHash, RoleType role, Guid libraryId)
+        protected User(Name name, string email, string passwordHash, Guid libraryId)
             : base()
         {
             Name = name;
             Email = email;
             PasswordHash = passwordHash;
             LibraryId = libraryId;
-            Role = role;
         }
 
         public Name Name { get; protected set; }
@@ -32,11 +30,11 @@
 
         public DateTimeOffset? LastLogin { get; protected set; }
 
-        public RoleType Role {  get; protected set; }
-
         public Guid LibraryId { get; protected set; }
 
         public Library Library { get; protected set; }
+
+        public IList<UserRole> UserRoles { get; protected set; }
 
         public void UpdateLastLogin()
         {

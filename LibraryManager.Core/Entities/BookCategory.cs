@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
-    public class BookCategory : BaseEntity
+    public class BookCategory
     {
         [Obsolete("EntityFrameworkCore constructor")]
         private BookCategory()

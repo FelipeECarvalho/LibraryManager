@@ -18,6 +18,10 @@
 
         internal const string Users = nameof(User);
 
-        internal const string BookCategory = nameof(Core.Entities.BookCategory);
+        internal const string Roles = nameof(Role);
+
+        internal const string UserRoles = nameof(UserRole);
+
+        internal const string BookCategories = nameof(BookCategory);
     }
 }

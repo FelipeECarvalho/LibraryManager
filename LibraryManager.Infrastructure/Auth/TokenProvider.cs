@@ -32,14 +32,18 @@
 
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Email, user.Email.ToString()),
+                new("library_id", user.LibraryId.ToString())
+            };
+
+            claims.AddRange(
+                user.UserRoles.Select(x => new Claim(ClaimTypes.Role, x.Role.RoleType.ToString())));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(
-                [
-                    new(ClaimTypes.Email, user.Email.ToString()),
-                    new(ClaimTypes.Role, user.GetType().Name),
-                    new("library_id", user.LibraryId.ToString())
-                ]),
+                Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddDays(_options.Expires),
                 SigningCredentials = credentials,
                 Issuer = _options.Issuer,
