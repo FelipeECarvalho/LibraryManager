@@ -25,7 +25,7 @@
             _options = options.Value;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, IList<UserRole> userRoles)
         {
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_options.Secret));
@@ -39,7 +39,7 @@
             };
 
             claims.AddRange(
-                user.UserRoles.Select(x => new Claim(ClaimTypes.Role, x.Role.RoleType.ToString())));
+                userRoles.Select(x => new Claim(ClaimTypes.Role, x.Role.RoleType.ToString())));
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

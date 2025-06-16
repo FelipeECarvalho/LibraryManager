@@ -4,6 +4,6 @@
 
     public interface ITokenProvider
     {
-        string GenerateToken(User user);
+        string GenerateToken(User user, IList<UserRole> userRoles);
     }
 }
