@@ -5,7 +5,6 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Core.ValueObjects;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -59,14 +58,14 @@
 
         private async Task<Result> ValidateAsync(CreateBorrowerCommand request, CancellationToken cancellationToken)
         {
-            var isEmailUnique = await _borrowerRepository.IsEmailUnique(request.Email, cancellationToken);
+            var isEmailUnique = await _borrowerRepository.IsEmailUnique(request.Email, request.LibraryId, cancellationToken);
 
             if (!isEmailUnique)
             {
                 return Result.Failure(DomainErrors.User.EmailAlreadyExists);
             }
 
-            var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, cancellationToken);
+            var isDocumentUnique = await _borrowerRepository.IsDocumentUnique(request.Document, request.LibraryId, cancellationToken);
 
             if (!isDocumentUnique)
             {

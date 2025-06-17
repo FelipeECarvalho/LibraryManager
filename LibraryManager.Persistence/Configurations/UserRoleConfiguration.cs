@@ -1,5 +1,4 @@
-﻿
-namespace LibraryManager.Persistence.Configurations
+﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
     using LibraryManager.Persistence.Constants;

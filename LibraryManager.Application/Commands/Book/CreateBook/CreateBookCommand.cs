@@ -9,5 +9,6 @@
         int? StockNumber,
         DateTimeOffset PublicationDate,
         string Isbn,
-        Guid AuthorId) : ICommand<BookResponse>;
+        Guid AuthorId,
+        Guid LibraryId) : ICommand<BookResponse>;
 }

@@ -8,11 +8,12 @@
         {
         }
 
-        public Category(string name, string description)
+        public Category(string name, string description, Guid libraryId)
             : base()
         {
             Name = name;
             Description = description;
+            LibraryId = libraryId;
         }
 
         public string Name { get; private set; }

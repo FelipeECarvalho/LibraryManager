@@ -48,7 +48,8 @@
                 request.PublicationDate,
                 request.Isbn.Trim(),
                 request.StockNumber,
-                request.AuthorId);
+                request.AuthorId,
+                request.LibraryId);
 
             _bookRepository.Add(book);
 
@@ -59,7 +60,7 @@
 
         private async Task<Result> Validate(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            var isIsbnUnique = await _bookRepository.IsIsbnUnique(request.Isbn, cancellationToken);
+            var isIsbnUnique = await _bookRepository.IsIsbnUnique(request.Isbn, request.LibraryId, cancellationToken);
 
             if (!isIsbnUnique)
             {

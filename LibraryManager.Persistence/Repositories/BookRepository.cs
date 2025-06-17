@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Book>> GetAllAsync(int limit = 100, int offset = 1, string title = null, CancellationToken cancellationToken = default)
+        public async Task<IList<Book>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, string title = null, CancellationToken cancellationToken = default)
         {
             var query = _context.Books
                 .AsNoTracking();
@@ -29,6 +29,7 @@
             return await query
                 .Include(x => x.Author)
                 .OrderBy(x => x.CreateDate)
+                .Where(x => x.LibraryId == libraryId)
                 .Skip((offset - 1) * limit)
                 .Take(limit)
                 .ToListAsync(cancellationToken);
@@ -51,9 +52,9 @@
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task<bool> IsIsbnUnique(string isbn, CancellationToken cancellationToken = default)
+        public async Task<bool> IsIsbnUnique(string isbn, Guid libraryId, CancellationToken cancellationToken = default)
         {
-            return !await _context.Books.AnyAsync(x => x.Isbn == isbn, cancellationToken);
+            return !await _context.Books.AnyAsync(x => x.Isbn == isbn && x.LibraryId == libraryId, cancellationToken);
         }
 
         public void Add(Book book)

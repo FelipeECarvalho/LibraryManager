@@ -2,7 +2,6 @@
 {
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.ValueObjects;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +15,12 @@
             _context = context;
         }
 
-        public async Task<IList<Borrower>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
+        public async Task<IList<Borrower>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
         {
             return await _context.Borrowers
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
+                .Where(x => x.LibraryId == libraryId)
                 .Skip((offset - 1) * limit)
                 .Take(limit)
                 .ToListAsync(cancellationToken);
@@ -32,14 +32,14 @@
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
         }
 
-        public async Task<bool> IsEmailUnique(string email, CancellationToken cancellationToken = default)
+        public async Task<bool> IsEmailUnique(string email, Guid libraryId, CancellationToken cancellationToken = default)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Email == email, cancellationToken);
+            return !await _context.Borrowers.AnyAsync(x => x.Email == email && x.LibraryId == libraryId, cancellationToken);
         }
 
-        public async Task<bool> IsDocumentUnique(string document, CancellationToken cancellationToken = default)
+        public async Task<bool> IsDocumentUnique(string document, Guid libraryId, CancellationToken cancellationToken = default)
         {
-            return !await _context.Borrowers.AnyAsync(x => x.Document == document, cancellationToken);
+            return !await _context.Borrowers.AnyAsync(x => x.Document == document && x.LibraryId == libraryId, cancellationToken);
         }
 
         public void Add(Borrower borrower)

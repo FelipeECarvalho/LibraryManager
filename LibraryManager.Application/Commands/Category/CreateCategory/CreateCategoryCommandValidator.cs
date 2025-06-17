@@ -12,6 +12,9 @@
             RuleFor(x => x)
                 .NotNull().WithMessage(Error.NullValue);
 
+            RuleFor(x => x.LibraryId)
+                .NotEmpty().WithMessage(DomainErrors.Library.NotFound);
+
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage(DomainErrors.Category.NameRequired)
                 .Length(2, 50).WithMessage(DomainErrors.Category.NameInvalidLength);

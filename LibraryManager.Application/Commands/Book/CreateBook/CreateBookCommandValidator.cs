@@ -16,6 +16,9 @@
                 .NotEmpty().WithMessage(DomainErrors.Book.TitleRequired)
                 .Length(2, 100).WithMessage(DomainErrors.Book.TitleInvalidLength);
 
+            RuleFor(x => x.LibraryId)
+                .NotEmpty().WithMessage(DomainErrors.Library.NotFound);
+
             RuleFor(x => x.PublicationDate)
                 .NotEmpty().WithMessage(DomainErrors.Book.PublicationDateRequired);
 

@@ -12,7 +12,14 @@
         {
         }
 
-        public Book(string title, string description, DateTimeOffset publicationDate, string isbn, int? stockNumber, Guid authorId)
+        public Book(
+            string title,
+            string description,
+            DateTimeOffset publicationDate,
+            string isbn,
+            int? stockNumber,
+            Guid authorId,
+            Guid libraryId)
             : base()
         {
             Title = title;
@@ -21,6 +28,7 @@
             Isbn = isbn;
             StockNumber = stockNumber;
             AuthorId = authorId;
+            LibraryId = libraryId;
         }
 
         public string Title { get; private set; }
@@ -55,12 +63,13 @@
 
         public bool IsAvailable()
         {
-            if (StockNumber == null)
+            if (StockNumber == null
+                || Loans == null || !Loans.Any())
             {
                 return true;
             }
 
-            var totalUnavailable = Loans?
+            var totalUnavailable = Loans
                 .Count(x => x.Status.IsBookUnavailable());
 
             return StockNumber > totalUnavailable;

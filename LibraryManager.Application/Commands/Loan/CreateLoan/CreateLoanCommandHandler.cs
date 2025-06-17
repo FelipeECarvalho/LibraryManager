@@ -55,7 +55,12 @@
                 return Result.Failure<LoanResponse>(DomainErrors.Loan.BookAlreadyLoaned);
             }
 
-            var loan = new Loan(borrower.Id, book.Id, request.StartDate, request.EndDate, request.Observation);
+            var loan = new Loan(
+                borrower.Id,
+                book.Id,
+                request.StartDate,
+                request.EndDate,
+                request.Observation);
 
             _loanRepository.Add(loan);
 

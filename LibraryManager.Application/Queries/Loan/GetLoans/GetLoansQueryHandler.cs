@@ -21,6 +21,7 @@
         public async Task<Result<IList<LoanResponse>>> Handle(GetLoansQuery request, CancellationToken cancellationToken)
         {
             var loans = await _loanRepository.GetAllAsync(
+                request.LibraryId,
                 request.Limit,
                 request.Offset,
                 request.BorrowerId,

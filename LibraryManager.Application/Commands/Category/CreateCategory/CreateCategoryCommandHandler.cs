@@ -24,7 +24,7 @@
 
         public async Task<Result<CategoryResponse>> Handle(CreateCategoryCommand request, CancellationToken cancellationToken)
         {
-            var category = new Category(request.Name, request.Description);
+            var category = new Category(request.Name, request.Description, request.LibraryId);
 
             _categoryRepository.Add(category);
 

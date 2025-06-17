@@ -1,6 +1,5 @@
 **TODO**
 
-- Ajustar User, Category, Book, etc., para trabalhar com libraries
 - Implementar melhorias no UnitOfWork
 - Adicionar logging
 - Adicionar cache

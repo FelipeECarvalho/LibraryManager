@@ -20,6 +20,7 @@
         public async Task<Result<IList<BookResponse>>> Handle(GetBooksQuery request, CancellationToken cancellationToken)
         {
             var books = await _bookRepository.GetAllAsync(
+                request.LibraryId,
                 request.Limit,
                 request.Offset,
                 request.Title,
