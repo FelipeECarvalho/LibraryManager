@@ -29,7 +29,7 @@
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = exception is LibraryNotFoundException
-                ? (int)HttpStatusCode.BadRequest
+                ? (int)HttpStatusCode.NotFound
                 : (int)HttpStatusCode.InternalServerError;
 
             await context.Response.WriteAsync(new ErrorDetails()

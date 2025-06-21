@@ -24,8 +24,6 @@
                 options.SubstituteApiVersionInUrl = true;
             });
 
-            
-
             return services;
         }
 

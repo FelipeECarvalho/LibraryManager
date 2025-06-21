@@ -13,7 +13,7 @@
     /// A category
     /// </summary>
     [ApiController]
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Operator,Admin")]
     public class CategoriesController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>

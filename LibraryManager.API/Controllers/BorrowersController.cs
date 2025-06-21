@@ -15,7 +15,7 @@
     /// A borrower
     /// </summary>
     [ApiController]
-    [Authorize(Roles = "Operator")]
+    [Authorize(Roles = "Operator,Admin")]
     public class BorrowersController(IMediator _mediator) : ApiControllerBase
     {
         /// <summary>
