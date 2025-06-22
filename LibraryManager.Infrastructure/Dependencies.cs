@@ -2,11 +2,13 @@
 {
     using LibraryManager.Core.Abstractions;
     using LibraryManager.Infrastructure.Auth;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatusJob;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.IdentityModel.Tokens;
+    using Quartz;
     using System.Text;
 
     public static class Dependencies
@@ -21,6 +23,14 @@
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
             services.AddSingleton<ITokenProvider, TokenProvider>();
+
+            services.AddQuartz();
+            services.AddQuartzHostedService(options =>
+            {
+                options.WaitForJobsToComplete = true;
+            });
+
+            services.ConfigureOptions<ProcessOverdueLoanStatusJob>();
 
             return services;
         }

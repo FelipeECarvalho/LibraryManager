@@ -13,7 +13,12 @@
         {
         }
 
-        public Loan(Guid borrowerId, Guid bookId, DateTimeOffset startDate, DateTimeOffset endDate, string observation)
+        public Loan(
+            Guid borrowerId,
+            Guid bookId,
+            DateTimeOffset startDate,
+            DateTimeOffset endDate,
+            string observation)
             : base()
         {
             BorrowerId = borrowerId;

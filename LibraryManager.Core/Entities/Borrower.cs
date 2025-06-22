@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Core.Entities
 {
+    using LibraryManager.Core.Enums;
     using LibraryManager.Core.Extensions;
     using LibraryManager.Core.ValueObjects;
 
@@ -40,6 +41,11 @@
 
         public bool CanLoan(Book book)
         {
+            if (Loans.Any(x => x.Status == LoanStatus.Overdue))
+            {
+                return false;
+            }
+
             return !Loans
                 .Any(x => x.BookId == book.Id && x.Status.IsBookUnavailable());
         }

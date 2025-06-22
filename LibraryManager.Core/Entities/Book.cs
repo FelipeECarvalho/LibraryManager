@@ -45,9 +45,9 @@
 
         public Author Author { get; private set; }
 
-        public IList<BookCategory> BookCategories { get; private set; }
+        public IList<BookCategory> BookCategories { get; private set; } = [];
 
-        public IList<Loan> Loans { get; private set; }
+        public IList<Loan> Loans { get; private set; } = [];
 
         public Guid LibraryId { get; private set; }
 
@@ -63,8 +63,7 @@
 
         public bool IsAvailable()
         {
-            if (StockNumber == null
-                || Loans == null || !Loans.Any())
+            if (StockNumber is null || !Loans.Any())
             {
                 return true;
             }
