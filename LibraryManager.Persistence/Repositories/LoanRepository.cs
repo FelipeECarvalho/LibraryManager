@@ -3,6 +3,7 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
+    using LibraryManager.Core.Extensions;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -43,6 +44,13 @@
             await _context.Loans
                 .Where(x => x.Status == LoanStatus.Borrowed && x.EndDate < DateTime.UtcNow)
                 .ExecuteUpdateAsync(x => x.SetProperty(l => l.Status, LoanStatus.Overdue));
+        }
+
+        public async Task ProcessCanceledAsync()
+        {
+            await _context.Loans
+                .Where(x => x.Status == LoanStatus.Approved && x.StartDate > DateTime.UtcNow.AddDays(7))
+                .ExecuteUpdateAsync(x => x.SetProperty(l => l.Status, LoanStatus.Cancelled));
         }
 
         public async Task<Loan> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

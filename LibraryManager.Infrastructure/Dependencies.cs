@@ -2,7 +2,8 @@
 {
     using LibraryManager.Core.Abstractions;
     using LibraryManager.Infrastructure.Auth;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatusJob;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
@@ -31,6 +32,7 @@
             });
 
             services.ConfigureOptions<ProcessOverdueLoanStatusJobSetup>();
+            services.ConfigureOptions<ProcessCanceledLoanStatusJobSetup>();
 
             return services;
         }

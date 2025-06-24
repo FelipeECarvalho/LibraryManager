@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatusJob
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
 {
     using Microsoft.Extensions.Options;
     using Quartz;
