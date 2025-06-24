@@ -1,13 +1,19 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatusJob
 {
+    using LibraryManager.Core.Abstractions.Repositories;
     using Quartz;
     using System.Threading.Tasks;
 
     internal sealed class ProcessOverdueLoanStatusJob : IJob
     {
-        public Task Execute(IJobExecutionContext context)
+        private readonly ILoanRepository _loanRepository;
+
+        public ProcessOverdueLoanStatusJob(ILoanRepository loanRepository)
         {
-            return Task.CompletedTask;
+            _loanRepository = loanRepository;
         }
+
+        public async Task Execute(IJobExecutionContext context) 
+            => await _loanRepository.ProcessOverdueAsync();
     }
 }

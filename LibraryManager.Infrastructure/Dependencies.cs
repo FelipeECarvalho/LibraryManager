@@ -30,7 +30,7 @@
                 options.WaitForJobsToComplete = true;
             });
 
-            services.ConfigureOptions<ProcessOverdueLoanStatusJob>();
+            services.ConfigureOptions<ProcessOverdueLoanStatusJobSetup>();
 
             return services;
         }

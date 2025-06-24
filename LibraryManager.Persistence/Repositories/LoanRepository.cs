@@ -2,6 +2,7 @@
 {
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
+    using LibraryManager.Core.Enums;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 
@@ -15,15 +16,15 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, Guid? BorrowerId = null, CancellationToken cancellationToken = default)
+        public async Task<IList<Loan>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, Guid? borrowerId = null, CancellationToken cancellationToken = default)
         {
             var query = _context.Loans
                 .AsNoTracking();
 
-            if (BorrowerId.HasValue)
+            if (borrowerId.HasValue)
             {
                 query = query
-                    .Where(x => x.BorrowerId == BorrowerId);
+                    .Where(x => x.BorrowerId == borrowerId);
             }
 
             return await query
@@ -35,6 +36,13 @@
                 .Skip((offset - 1) * limit)
                 .Take(offset)
                 .ToListAsync(cancellationToken);
+        }
+
+        public async Task ProcessOverdueAsync()
+        {
+            await _context.Loans
+                .Where(x => x.Status == LoanStatus.Borrowed && x.EndDate < DateTime.UtcNow)
+                .ExecuteUpdateAsync(x => x.SetProperty(l => l.Status, LoanStatus.Overdue));
         }
 
         public async Task<Loan> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)

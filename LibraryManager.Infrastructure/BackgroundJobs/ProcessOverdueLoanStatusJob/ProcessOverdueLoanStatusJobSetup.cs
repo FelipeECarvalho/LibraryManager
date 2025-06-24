@@ -14,7 +14,7 @@
                 .AddTrigger(q =>
                 {
                     q.ForJob(jobKey);
-                    q.WithCronSchedule("0 0 0 * * ?");
+                    q.WithCronSchedule("0 0 * * * ?");
                 });
         }
     }
