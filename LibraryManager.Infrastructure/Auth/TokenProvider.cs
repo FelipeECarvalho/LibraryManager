@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.Auth
 {
     using LibraryManager.Core.Abstractions;
+    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Infrastructure;
@@ -14,8 +15,11 @@
         : ITokenProvider
     {
         private readonly JwtInfoOptions _options;
+        private readonly IUserRoleRepository _userRoleRepository;
 
-        public TokenProvider(IOptions<JwtInfoOptions> options)
+        public TokenProvider(
+            IOptions<JwtInfoOptions> options,
+            IUserRoleRepository userRoleRepository)
         {
             if (options is null)
             {
@@ -23,10 +27,13 @@
             }
 
             _options = options.Value;
+            _userRoleRepository = userRoleRepository;
         }
 
-        public string GenerateToken(User user, IList<UserRole> userRoles)
+        public async Task<string> GenerateTokenAsync(User user)
         {
+            var userRoles = await _userRoleRepository.GetByUserAsync(user.Id);
+
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_options.Secret));
 

@@ -40,7 +40,7 @@
                 return Result.Failure<string>(DomainErrors.Library.IdNotFound(request.LibraryId));
             }
 
-            var user = await _userRepository.GetByEmailLoadRole(request.Email, library.Id, cancellationToken);
+            var user = await _userRepository.GetByEmail(request.Email, library.Id, cancellationToken);
 
             if (user == null)
             {
@@ -56,7 +56,7 @@
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _tokenProvider.GenerateToken(user, user.UserRoles);
+            return _tokenProvider.GenerateToken(user);
         }
     }
 }

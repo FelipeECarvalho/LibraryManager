@@ -34,8 +34,6 @@
 
         public Library Library { get; protected set; }
 
-        public IList<UserRole> UserRoles { get; protected set; }
-
         public void UpdateLastLogin()
         {
             LastLogin = DateTimeOffset.UtcNow;

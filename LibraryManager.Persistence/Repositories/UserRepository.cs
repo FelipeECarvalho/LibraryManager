@@ -13,11 +13,9 @@
             _context = context;
         }
 
-        public async Task<User> GetByEmailLoadRole(string email, Guid libraryId, CancellationToken cancellationToken)
+        public async Task<User> GetByEmail(string email, Guid libraryId, CancellationToken cancellationToken)
         {
             return await _context.Users
-                .Include(x => x.UserRoles)
-                    .ThenInclude(x => x.Role)
                 .SingleOrDefaultAsync(x => x.Email == email && x.LibraryId == libraryId, cancellationToken);
         }
     }
