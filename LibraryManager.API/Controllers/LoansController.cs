@@ -24,9 +24,12 @@
         /// <returns>A list containing all loans.</returns>
         [HttpGet]
         [ProducesResponseType(typeof(IList<LoanResponse>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll([FromQuery] GetLoansQuery query)
+        public async Task<IActionResult> GetAll(
+            [FromQuery] GetLoansQuery query,
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(query);
+            query.LibraryId = LibraryId;
+            var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
         }
@@ -42,9 +45,10 @@
         [ProducesResponseType(typeof(LoanResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(
-            Guid id)
+            Guid id,
+            CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetLoanByIdQuery(id));
+            var result = await _mediator.Send(new GetLoanByIdQuery(id), cancellationToken);
 
             if (result.IsFailure)
             {

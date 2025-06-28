@@ -27,6 +27,7 @@
             [FromQuery] GetCategoriesQuery query,
             CancellationToken cancellationToken)
         {
+            query.LibraryId = LibraryId;
             var response = await _mediator.Send(query, cancellationToken);
 
             return Ok(response.Value);
@@ -71,6 +72,7 @@
             CreateCategoryCommand categoryRequest,
             CancellationToken cancellationToken)
         {
+            categoryRequest.LibraryId = LibraryId;
             var response = await _mediator.Send(categoryRequest, cancellationToken);
 
             if (response.IsFailure)

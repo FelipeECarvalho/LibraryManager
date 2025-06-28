@@ -29,6 +29,7 @@
             [FromQuery] GetBooksQuery query,
             CancellationToken cancellationToken)
         {
+            query.LibraryId = LibraryId;
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
@@ -73,6 +74,7 @@
             [FromBody] CreateBookCommand bookRequest,
             CancellationToken cancellationToken)
         {
+            bookRequest.LibraryId = LibraryId;
             var result = await _mediator.Send(bookRequest, cancellationToken);
 
             if (result.IsFailure)

@@ -29,6 +29,7 @@
             [FromQuery] GetBorrowersQuery query,
             CancellationToken cancellationToken)
         {
+            query.LibraryId = LibraryId;
             var result = await _mediator.Send(query, cancellationToken);
 
             return Ok(result.Value);
@@ -74,6 +75,7 @@
             [FromBody] CreateBorrowerCommand borrowerRequest,
             CancellationToken cancellationToken)
         {
+            borrowerRequest.LibraryId = LibraryId;
             var result = await _mediator.Send(borrowerRequest, cancellationToken);
 
             if (result.IsFailure)

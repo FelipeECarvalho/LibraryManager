@@ -11,7 +11,7 @@
     [ApiController]
     public abstract class ApiControllerBase : ControllerBase
     {
-        protected Guid LibraryId => GetLibrary();
+        protected Guid LibraryId => GetLibraryIdFromClaims();
 
         protected IActionResult HandleFailure(Result result)
         {
@@ -55,7 +55,7 @@
             };
         }
 
-        private Guid GetLibrary()
+        private Guid GetLibraryIdFromClaims()
         {
             var routeValue = User?.FindFirst("library_id")?.Value;
 

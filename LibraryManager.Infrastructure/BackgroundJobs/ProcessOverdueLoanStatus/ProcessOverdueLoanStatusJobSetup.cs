@@ -5,15 +5,15 @@
 
     internal sealed class ProcessOverdueLoanStatusJobSetup : IConfigureOptions<QuartzOptions>
     {
+        private static readonly JobKey JobKey = JobKey.Create(nameof(ProcessOverdueLoanStatusJob));
+
         public void Configure(QuartzOptions options)
         {
-            var jobKey = JobKey.Create(nameof(ProcessOverdueLoanStatusJob));
-
             options
-                .AddJob<ProcessOverdueLoanStatusJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
+                .AddJob<ProcessOverdueLoanStatusJob>(jobBuilder => jobBuilder.WithIdentity(JobKey))
                 .AddTrigger(q =>
                 {
-                    q.ForJob(jobKey);
+                    q.ForJob(JobKey);
                     q.WithCronSchedule("0 0 * * * ?");
                 });
         }

@@ -5,15 +5,15 @@
 
     internal sealed class ProcessCanceledLoanStatusJobSetup : IConfigureOptions<QuartzOptions>
     {
+        private static readonly JobKey JobKey = JobKey.Create(nameof(ProcessCanceledLoanStatusJob));
+
         public void Configure(QuartzOptions options)
         {
-            var jobKey = JobKey.Create(nameof(ProcessCanceledLoanStatusJob));
-
             options
-                .AddJob<ProcessCanceledLoanStatusJob>(jobBuilder => jobBuilder.WithIdentity(jobKey))
+                .AddJob<ProcessCanceledLoanStatusJob>(jobBuilder => jobBuilder.WithIdentity(JobKey))
                 .AddTrigger(q =>
                 {
-                    q.ForJob(jobKey);
+                    q.ForJob(JobKey);
                     q.WithCronSchedule("0 0 * * * ?");
                 });
         }

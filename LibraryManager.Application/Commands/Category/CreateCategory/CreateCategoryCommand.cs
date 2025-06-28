@@ -5,7 +5,9 @@
 
     public sealed record CreateCategoryCommand(
         string Name,
-        string Description,
-        Guid LibraryId)
-        : ICommand<CategoryResponse>;
+        string Description)
+        : ICommand<CategoryResponse>
+    {
+        public Guid LibraryId { get; set; }
+    }
 }

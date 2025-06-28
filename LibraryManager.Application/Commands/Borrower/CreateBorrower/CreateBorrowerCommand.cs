@@ -9,6 +9,8 @@
         string Document,
         string Email,
         DateTimeOffset BirthDate,
-        Address Address,
-        Guid LibraryId) : ICommand<BorrowerResponse>;
+        Address Address) : ICommand<BorrowerResponse>
+    {
+        public Guid LibraryId { get; set; }
+    }
 }
