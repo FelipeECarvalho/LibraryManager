@@ -56,7 +56,7 @@
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _tokenProvider.GenerateToken(user);
+            return await _tokenProvider.GenerateTokenAsync(user);
         }
     }
 }

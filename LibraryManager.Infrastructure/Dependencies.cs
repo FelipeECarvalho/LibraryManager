@@ -23,7 +23,8 @@
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
-            services.AddSingleton<ITokenProvider, TokenProvider>();
+            
+            services.AddScoped<ITokenProvider, TokenProvider>();
 
             services.AddQuartz();
             services.AddQuartzHostedService(options =>

@@ -21,7 +21,7 @@
         public async Task<Result<IList<CategoryResponse>>> Handle(GetCategoriesQuery request, CancellationToken cancellationToken)
         {
             var categories = await _categoryRepository.GetAllAsync(
-                request.libraryId,
+                request.LibraryId,
                 request.Limit,
                 request.Offset,
                 cancellationToken);
