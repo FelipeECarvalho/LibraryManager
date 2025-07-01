@@ -14,6 +14,10 @@
         }
 
         public async Task Execute(IJobExecutionContext context)
-            => await _loanRepository.ProcessCanceledAsync();
+        {
+            await _loanRepository.ProcessCanceledAsync();
+
+            return;
+        }
     }
 }

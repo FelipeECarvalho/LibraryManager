@@ -4,12 +4,16 @@ namespace LibraryManager.API
     using LibraryManager.Application;
     using LibraryManager.Infrastructure;
     using LibraryManager.Persistence;
+    using Serilog;
 
     internal static class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Host.UseSerilog((context, loggerConfig) => 
+                loggerConfig.ReadFrom.Configuration(context.Configuration) );
 
             builder.Services
                 .AddPersistence(builder.Configuration)
@@ -31,6 +35,10 @@ namespace LibraryManager.API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseMiddleware<RequestLogContextMiddleware>();
+
+            app.UseSerilogRequestLogging();
 
             app.UseAuthentication();
 
