@@ -20,6 +20,8 @@
         {
             return await _context.UserRoles
                 .AsNoTracking()
+                .Include(x => x.Role)
+                .Include(x => x.User)
                 .Where(x => x.UserId == userId)
                 .ToListAsync(cancellationToken);
         }

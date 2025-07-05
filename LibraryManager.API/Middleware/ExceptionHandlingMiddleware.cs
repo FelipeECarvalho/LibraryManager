@@ -8,6 +8,7 @@
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+        private const string logMessageTemplate = "An exception occurred: {ExceptionMessage}";
 
         public ExceptionHandlingMiddleware(
             RequestDelegate next,
@@ -42,7 +43,6 @@
                 Message = exception.Message
             }.ToString());
 
-            const string logMessageTemplate = "An exception occurred: {ExceptionMessage}";
             _logger.LogError(logMessageTemplate, exception.Message);
         }
     }
