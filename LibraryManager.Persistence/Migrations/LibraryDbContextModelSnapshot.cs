@@ -17,7 +17,7 @@ namespace LibraryManager.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -113,10 +113,6 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasKey("BookId", "CategoryId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("BookId", "CategoryId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted] = 0");
 
                     b.ToTable("BookCategory", (string)null);
                 });
@@ -313,26 +309,6 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("81efa529-aa8c-4943-890f-d0e7661776cd"),
-                            CreateDate = new DateTimeOffset(new DateTime(2025, 6, 28, 12, 31, 23, 214, DateTimeKind.Unspecified).AddTicks(9354), new TimeSpan(0, -3, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Admin",
-                            RoleType = 1,
-                            UpdateDate = new DateTimeOffset(new DateTime(2025, 6, 28, 12, 31, 23, 230, DateTimeKind.Unspecified).AddTicks(5953), new TimeSpan(0, -3, 0, 0, 0))
-                        },
-                        new
-                        {
-                            Id = new Guid("fb2a61d3-5278-45c6-98a6-a04ed7892f7f"),
-                            CreateDate = new DateTimeOffset(new DateTime(2025, 6, 28, 12, 31, 23, 230, DateTimeKind.Unspecified).AddTicks(6457), new TimeSpan(0, -3, 0, 0, 0)),
-                            IsDeleted = false,
-                            Name = "Operator",
-                            RoleType = 0,
-                            UpdateDate = new DateTimeOffset(new DateTime(2025, 6, 28, 12, 31, 23, 230, DateTimeKind.Unspecified).AddTicks(6460), new TimeSpan(0, -3, 0, 0, 0))
-                        });
                 });
 
             modelBuilder.Entity("LibraryManager.Core.Entities.User", b =>
@@ -390,9 +366,7 @@ namespace LibraryManager.Persistence.Migrations
 
                     b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId", "UserId")
-                        .IsUnique()
-                        .HasFilter("[IsDeleted] = 0");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("UserRole", (string)null);
                 });

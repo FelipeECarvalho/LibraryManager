@@ -1,15 +1,16 @@
 **TODO**
 
-- Adicionar logging
 - Adicionar cache
-- Testes unitários
 - Envio de e-mails
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
-- Adicionar imagem para os livros
 - Multas ao usuário
 	- enquanto não pagar não empresta
+- Testes unitários
+- Começar a implementar o front
+	- Usar blazor?
+- Adicionar imagem para os livros
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
 	- Cadastrar a foto do usuário para a carteirinha

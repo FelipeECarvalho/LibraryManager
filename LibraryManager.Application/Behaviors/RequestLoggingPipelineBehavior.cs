@@ -26,19 +26,19 @@
         {
             string requestName = typeof(TRequest).Name;
 
-            _logger.LogInformation("Processing request {RequestName}", requestName);
+            _logger.LogInformation("Processing request {@RequestName}, {@DateTimeUtc}", requestName, DateTime.UtcNow);
 
             TResponse result = await next(cancellationToken);
 
             if (result.IsSuccess)
             {
-                _logger.LogInformation("Completed request {RequestName}", requestName);
+                _logger.LogInformation("Completed request {@RequestName}, {@DateTimeUtc}", requestName, DateTime.UtcNow);
             }
             else
             {
                 using (LogContext.PushProperty("Error", result.Error))
                 {
-                    _logger.LogError("Completed request {RequestName} with error", requestName);
+                    _logger.LogError("Completed request {@RequestName}, {@DateTimeUtc} with error", requestName, DateTime.UtcNow);
                 }
             }
 

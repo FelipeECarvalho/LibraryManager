@@ -16,10 +16,6 @@
 
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
             builder.Property(x => x.RoleType).IsRequired();
-
-            builder.HasData(
-                new Role(RoleType.Admin.ToString(), RoleType.Admin),
-                new Role(RoleType.Operator.ToString(), RoleType.Operator));
         }
     }
 }

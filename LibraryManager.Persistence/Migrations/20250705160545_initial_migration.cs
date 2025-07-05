@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LibraryManager.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class remove_operator1 : Migration
+    public partial class initial_migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -53,6 +53,22 @@ namespace LibraryManager.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Library", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    RoleType = table.Column<int>(type: "int", nullable: false),
+                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,7 +173,6 @@ namespace LibraryManager.Persistence.Migrations
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(512)", maxLength: 512, nullable: false),
                     LastLogin = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Role = table.Column<int>(type: "int", nullable: false),
                     LibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
@@ -210,16 +225,12 @@ namespace LibraryManager.Persistence.Migrations
                 name: "BookCategory",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    UpdateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookCategory", x => x.Id);
+                    table.PrimaryKey("PK_BookCategory", x => new { x.BookId, x.CategoryId });
                     table.ForeignKey(
                         name: "FK_BookCategory_Book_BookId",
                         column: x => x.BookId,
@@ -232,6 +243,30 @@ namespace LibraryManager.Persistence.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRole",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRole", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_UserRole_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRole_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -254,13 +289,6 @@ namespace LibraryManager.Persistence.Migrations
                 name: "IX_Book_Title",
                 table: "Book",
                 column: "Title");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_BookCategory_BookId_CategoryId",
-                table: "BookCategory",
-                columns: new[] { "BookId", "CategoryId" },
-                unique: true,
-                filter: "[IsDeleted] = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookCategory_CategoryId",
@@ -330,6 +358,11 @@ namespace LibraryManager.Persistence.Migrations
                 name: "IX_User_LibraryId",
                 table: "User",
                 column: "LibraryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserRole_RoleId",
+                table: "UserRole",
+                column: "RoleId");
         }
 
         /// <inheritdoc />
@@ -342,7 +375,7 @@ namespace LibraryManager.Persistence.Migrations
                 name: "Loan");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "UserRole");
 
             migrationBuilder.DropTable(
                 name: "Category");
@@ -352,6 +385,12 @@ namespace LibraryManager.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Borrower");
+
+            migrationBuilder.DropTable(
+                name: "Role");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Author");

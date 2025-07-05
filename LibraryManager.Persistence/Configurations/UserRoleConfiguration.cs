@@ -22,10 +22,6 @@
                 .WithMany()
                 .HasForeignKey(x => x.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasIndex(x => new { x.RoleId, x.UserId })
-                .HasFilter("[IsDeleted] = 0")
-                .IsUnique();
         }
     }
 }
