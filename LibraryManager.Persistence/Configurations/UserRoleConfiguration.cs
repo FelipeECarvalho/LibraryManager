@@ -16,11 +16,13 @@
             builder.HasOne(x => x.User)
                 .WithMany()
                 .HasForeignKey(x => x.UserId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Role)
                 .WithMany()
                 .HasForeignKey(x => x.RoleId)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

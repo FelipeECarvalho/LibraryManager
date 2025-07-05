@@ -15,11 +15,11 @@
             CategoryId = categoryId;
         }
 
-        public Guid BookId { get; private set; }
+        public Guid? BookId { get; private set; }
 
         public Book Book { get; private set; }
 
-        public Guid CategoryId { get; private set; }
+        public Guid? CategoryId { get; private set; }
 
         public Category Category { get; private set; }
     }

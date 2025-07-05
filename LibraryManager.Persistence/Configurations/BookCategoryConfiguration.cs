@@ -16,7 +16,7 @@
             builder.HasOne(x => x.Book)
                 .WithMany(x => x.BookCategories)
                 .HasForeignKey(x => x.BookId)
-                .IsRequired()
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Category)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LibraryManager.Persistence.Migrations
 {
     [DbContext(typeof(LibraryDbContext))]
-    [Migration("20250705160545_initial_migration")]
+    [Migration("20250705170352_initial_migration")]
     partial class initial_migration
     {
         /// <inheritdoc />
@@ -428,13 +428,12 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasOne("LibraryManager.Core.Entities.Book", "Book")
                         .WithMany("BookCategories")
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LibraryManager.Core.Entities.Category", "Category")
                         .WithMany("BookCategories")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Book");
 
@@ -699,14 +698,12 @@ namespace LibraryManager.Persistence.Migrations
                     b.HasOne("LibraryManager.Core.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("LibraryManager.Core.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Role");
 
