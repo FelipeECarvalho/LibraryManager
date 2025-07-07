@@ -1,19 +1,23 @@
 ﻿namespace LibraryManager.API.Middleware
 {
-    using Serilog.Context;
+    using LibraryManager.Infrastructure.Logging;
 
     public class RequestLogContextMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogContextEnricher _contextEnricher;
 
-        public RequestLogContextMiddleware(RequestDelegate next)
+        public RequestLogContextMiddleware(
+            RequestDelegate next,
+            ILogContextEnricher contextEnricher)
         {
             _next = next;
+            _contextEnricher = contextEnricher;
         }
-        
+
         public Task InvokeAsync(HttpContext context)
         {
-            using (LogContext.PushProperty("CorrelationId", context.TraceIdentifier))
+            using (_contextEnricher.PushProperty("CorrelationId", context.TraceIdentifier))
             {
                 return _next(context); 
             }

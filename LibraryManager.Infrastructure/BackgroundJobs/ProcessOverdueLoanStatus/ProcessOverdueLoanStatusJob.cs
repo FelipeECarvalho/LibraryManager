@@ -29,9 +29,9 @@
 
                 _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Completed BackgroundJob: ProcessOverdueLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogError(ex, "Completed BackgroundJob: ProcessOverdueLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
             }
 
             return;

@@ -28,9 +28,9 @@
 
                 _logger.LogInformation("Completed BackgroundJob: ProcessCanceledLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                 _logger.LogError("Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
+                 _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
             }
 
             return;

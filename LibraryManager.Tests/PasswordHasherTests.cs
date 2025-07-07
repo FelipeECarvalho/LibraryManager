@@ -1,12 +1,11 @@
 namespace LibraryManager.Tests
 {
-    using LibraryManager.Core.Abstractions;
     using LibraryManager.Infrastructure.Password;
     using Xunit;
 
     public class PasswordHasherTests
     {
-        private readonly IPasswordHasher _passwordHasher;
+        private readonly PasswordHasher _passwordHasher;
 
         public PasswordHasherTests()
         {

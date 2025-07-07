@@ -22,8 +22,6 @@
             services.AddAuth(configuration);
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
-            services.AddSingleton<IPasswordGenerator, PasswordGenerator>();
-            
             services.AddScoped<ITokenProvider, TokenProvider>();
 
             services.AddQuartz();

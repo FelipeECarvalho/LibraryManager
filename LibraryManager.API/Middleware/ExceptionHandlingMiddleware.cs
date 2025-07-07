@@ -43,7 +43,7 @@
                 Message = exception.Message
             }.ToString());
 
-            _logger.LogError(logMessageTemplate, exception.Message);
+            _logger.LogError(exception, logMessageTemplate, exception.Message);
         }
     }
 }

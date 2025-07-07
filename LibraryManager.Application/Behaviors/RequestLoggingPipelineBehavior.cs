@@ -1,9 +1,9 @@
 ﻿namespace LibraryManager.Application.Behaviors
 {
     using LibraryManager.Core.Common;
+    using LibraryManager.Infrastructure.Logging;
     using MediatR;
     using Microsoft.Extensions.Logging;
-    using Serilog.Context;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -14,7 +14,8 @@
     {
         private readonly ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> _logger;
 
-        public RequestLoggingPipelineBehavior(ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
+        public RequestLoggingPipelineBehavior(
+            ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }
@@ -36,10 +37,7 @@
             }
             else
             {
-                using (LogContext.PushProperty("Error", result.Error))
-                {
-                    _logger.LogError("Completed request {@RequestName}, {@DateTimeUtc} with error", requestName, DateTime.UtcNow);
-                }
+                _logger.LogErrorWithContext(result.Error, "Completed request {@RequestName}, {@DateTimeUtc} with error", requestName, DateTime.UtcNow);
             }
 
             return result;
