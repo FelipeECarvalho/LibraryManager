@@ -4,6 +4,7 @@ namespace LibraryManager.API
     using LibraryManager.Application;
     using LibraryManager.Infrastructure;
     using LibraryManager.Persistence;
+    using Microsoft.Extensions.Caching.Hybrid;
     using Serilog;
 
     internal static class Program
@@ -24,6 +25,15 @@ namespace LibraryManager.API
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddHybridCache(options =>
+            {
+                options.DefaultEntryOptions = new HybridCacheEntryOptions
+                {
+                    LocalCacheExpiration = TimeSpan.FromMinutes(1),
+                    Expiration = TimeSpan.FromMinutes(5)
+                };
+            });
 
             var app = builder.Build();
 

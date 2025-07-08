@@ -4,6 +4,7 @@
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus;
+    using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@
             services.AddAuth(configuration);
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
             services.AddScoped<ITokenProvider, TokenProvider>();
 
             services.AddQuartz();

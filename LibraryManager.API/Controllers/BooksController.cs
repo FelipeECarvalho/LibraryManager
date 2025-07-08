@@ -10,13 +10,17 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Hybrid;
+    using System.Threading;
 
     /// <summary>
     /// A book
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    public class BooksController(IMediator _mediator) : ApiControllerBase
+    public class BooksController(
+        IMediator _mediator,
+        HybridCache _hybridCache) : ApiControllerBase
     {
         /// <summary>
         /// Retrieves all books.
@@ -29,8 +33,14 @@
             [FromQuery] GetBooksQuery query,
             CancellationToken cancellationToken)
         {
+            var cacheKey = "books";
             query.LibraryId = LibraryId;
-            var result = await _mediator.Send(query, cancellationToken);
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                tags: ["books"],
+                cancellationToken: cancellationToken);
 
             return Ok(result.Value);
         }
@@ -49,8 +59,14 @@
             Guid id,
             CancellationToken cancellationToken)
         {
+            var cacheKey = $"book-{id}";
             var query = new GetBookByIdQuery(id);
-            var result = await _mediator.Send(query, cancellationToken);
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                tags: ["books"],
+                cancellationToken: cancellationToken);
 
             if (result.IsFailure)
             {
@@ -82,6 +98,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveAsync("books", cancellationToken);
+
             var book = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }
@@ -106,6 +124,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveAsync("books", cancellationToken);
+
             return NoContent();
         }
 
@@ -123,16 +143,19 @@
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put(
             Guid id,
-            [FromBody] UpdateBookCommand authorRequest)
+            [FromBody] UpdateBookCommand authorRequest,
+            CancellationToken cancellationToken)
         {
             authorRequest.Id = id;
 
-            var result = await _mediator.Send(authorRequest);
+            var result = await _mediator.Send(authorRequest, cancellationToken);
 
             if (result.IsFailure)
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveAsync("books", cancellationToken);
 
             return NoContent();
         }
@@ -160,6 +183,8 @@
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveAsync("books", cancellationToken);
 
             return NoContent();
         }
