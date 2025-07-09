@@ -100,6 +100,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
+
             var borrower = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = borrower.Id }, borrower);
         }
@@ -124,7 +126,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(_borrowersCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -154,7 +156,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(_borrowersCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
 
             return NoContent();
         }

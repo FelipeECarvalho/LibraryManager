@@ -99,8 +99,9 @@
                 return HandleFailure(result);
             }
 
-            var loan = result.Value;
+            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
 
+            var loan = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
         }
 
@@ -129,7 +130,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(_loanCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -159,7 +160,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(_loanCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
 
             return NoContent();
         }

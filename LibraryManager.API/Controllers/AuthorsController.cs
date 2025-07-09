@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Hybrid;
+    using System.Text.Json;
 
     /// <summary>
     /// An Author
@@ -33,6 +34,8 @@
             [FromQuery] GetAuthorsQuery query,
             CancellationToken cancellationToken)
         {
+            var cacheKey = $"{_authorsCacheKey}:{JsonSerializer.Serialize(query)}";
+
             var result = await _hybridCache.GetOrCreateAsync(
                 _authorsCacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
@@ -93,6 +96,8 @@
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveByTagAsync(_authorsCacheKey, cancellationToken);
 
             var author = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = author.Id }, author);

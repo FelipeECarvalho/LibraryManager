@@ -100,6 +100,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
+
             var book = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }

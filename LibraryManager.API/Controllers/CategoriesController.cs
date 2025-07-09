@@ -99,6 +99,9 @@
                 return HandleFailure(response);
             }
 
+
+            await _hybridCache.RemoveByTagAsync(_categoriesCacheTag, cancellationToken);
+
             var category = response.Value;
             return Ok(category);
         }
@@ -123,7 +126,7 @@
                 return HandleFailure(response);
             }
 
-            await _hybridCache.RemoveAsync(_categoriesCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_categoriesCacheTag, cancellationToken);
 
             return NoContent();
         }
