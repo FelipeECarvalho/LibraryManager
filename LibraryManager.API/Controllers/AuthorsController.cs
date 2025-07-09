@@ -20,7 +20,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        public static readonly Func<Guid, string> AuthorCacheKey = id => $"author:{id}";
+        private readonly string _authorsCacheKey = "authors";
 
         /// <summary>
         /// Retrieves all authors.
@@ -33,11 +33,10 @@
             [FromQuery] GetAuthorsQuery query,
             CancellationToken cancellationToken)
         {
-            var cacheKey = $"authors";
-
             var result = await _hybridCache.GetOrCreateAsync(
-                cacheKey,
+                _authorsCacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_authorsCacheKey],
                 cancellationToken: cancellationToken);
 
             return Ok(result.Value);
@@ -58,10 +57,12 @@
             CancellationToken cancellationToken)
         {
             var query = new GetAuthorByIdQuery(id);
+            var cacheKey = $"author:{id}";
 
             var result = await _hybridCache.GetOrCreateAsync(
-                AuthorCacheKey(id),
+                cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_authorsCacheKey],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -117,7 +118,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(AuthorCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_authorsCacheKey, cancellationToken);
 
             return NoContent();
         }
@@ -147,7 +148,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(AuthorCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_authorsCacheKey, cancellationToken);
 
             return NoContent();
         }

@@ -19,7 +19,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        public static readonly Func<Guid, string> CategoryCacheKey = id => $"category:{id}";
+        private readonly string _categoriesCacheTag = "categories";
 
         /// <summary>
         /// Retrieves all categories.
@@ -38,6 +38,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_categoriesCacheTag],
                 cancellationToken: cancellationToken);
 
             var categories = result.Value;
@@ -59,10 +60,12 @@
             CancellationToken cancellationToken)
         {
             var query = new GetCategoryByIdQuery(id);
+            var cacheKey = $"category:{id}";
 
             var result = await _hybridCache.GetOrCreateAsync(
-                CategoryCacheKey(id),
+                cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_categoriesCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -120,7 +123,7 @@
                 return HandleFailure(response);
             }
 
-            await _hybridCache.RemoveAsync(CategoryCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveAsync(_categoriesCacheTag, cancellationToken);
 
             return NoContent();
         }

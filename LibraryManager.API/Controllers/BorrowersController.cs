@@ -21,7 +21,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        public static readonly Func<Guid, string> BorrowerCacheKey = id => $"borrower:{id}";
+        private readonly string _borrowersCacheTag = "borrowers";
 
         /// <summary>
         /// Retrieves all borrowers.
@@ -40,6 +40,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_borrowersCacheTag],
                 cancellationToken: cancellationToken);
 
             return Ok(result.Value);
@@ -60,10 +61,12 @@
             CancellationToken cancellationToken)
         {
             var query = new GetBorrowerByIdQuery(id);
+            var cacheKey = $"borrower:{id}";
 
             var result = await _hybridCache.GetOrCreateAsync(
-                BorrowerCacheKey(id),
+                cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_borrowersCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -121,7 +124,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(BorrowerCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveAsync(_borrowersCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -151,7 +154,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(BorrowerCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveAsync(_borrowersCacheTag, cancellationToken);
 
             return NoContent();
         }

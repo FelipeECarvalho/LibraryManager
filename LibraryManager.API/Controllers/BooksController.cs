@@ -22,7 +22,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        public static readonly Func<Guid, string> BookCacheKey = id => $"book:{id}";
+        private readonly string _booksCacheTag = "books";
 
         /// <summary>
         /// Retrieves all books.
@@ -41,6 +41,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_booksCacheTag],
                 cancellationToken: cancellationToken);
 
             return Ok(result.Value);
@@ -61,10 +62,12 @@
             CancellationToken cancellationToken)
         {
             var query = new GetBookByIdQuery(id);
+            var cacheKey = $"books:{id}";
 
             var result = await _hybridCache.GetOrCreateAsync(
-                BookCacheKey(id),
+                cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
+                tags: [_booksCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -121,7 +124,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -152,7 +155,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -165,11 +168,11 @@
         /// <response code="204">Book updated successfully.</response>
         /// <response code="400">Validation error.</response>
         /// <response code="404">Book not found.</response>
-        [HttpPut("{id:Guid}/stock")]
+        [HttpPatch("{id:Guid}/stock")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Put(
+        public async Task<IActionResult> Patch(
             Guid id,
             [FromQuery] int stockNumber,
             CancellationToken cancellationToken)
@@ -181,7 +184,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
+            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
 
             return NoContent();
         }
