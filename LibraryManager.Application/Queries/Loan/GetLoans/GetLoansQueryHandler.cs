@@ -22,8 +22,8 @@
         {
             var loans = await _loanRepository.GetAllAsync(
                 request.LibraryId,
-                request.Limit,
-                request.Offset,
+                request.PageSize,
+                request.PageNumber,
                 request.BorrowerId,
                 cancellationToken);
 

@@ -22,8 +22,8 @@
         {
             var categories = await _categoryRepository.GetAllAsync(
                 request.LibraryId,
-                request.Limit,
-                request.Offset,
+                request.pageSize,
+                request.pageNumber,
                 cancellationToken);
 
             var response = categories?

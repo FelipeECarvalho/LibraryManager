@@ -21,8 +21,8 @@
         {
             var books = await _bookRepository.GetAllAsync(
                 request.LibraryId,
-                request.Limit,
-                request.Offset,
+                request.pageSize,
+                request.pageNumber,
                 request.Title,
                 cancellationToken);
 

@@ -15,13 +15,13 @@
             _context = context;
         }
 
-        public async Task<IList<Author>> GetAllAsync(int limit = 100, int offset = 1, CancellationToken cancellationToken = default)
+        public async Task<IList<Author>> GetAllAsync(int pageSize = 100, int pageNumber = 1, CancellationToken cancellationToken = default)
         {
             return await _context.Authors
                 .AsNoTracking()
                 .OrderBy(x => x.CreateDate)
-                .Skip((offset - 1) * limit)
-                .Take(limit)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
         }
 

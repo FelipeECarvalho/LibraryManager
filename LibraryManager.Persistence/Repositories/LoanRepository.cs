@@ -16,7 +16,7 @@
             _context = context;
         }
 
-        public async Task<IList<Loan>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, Guid? borrowerId = null, CancellationToken cancellationToken = default)
+        public async Task<IList<Loan>> GetAllAsync(Guid libraryId, int pageSize = 100, int pageNumber = 1, Guid? borrowerId = null, CancellationToken cancellationToken = default)
         {
             var query = _context.Loans
                 .AsNoTracking();
@@ -33,8 +33,8 @@
                     .ThenInclude(x => x.Author)
                 .Where(x => x.Borrower.LibraryId == libraryId)
                 .OrderBy(x => x.CreateDate)
-                .Skip((offset - 1) * limit)
-                .Take(offset)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
         }
 

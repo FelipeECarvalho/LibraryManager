@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Hybrid;
+    using System.Text.Json;
 
     /// <summary>
     /// A Loan
@@ -34,7 +35,7 @@
             CancellationToken cancellationToken)
         {
             query.LibraryId = LibraryId;
-            var cacheKey = $"library:{query.LibraryId}:loans";
+            var cacheKey = $"library:{query.LibraryId}:loans:{JsonSerializer.Serialize(query)}";
 
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,

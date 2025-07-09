@@ -37,7 +37,7 @@
             var cacheKey = $"{_authorsCacheKey}:{JsonSerializer.Serialize(query)}";
 
             var result = await _hybridCache.GetOrCreateAsync(
-                _authorsCacheKey,
+                cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
                 tags: [_authorsCacheKey],
                 cancellationToken: cancellationToken);

@@ -333,5 +333,18 @@
         }
 
         #endregion
+
+        public static class General
+        {
+            public static Error PageNumberInvalid => new(
+                "General.PageNumberInvalid",
+                $"The page number value must be greater than zero",
+                ErrorType.Validation);
+
+            public static Error PageSizeInvalid => new(
+                "General.PageSizeInvalid",
+                $"The page size value must be greater than zero",
+                ErrorType.Validation);
+        }
     }
 }

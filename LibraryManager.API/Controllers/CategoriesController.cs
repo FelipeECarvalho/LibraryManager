@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Hybrid;
+    using System.Text.Json;
 
     /// <summary>
     /// A category
@@ -33,7 +34,7 @@
             CancellationToken cancellationToken)
         {
             query.LibraryId = LibraryId;
-            var cacheKey = $"library:{query.LibraryId}:categories";
+            var cacheKey = $"library:{query.LibraryId}:categories:{JsonSerializer.Serialize(query)}";
 
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,

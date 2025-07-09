@@ -20,8 +20,8 @@
         public async Task<Result<IList<AuthorResponse>>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
         {
             var authors = await _authorRepository.GetAllAsync(
-                request.Limit,
-                request.Offset,
+                request.pageSize,
+                request.pageNumber,
                 cancellationToken);
 
             var response = authors?

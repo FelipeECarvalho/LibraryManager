@@ -15,7 +15,7 @@
             _context = context;
         }
 
-        public async Task<IList<Book>> GetAllAsync(Guid libraryId, int limit = 100, int offset = 1, string title = null, CancellationToken cancellationToken = default)
+        public async Task<IList<Book>> GetAllAsync(Guid libraryId, int pageSize = 100, int pageNumber = 1, string title = null, CancellationToken cancellationToken = default)
         {
             var query = _context.Books
                 .AsNoTracking();
@@ -30,8 +30,8 @@
                 .Include(x => x.Author)
                 .OrderBy(x => x.CreateDate)
                 .Where(x => x.LibraryId == libraryId)
-                .Skip((offset - 1) * limit)
-                .Take(limit)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .ToListAsync(cancellationToken);
         }
 
