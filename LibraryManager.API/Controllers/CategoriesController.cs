@@ -8,14 +8,19 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Hybrid;
 
     /// <summary>
     /// A category
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    public class CategoriesController(IMediator _mediator) : ApiControllerBase
+    public class CategoriesController(
+        IMediator _mediator,
+        HybridCache _hybridCache) : ApiControllerBase
     {
+        public static readonly Func<Guid, string> CategoryCacheKey = id => $"category:{id}";
+
         /// <summary>
         /// Retrieves all categories.
         /// </summary>
@@ -28,9 +33,15 @@
             CancellationToken cancellationToken)
         {
             query.LibraryId = LibraryId;
-            var response = await _mediator.Send(query, cancellationToken);
+            var cacheKey = $"library:{query.LibraryId}:categories";
 
-            return Ok(response.Value);
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
+
+            var categories = result.Value;
+            return Ok(categories);
         }
 
         /// <summary>
@@ -47,14 +58,19 @@
             Guid id,
             CancellationToken cancellationToken)
         {
-            var response = await _mediator.Send(new GetCategoryByIdQuery(id), cancellationToken);
+            var query = new GetCategoryByIdQuery(id);
 
-            if (response.IsFailure)
+            var result = await _hybridCache.GetOrCreateAsync(
+                CategoryCacheKey(id),
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
+
+            if (result.IsFailure)
             {
-                return HandleFailure(response);
+                return HandleFailure(result);
             }
 
-            var category = response.Value;
+            var category = result.Value;
             return Ok(category);
         }
 
@@ -103,6 +119,8 @@
             {
                 return HandleFailure(response);
             }
+
+            await _hybridCache.RemoveAsync(CategoryCacheKey(id), cancellationToken);
 
             return NoContent();
         }

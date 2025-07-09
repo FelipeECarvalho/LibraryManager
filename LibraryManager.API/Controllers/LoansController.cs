@@ -9,14 +9,19 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Hybrid;
 
     /// <summary>
     /// A Loan
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    public class LoansController(IMediator _mediator) : ApiControllerBase
+    public class LoansController(
+        IMediator _mediator,
+        HybridCache _hybridCache) : ApiControllerBase
     {
+        public static readonly Func<Guid, string> LoanCacheKey = id => $"loan:{id}";
+
         /// <summary>
         /// Retrieves all loans.
         /// </summary>
@@ -29,7 +34,12 @@
             CancellationToken cancellationToken)
         {
             query.LibraryId = LibraryId;
-            var result = await _mediator.Send(query, cancellationToken);
+            var cacheKey = $"library:{query.LibraryId}:loans";
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             return Ok(result.Value);
         }
@@ -48,7 +58,12 @@
             Guid id,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetLoanByIdQuery(id), cancellationToken);
+            var query = new GetLoanByIdQuery(id);
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                LoanCacheKey(id),
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             if (result.IsFailure)
             {
@@ -111,6 +126,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveAsync(LoanCacheKey(id), cancellationToken);
+
             return NoContent();
         }
 
@@ -138,6 +155,8 @@
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveAsync(LoanCacheKey(id), cancellationToken);
 
             return NoContent();
         }

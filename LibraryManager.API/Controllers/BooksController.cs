@@ -22,6 +22,8 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
+        public static readonly Func<Guid, string> BookCacheKey = id => $"book:{id}";
+
         /// <summary>
         /// Retrieves all books.
         /// </summary>
@@ -33,13 +35,12 @@
             [FromQuery] GetBooksQuery query,
             CancellationToken cancellationToken)
         {
-            var cacheKey = "books";
             query.LibraryId = LibraryId;
+            var cacheKey = $"library:{query.LibraryId}:books";
 
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: ["books"],
                 cancellationToken: cancellationToken);
 
             return Ok(result.Value);
@@ -59,13 +60,11 @@
             Guid id,
             CancellationToken cancellationToken)
         {
-            var cacheKey = $"book-{id}";
             var query = new GetBookByIdQuery(id);
 
             var result = await _hybridCache.GetOrCreateAsync(
-                cacheKey,
+                BookCacheKey(id),
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: ["books"],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -98,8 +97,6 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync("books", cancellationToken);
-
             var book = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
         }
@@ -124,7 +121,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync("books", cancellationToken);
+            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
 
             return NoContent();
         }
@@ -155,7 +152,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync("books", cancellationToken);
+            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
 
             return NoContent();
         }
@@ -184,7 +181,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveAsync("books", cancellationToken);
+            await _hybridCache.RemoveAsync(BookCacheKey(id), cancellationToken);
 
             return NoContent();
         }

@@ -10,14 +10,19 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Hybrid;
 
     /// <summary>
     /// A borrower
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    public class BorrowersController(IMediator _mediator) : ApiControllerBase
+    public class BorrowersController(
+        IMediator _mediator,
+        HybridCache _hybridCache) : ApiControllerBase
     {
+        public static readonly Func<Guid, string> BorrowerCacheKey = id => $"borrower:{id}";
+
         /// <summary>
         /// Retrieves all borrowers.
         /// </summary>
@@ -30,7 +35,12 @@
             CancellationToken cancellationToken)
         {
             query.LibraryId = LibraryId;
-            var result = await _mediator.Send(query, cancellationToken);
+            var cacheKey = $"library:{query.LibraryId}:borrowers";
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             return Ok(result.Value);
         }
@@ -49,7 +59,12 @@
             Guid id,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(new GetBorrowerByIdQuery(id), cancellationToken);
+            var query = new GetBorrowerByIdQuery(id);
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                BorrowerCacheKey(id),
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             if (result.IsFailure)
             {
@@ -57,7 +72,6 @@
             }
 
             var borrower = result.Value;
-
             return Ok(borrower);
         }
 
@@ -107,6 +121,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveAsync(BorrowerCacheKey(id), cancellationToken);
+
             return NoContent();
         }
 
@@ -134,6 +150,8 @@
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveAsync(BorrowerCacheKey(id), cancellationToken);
 
             return NoContent();
         }

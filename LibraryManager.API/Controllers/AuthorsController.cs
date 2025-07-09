@@ -9,14 +9,19 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Caching.Hybrid;
 
     /// <summary>
     /// An Author
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Admin")]
-    public class AuthorsController(IMediator _mediator) : ApiControllerBase
+    public class AuthorsController(
+        IMediator _mediator,
+        HybridCache _hybridCache) : ApiControllerBase
     {
+        public static readonly Func<Guid, string> AuthorCacheKey = id => $"author:{id}";
+
         /// <summary>
         /// Retrieves all authors.
         /// </summary>
@@ -28,7 +33,12 @@
             [FromQuery] GetAuthorsQuery query,
             CancellationToken cancellationToken)
         {
-            var result = await _mediator.Send(query, cancellationToken);
+            var cacheKey = $"authors";
+
+            var result = await _hybridCache.GetOrCreateAsync(
+                cacheKey,
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             return Ok(result.Value);
         }
@@ -49,7 +59,10 @@
         {
             var query = new GetAuthorByIdQuery(id);
 
-            var result = await _mediator.Send(query, cancellationToken);
+            var result = await _hybridCache.GetOrCreateAsync(
+                AuthorCacheKey(id),
+                async _ => await _mediator.Send(query, cancellationToken),
+                cancellationToken: cancellationToken);
 
             if (result.IsFailure)
             {
@@ -104,6 +117,8 @@
                 return HandleFailure(result);
             }
 
+            await _hybridCache.RemoveAsync(AuthorCacheKey(id), cancellationToken);
+
             return NoContent();
         }
 
@@ -131,6 +146,8 @@
             {
                 return HandleFailure(result);
             }
+
+            await _hybridCache.RemoveAsync(AuthorCacheKey(id), cancellationToken);
 
             return NoContent();
         }
