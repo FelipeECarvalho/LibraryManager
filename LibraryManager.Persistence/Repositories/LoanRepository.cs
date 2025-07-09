@@ -3,7 +3,6 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
-    using LibraryManager.Core.Extensions;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;
 

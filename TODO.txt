@@ -4,9 +4,9 @@
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
+- Testes unitários
 - Multas ao usuário
 	- enquanto não pagar não empresta
-- Testes unitários
 - Começar a implementar o front usando blazor
 - Adicionar imagem para os livros
 - Adicionar a carteirinha do usuário

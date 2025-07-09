@@ -4,8 +4,8 @@
     using LibraryManager.Application.Queries.Loan;
 
     public sealed record GetLoansQuery(
-        Guid? BorrowerId, 
-        int Limit = 100, 
+        Guid? BorrowerId,
+        int Limit = 100,
         int Offset = 1)
         : IQuery<IList<LoanResponse>>
     {

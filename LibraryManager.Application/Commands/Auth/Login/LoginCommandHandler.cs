@@ -36,7 +36,7 @@
         {
             var library = await _libraryRepository.GetById(request.LibraryId, cancellationToken);
 
-            if (library == null) 
+            if (library == null)
             {
                 return Result.Failure<string>(DomainErrors.Library.IdNotFound(request.LibraryId));
             }

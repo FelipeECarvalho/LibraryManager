@@ -3,7 +3,7 @@
     using LibraryManager.Core.Entities;
     using Microsoft.EntityFrameworkCore;
 
-    public sealed class LibraryDbContext(DbContextOptions<LibraryDbContext> options) 
+    public sealed class LibraryDbContext(DbContextOptions<LibraryDbContext> options)
         : DbContext(options)
     {
         public DbSet<Author> Authors { get; set; }

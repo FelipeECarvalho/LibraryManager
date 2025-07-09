@@ -14,7 +14,7 @@
             _context = context;
         }
 
-        public async Task<Library> GetById(Guid id, CancellationToken cancellationToken = default) 
+        public async Task<Library> GetById(Guid id, CancellationToken cancellationToken = default)
         {
             return await _context.Libraries
                 .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);

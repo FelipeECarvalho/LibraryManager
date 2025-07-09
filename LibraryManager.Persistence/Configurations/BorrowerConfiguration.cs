@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
     using LibraryManager.Core.Entities;
-    using LibraryManager.Core.ValueObjects;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;

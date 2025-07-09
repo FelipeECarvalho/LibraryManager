@@ -2,8 +2,8 @@
 {
     using LibraryManager.Core.Abstractions.Repositories;
     using Microsoft.Extensions.Logging;
-    using System.Threading.Tasks;
     using Quartz;
+    using System.Threading.Tasks;
 
     internal sealed class ProcessCanceledLoanStatusJob : IJob
     {
@@ -11,7 +11,7 @@
         private readonly ILogger<ProcessCanceledLoanStatusJob> _logger;
 
         public ProcessCanceledLoanStatusJob(
-            ILoanRepository loanRepository, 
+            ILoanRepository loanRepository,
             ILogger<ProcessCanceledLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
@@ -30,7 +30,7 @@
             }
             catch (Exception ex)
             {
-                 _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
             }
 
             return;

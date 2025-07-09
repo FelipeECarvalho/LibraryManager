@@ -59,7 +59,7 @@
         {
             var routeValue = User?.FindFirst("library_id")?.Value;
 
-            if (routeValue != null && 
+            if (routeValue != null &&
                 Guid.TryParse(routeValue.ToString(), out var id))
             {
                 return id;

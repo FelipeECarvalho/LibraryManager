@@ -19,7 +19,7 @@
         {
             using (_contextEnricher.PushProperty("CorrelationId", context.TraceIdentifier))
             {
-                return _next(context); 
+                return _next(context);
             }
         }
     }
