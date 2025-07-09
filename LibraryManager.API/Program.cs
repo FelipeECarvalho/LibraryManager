@@ -4,12 +4,14 @@ namespace LibraryManager.API
     using LibraryManager.Application;
     using LibraryManager.Infrastructure;
     using LibraryManager.Persistence;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Hybrid;
+    using Microsoft.Extensions.Hosting;
     using Serilog;
 
-    internal static class Program
+    internal class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +45,10 @@ namespace LibraryManager.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            using var scope = app.Services.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<LibraryDbContext>();
+            await db.Database.MigrateAsync();
 
             app.UseHttpsRedirection();
 
