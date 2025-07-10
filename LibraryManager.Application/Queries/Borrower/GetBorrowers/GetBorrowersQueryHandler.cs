@@ -19,7 +19,11 @@
 
         public async Task<Result<IList<BorrowerResponse>>> Handle(GetBorrowersQuery request, CancellationToken cancellationToken)
         {
-            var borrowers = await _borrowerRepository.GetAllAsync(request.LibraryId, request.pageSize, request.pageNumber, cancellationToken);
+            var borrowers = await _borrowerRepository.GetAllAsync(
+                request.LibraryId,
+                request.PageSize, 
+                request.PageNumber, 
+                cancellationToken);
 
             var borrowersResponse = borrowers?
                 .Select(BorrowerResponse.FromEntity)?

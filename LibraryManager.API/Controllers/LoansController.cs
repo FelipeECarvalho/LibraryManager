@@ -43,6 +43,11 @@
                 tags: [_loanCacheTag],
                 cancellationToken: cancellationToken);
 
+            if (result.IsFailure)
+            {
+                return HandleFailure(result);
+            }
+
             return Ok(result.Value);
         }
 

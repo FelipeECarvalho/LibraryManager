@@ -14,7 +14,7 @@
 
             public static Error DescriptionInvalidLength => new(
                 "Author.DescriptionInvalidLength",
-                $"The author description must be less than 256 characters long.",
+                "The author description must be less than 256 characters long.",
                 ErrorType.Validation);
         }
 
@@ -27,7 +27,7 @@
 
             public static Error NotFound => new(
                 "Library.NotFound",
-                $"The library was not found.",
+                "The library was not found.",
                 ErrorType.NotFound);
         }
 
@@ -308,27 +308,27 @@
         {
             public static Error NameRequired => new(
                 "Name.Required",
-                $"The name is required",
+                "The name is required",
                 ErrorType.Validation);
 
             public static Error FirstNameRequired => new(
                 "Name.FirstNameRequired",
-                $"The first name is required",
+                "The first name is required",
                 ErrorType.Validation);
 
             public static Error LastNameRequired => new(
                 "Name.LastNameRequired",
-                $"The last name is required",
+                "The last name is required",
                 ErrorType.Validation);
 
             public static Error FirstNameInvalidLength => new(
                 "Name.FirstNameLengthError",
-                $"The first name must be between 2 and 100 characters long",
+                "The first name must be between 2 and 100 characters long",
                 ErrorType.Validation);
 
             public static Error LastNameInvalidLength => new(
                 "Name.LastNameLengthError",
-                $"The last name must be between 2 and 100 characters long",
+                "The last name must be between 2 and 100 characters long",
                 ErrorType.Validation);
         }
 
@@ -338,12 +338,12 @@
         {
             public static Error PageNumberInvalid => new(
                 "General.PageNumberInvalid",
-                $"The page number value must be greater than zero",
+                "The page number value must be greater than zero",
                 ErrorType.Validation);
 
             public static Error PageSizeInvalid => new(
                 "General.PageSizeInvalid",
-                $"The page size value must be greater than zero",
+                "The page size value must be greater than zero",
                 ErrorType.Validation);
         }
     }

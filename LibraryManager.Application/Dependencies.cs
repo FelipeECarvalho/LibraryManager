@@ -11,7 +11,6 @@
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddValidatorsFromAssembly(typeof(Dependencies).Assembly, includeInternalTypes: true);
-            services.AddValidatorsFromAssembly(typeof(PaginableValidator).Assembly);
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>));
