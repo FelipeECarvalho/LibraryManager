@@ -4,10 +4,11 @@
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
+- Implementar retry e circuit breaker
 - Testes unitários
+- Começar a implementar o front usando blazor
 - Multas ao usuário
 	- enquanto não pagar não empresta
-- Começar a implementar o front usando blazor
 - Adicionar imagem para os livros
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
