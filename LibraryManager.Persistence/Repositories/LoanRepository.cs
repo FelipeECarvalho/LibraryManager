@@ -38,17 +38,25 @@
                 .ToListAsync(cancellationToken);
         }
 
+        public async Task<IList<Loan>> GetByStatusAsync(LoanStatus loanStatus)
+        {
+            return await _context.Loans
+                .Include(x => x.Borrower)
+                .Where(x => x.Status == loanStatus)
+                .ToListAsync();
+        }
+
         public async Task ProcessOverdueAsync()
         {
             await _context.Loans
-                .Where(x => x.Status == LoanStatus.Borrowed && x.EndDate < DateTime.UtcNow)
+                .Where(x => x.Status == LoanStatus.Borrowed && x.EndDate < DateTimeOffset.UtcNow)
                 .ExecuteUpdateAsync(x => x.SetProperty(l => l.Status, LoanStatus.Overdue));
         }
 
         public async Task ProcessCanceledAsync()
         {
             await _context.Loans
-                .Where(x => x.Status == LoanStatus.Approved && x.StartDate > DateTime.UtcNow.AddDays(7))
+                .Where(x => x.Status == LoanStatus.Approved && x.StartDate > DateTimeOffset.UtcNow.AddDays(7))
                 .ExecuteUpdateAsync(x => x.SetProperty(l => l.Status, LoanStatus.Cancelled));
         }
 

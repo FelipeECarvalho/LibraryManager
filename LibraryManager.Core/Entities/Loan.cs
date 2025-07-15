@@ -7,6 +7,9 @@
 
     public class Loan : BaseEntity
     {
+        // TODO: Add library configuration
+        private const int DaysToCancelation = 7;
+
         [Obsolete("EntityFrameworkCore constructor")]
         private Loan()
             : base()
@@ -78,6 +81,18 @@
             UpdateDate = DateTimeOffset.Now;
 
             return Result.Success();
+        }
+
+        public bool CanBeCanceled()
+        {
+            return Status == LoanStatus.Approved
+                && DateTimeOffset.UtcNow > StartDate.AddDays(DaysToCancelation);
+        }
+
+        public bool CanBeOverdue()
+        {
+            return Status == LoanStatus.Borrowed
+                && DateTimeOffset.UtcNow > EndDate;
         }
 
         private Result ValidateStatusTransition(LoanStatus newStatus)
