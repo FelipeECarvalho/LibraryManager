@@ -24,7 +24,7 @@
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Processing BackgroundJob: ProcessCanceledLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
+            _logger.LogInformation("Processing BackgroundJob: ProcessCanceledLoanStatusJob. {DateTimeUtc}", DateTimeOffset.UtcNow);
 
             try
             {
@@ -47,11 +47,11 @@
 
                 await _unitOfWork.SaveChangesAsync();
 
-                _logger.LogInformation("Completed BackgroundJob: ProcessCanceledLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogInformation("Completed BackgroundJob: ProcessCanceledLoanStatusJob. {DateTimeUtc}", DateTimeOffset.UtcNow);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {DateTimeUtc}", DateTimeOffset.UtcNow);
             }
 
             return;

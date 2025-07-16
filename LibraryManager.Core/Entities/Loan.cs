@@ -8,7 +8,10 @@
     public class Loan : BaseEntity
     {
         // TODO: Add library configuration
-        private const int DaysToCancelation = 7;
+        private const int MaxDaysAfterApprovalToCancel = 7;
+        private const int DaysBeforeDueToMarkAsNearOverdue = 1;
+        private const decimal OverdueFee = 5m;
+        private const decimal DailyOverdueFee = 1m;
 
         [Obsolete("EntityFrameworkCore constructor")]
         private Loan()
@@ -48,6 +51,8 @@
 
         public LoanStatus Status { get; private set; }
 
+        public decimal TotalOverdueFee { get; private set; }
+
         public Result Update(DateTimeOffset endDate)
         {
             if (StartDate > endDate)
@@ -63,7 +68,7 @@
                 Status = LoanStatus.Borrowed;
             }
 
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
 
             return Result.Success();
         }
@@ -78,15 +83,46 @@
             }
 
             Status = status;
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
 
             return Result.Success();
         }
 
+        public void UpdateOverdueFee()
+        {
+            if (Status != LoanStatus.Overdue)
+            {
+                return;
+            }
+
+            var overdueDays = CalculateOverdueDays();
+
+            if (overdueDays <= 0)
+            {
+                return;
+            }
+
+            TotalOverdueFee = OverdueFee + (overdueDays * DailyOverdueFee);
+        }
+
+        public int CalculateOverdueDays()
+        {
+            return Math.Max(0, (DateTimeOffset.Now.Date - EndDate.Date).Days);
+        }
+
+        /// <summary>
+        /// In case the user hasn't picked up the book.
+        /// </summary>
         public bool CanBeCanceled()
         {
             return Status == LoanStatus.Approved
-                && DateTimeOffset.UtcNow > StartDate.AddDays(DaysToCancelation);
+                && DateTimeOffset.UtcNow > StartDate.AddDays(MaxDaysAfterApprovalToCancel);
+        }
+
+        public bool IsNearOverdue()
+        {
+            return Status == LoanStatus.Borrowed
+                && (EndDate.Date - DateTimeOffset.UtcNow.Date).TotalDays <= DaysBeforeDueToMarkAsNearOverdue;
         }
 
         public bool CanBeOverdue()

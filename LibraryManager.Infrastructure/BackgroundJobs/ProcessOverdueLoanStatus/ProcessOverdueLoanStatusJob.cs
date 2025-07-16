@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
 {
     using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
     using Microsoft.Extensions.Logging;
     using Quartz;
@@ -11,20 +12,23 @@
         private readonly ILoanRepository _loanRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProcessOverdueLoanStatusJob> _logger;
+        private readonly dynamic _emailService;
 
         public ProcessOverdueLoanStatusJob(
             ILoanRepository loanRepository,
             IUnitOfWork unitOfWork,
+            dynamic emailService,
             ILogger<ProcessOverdueLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _emailService = emailService;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Processing BackgroundJob: ProcessOverdueLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
+            _logger.LogInformation("Processing BackgroundJob: ProcessOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
 
             try
             {
@@ -32,26 +36,37 @@
 
                 _logger.LogInformation("Total loans to process: {Count}", loans.Count);
 
-                foreach (var loan in loans) 
-                {
-                    if (!loan.CanBeOverdue())
-                    {
-                        continue;
-                    }
-
-                    loan.UpdateStatus(LoanStatus.Overdue);
-                }
+                await ProcessLoans(loans);
 
                 await _unitOfWork.SaveChangesAsync();
 
-                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoanStatusJob. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Completed BackgroundJob: ProcessOverdueLoanStatusJob with error. {@DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogError(ex, "Completed BackgroundJob: ProcessOverdueLoanStatusJob with error. {DateTimeUtc}", DateTime.UtcNow);
             }
+        }
 
-            return;
+        private async Task ProcessLoans(IList<Loan> loans)
+        {
+            foreach (var loan in loans)
+            {
+                if (!loan.CanBeOverdue())
+                {
+                    if (loan.IsNearOverdue())
+                    {
+                        await _emailService.SendReminderAsync(loan);
+                    }
+
+                    continue;
+                }
+
+                await _emailService.SendOverdueNotificationAsync(loan);
+
+                loan.UpdateStatus(LoanStatus.Overdue);
+                loan.UpdateOverdueFee();
+            }
         }
     }
 }
