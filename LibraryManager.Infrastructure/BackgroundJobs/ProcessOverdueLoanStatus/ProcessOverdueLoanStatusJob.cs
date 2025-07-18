@@ -3,6 +3,7 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
+    using LibraryManager.Infrastructure.Email;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -12,12 +13,12 @@
         private readonly ILoanRepository _loanRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProcessOverdueLoanStatusJob> _logger;
-        private readonly dynamic _emailService;
+        private readonly IEmailService _emailService;
 
         public ProcessOverdueLoanStatusJob(
             ILoanRepository loanRepository,
             IUnitOfWork unitOfWork,
-            dynamic emailService,
+            IEmailService emailService,
             ILogger<ProcessOverdueLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
@@ -52,20 +53,18 @@
         {
             foreach (var loan in loans)
             {
-                if (!loan.CanBeOverdue())
+                if (loan.IsNearOverdue())
                 {
-                    if (loan.IsNearOverdue())
-                    {
-                        await _emailService.SendReminderAsync(loan);
-                    }
-
-                    continue;
+                    await _emailService.SendAsync(null);
                 }
 
-                await _emailService.SendOverdueNotificationAsync(loan);
+                if (loan.CanBeOverdue())
+                {
+                    loan.UpdateStatus(LoanStatus.Overdue);
+                    loan.UpdateOverdueFee();
 
-                loan.UpdateStatus(LoanStatus.Overdue);
-                loan.UpdateOverdueFee();
+                    await _emailService.SendAsync(null);
+                }
             }
         }
     }

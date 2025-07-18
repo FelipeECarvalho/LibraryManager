@@ -22,6 +22,10 @@
 
             services.AddAuth(configuration);
 
+            services
+                .AddFluentEmail(configuration["Email:SenderEmail"], configuration["Email:Sender"])
+                .AddSmtpSender(configuration["Email:Host"], configuration.GetValue<int>("Email:Port"));
+
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
             services.AddScoped<ITokenProvider, TokenProvider>();

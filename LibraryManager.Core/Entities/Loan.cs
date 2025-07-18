@@ -51,7 +51,7 @@
 
         public LoanStatus Status { get; private set; }
 
-        public decimal TotalOverdueFee { get; private set; }
+        public decimal? TotalOverdueFee { get; private set; }
 
         public Result Update(DateTimeOffset endDate)
         {

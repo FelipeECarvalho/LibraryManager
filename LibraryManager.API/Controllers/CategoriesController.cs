@@ -42,6 +42,11 @@
                 tags: [_categoriesCacheTag],
                 cancellationToken: cancellationToken);
 
+            if (result.IsFailure)
+            {
+                return HandleFailure(result);
+            }
+
             var categories = result.Value;
             return Ok(categories);
         }

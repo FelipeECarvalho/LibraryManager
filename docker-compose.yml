@@ -1,5 +1,3 @@
-version: '3.4'
-
 services:
   librarymanager.database:
     image: "mcr.microsoft.com/mssql/server:2025-latest"
@@ -29,6 +27,13 @@ services:
     restart: on-failure
     networks:
       - librarymanager.network
+
+  librarymanager.papercut:
+     image: changemakerstudiosus/papercut-smtp:latest
+     container_name: librarymanager.Papercut
+     ports:
+       - 8080:80
+       - 25:25 
 
 networks:
   librarymanager.network:

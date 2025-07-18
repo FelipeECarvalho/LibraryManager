@@ -18,6 +18,7 @@
             builder.Property(x => x.EndDate).IsRequired();
             builder.Property(x => x.Status).IsRequired();
             builder.Property(x => x.Observation).HasMaxLength(256).IsRequired(false);
+            builder.Property(x => x.TotalOverdueFee).HasPrecision(10, 2).IsRequired(false);
 
             builder.HasOne(x => x.Borrower)
                 .WithMany(x => x.Loans)

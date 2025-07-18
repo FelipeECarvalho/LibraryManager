@@ -1,5 +1,6 @@
 namespace LibraryManager.API
 {
+    using LibraryManager.API.Exceptions;
     using LibraryManager.API.Middleware;
     using LibraryManager.Application;
     using LibraryManager.Infrastructure;
@@ -14,6 +15,17 @@ namespace LibraryManager.API
         public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddProblemDetails(config =>
+            {
+                config.CustomizeProblemDetails = context =>
+                {
+                    context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+                };
+            });
+
+            builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
+            builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
             builder.Host.UseSerilog((context, loggerConfig) =>
                 loggerConfig.ReadFrom.Configuration(context.Configuration));
@@ -39,7 +51,6 @@ namespace LibraryManager.API
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -62,7 +73,7 @@ namespace LibraryManager.API
 
             app.MapControllers();
 
-            app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseExceptionHandler();
 
             app.Run();
         }

@@ -44,6 +44,11 @@
                 tags: [_borrowersCacheTag],
                 cancellationToken: cancellationToken);
 
+            if (result.IsFailure)
+            {
+                return HandleFailure(result);
+            }
+
             return Ok(result.Value);
         }
 
