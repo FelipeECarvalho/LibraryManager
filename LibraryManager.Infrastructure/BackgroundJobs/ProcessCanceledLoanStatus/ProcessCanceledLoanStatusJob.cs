@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus
 {
     using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
+    using LibraryManager.Infrastructure.Email;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -10,15 +12,18 @@
     {
         private readonly ILoanRepository _loanRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
         private readonly ILogger<ProcessCanceledLoanStatusJob> _logger;
 
         public ProcessCanceledLoanStatusJob(
             ILoanRepository loanRepository,
             IUnitOfWork unitOfWork,
+            IEmailService emailService,
             ILogger<ProcessCanceledLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
             _logger = logger;
         }
 
@@ -33,17 +38,7 @@
 
                 _logger.LogInformation("Total loans to process: {Count}", loans.Count);
 
-                foreach (var loan in loans) 
-                {
-                    if (!loan.CanBeCanceled())
-                    {
-                        continue;
-                    }
-
-                    loan.UpdateStatus(LoanStatus.Cancelled);
-
-                    // TODO: Send an email to the borrower and to the library
-                }
+                await ProcessLoans(loans);
 
                 await _unitOfWork.SaveChangesAsync();
 
@@ -53,8 +48,19 @@
             {
                 _logger.LogError(ex, "Completed BackgroundJob: ProcessCanceledLoanStatusJob with error. {DateTimeUtc}", DateTimeOffset.UtcNow);
             }
+        }
 
-            return;
+        private async Task ProcessLoans(IList<Loan> loans)
+        {
+            foreach (var loan in loans)
+            {
+                if (loan.CanBeCanceled())
+                {
+                    loan.UpdateStatus(LoanStatus.Cancelled);
+
+                    await _emailService.SendAsync(null);
+                }
+            }
         }
     }
 }

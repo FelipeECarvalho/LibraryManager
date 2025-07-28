@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
 {
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus;
     using Microsoft.Extensions.Options;
     using Quartz;
 

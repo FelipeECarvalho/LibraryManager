@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus
 {
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
@@ -11,13 +11,13 @@
     internal sealed class ProcessNearOverdueLoanStatusJob : IJob
     {
         private readonly ILoanRepository _loanRepository;
-        private readonly ILogger<ProcessOverdueLoanStatusJob> _logger;
+        private readonly ILogger<ProcessNearOverdueLoanStatusJob> _logger;
         private readonly IEmailService _emailService;
 
         public ProcessNearOverdueLoanStatusJob(
             ILoanRepository loanRepository,
             IEmailService emailService,
-            ILogger<ProcessOverdueLoanStatusJob> logger)
+            ILogger<ProcessNearOverdueLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
             _logger = logger;
