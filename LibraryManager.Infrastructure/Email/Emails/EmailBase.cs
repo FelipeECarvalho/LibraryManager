@@ -1,15 +1,15 @@
 ﻿namespace LibraryManager.Infrastructure.Email.Emails
 {
-    public abstract class EmailBase
+    public interface IEmailBase
     {
-        public string To { get; private set; }
+        string Subject { get; }
 
-        public string Subject { get; private set; }
+        string Body { get; }
 
-        public string Body { get; private set; }
+        string Cc { get; }
 
-        public string Cc { get; private set; }
+        string Bcc { get; }
 
-        public string Bcc { get; private set; }
+        string To { get; }
     }
 }

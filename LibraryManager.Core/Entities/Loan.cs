@@ -122,7 +122,8 @@
         public bool IsNearOverdue()
         {
             return Status == LoanStatus.Borrowed
-                && (EndDate.Date - DateTimeOffset.UtcNow.Date).TotalDays <= DaysBeforeDueToMarkAsNearOverdue;
+                && (EndDate.Date - DateTimeOffset.UtcNow.Date).TotalDays <= DaysBeforeDueToMarkAsNearOverdue
+                && !(DateTimeOffset.UtcNow > EndDate);
         }
 
         public bool CanBeOverdue()

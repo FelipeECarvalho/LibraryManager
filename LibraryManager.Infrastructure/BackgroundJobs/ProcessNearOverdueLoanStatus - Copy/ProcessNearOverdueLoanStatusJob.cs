@@ -8,44 +8,40 @@
     using Quartz;
     using System.Threading.Tasks;
 
-    internal sealed class ProcessOverdueLoanStatusJob : IJob
+    internal sealed class ProcessNearOverdueLoanStatusJob : IJob
     {
         private readonly ILoanRepository _loanRepository;
-        private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger<ProcessOverdueLoanStatusJob> _logger;
         private readonly IEmailService _emailService;
 
-        public ProcessOverdueLoanStatusJob(
+        public ProcessNearOverdueLoanStatusJob(
             ILoanRepository loanRepository,
-            IUnitOfWork unitOfWork,
             IEmailService emailService,
             ILogger<ProcessOverdueLoanStatusJob> logger)
         {
             _loanRepository = loanRepository;
-            _unitOfWork = unitOfWork;
             _logger = logger;
             _emailService = emailService;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Processing BackgroundJob: ProcessOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
+            _logger.LogInformation("Processing BackgroundJob: ProcessNearOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
 
             try
             {
-                var loans = await _loanRepository.GetByStatusAsync(LoanStatus.Borrowed);
+                var loans = await _loanRepository
+                    .GetByStatusAsync(LoanStatus.Borrowed);
 
                 _logger.LogInformation("Total loans to process: {Count}", loans.Count);
 
                 await ProcessLoans(loans);
 
-                await _unitOfWork.SaveChangesAsync();
-
-                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogInformation("Completed BackgroundJob: ProcessNearOverdueLoanStatusJob. {DateTimeUtc}", DateTime.UtcNow);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Completed BackgroundJob: ProcessOverdueLoanStatusJob with error. {DateTimeUtc}", DateTime.UtcNow);
+                _logger.LogError(ex, "Completed BackgroundJob: ProcessNearOverdueLoanStatusJob with error. {DateTimeUtc}", DateTime.UtcNow);
             }
         }
 
@@ -53,11 +49,8 @@
         {
             foreach (var loan in loans)
             {
-                if (loan.CanBeOverdue())
+                if (loan.IsNearOverdue())
                 {
-                    loan.UpdateStatus(LoanStatus.Overdue);
-                    loan.UpdateOverdueFee();
-
                     await _emailService.SendAsync(null);
                 }
             }
