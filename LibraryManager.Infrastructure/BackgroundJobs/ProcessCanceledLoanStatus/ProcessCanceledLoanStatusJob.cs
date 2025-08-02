@@ -4,6 +4,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
     using LibraryManager.Infrastructure.Email;
+    using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -58,7 +59,8 @@
                 {
                     loan.UpdateStatus(LoanStatus.Cancelled);
 
-                    await _emailService.SendAsync(null);
+                    var email = new LoanCanceledEmail(loan);
+                    await _emailService.SendAsync(email);
                 }
             }
         }

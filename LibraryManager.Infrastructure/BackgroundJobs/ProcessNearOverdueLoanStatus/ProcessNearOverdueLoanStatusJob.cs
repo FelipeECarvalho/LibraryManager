@@ -4,6 +4,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
     using LibraryManager.Infrastructure.Email;
+    using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -51,7 +52,8 @@
             {
                 if (loan.IsNearOverdue())
                 {
-                    await _emailService.SendAsync(null);
+                    var email = new LoanNearOverdueEmail(loan);
+                    await _emailService.SendAsync(email);
                 }
             }
         }

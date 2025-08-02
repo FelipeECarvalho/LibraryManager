@@ -4,6 +4,7 @@
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
     using LibraryManager.Infrastructure.Email;
+    using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -53,13 +54,16 @@
         {
             foreach (var loan in loans)
             {
-                if (loan.CanBeOverdue())
+                if (!loan.CanBeOverdue())
                 {
-                    loan.UpdateStatus(LoanStatus.Overdue);
-                    loan.UpdateOverdueFee();
-
-                    await _emailService.SendAsync(null);
+                    continue;
                 }
+
+                loan.UpdateStatus(LoanStatus.Overdue);
+                loan.UpdateOverdueFee();
+
+                var email = new LoanOverdueEmail(loan);
+                await _emailService.SendAsync(email);
             }
         }
     }

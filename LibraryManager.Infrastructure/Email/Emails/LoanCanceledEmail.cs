@@ -2,11 +2,11 @@
 {
     using LibraryManager.Core.Entities;
 
-    public sealed class LoanNearOverdueEmail : EmailBase
+    public sealed class LoanCanceledEmail : EmailBase
     {
         private readonly Loan _data;
 
-        public LoanNearOverdueEmail(Loan data)
+        public LoanCanceledEmail(Loan data)
             : base(data?.Borrower?.Email)
         {
             ArgumentNullException.ThrowIfNull(data);
@@ -16,16 +16,14 @@
             _data = data;
         }
 
-        public override string Subject => $"Attention: Your loan for the book '{_data.Book.Title}' is about to expire!";
+        public override string Subject => $"Notice: Your loan for the book '{_data.Book.Title}' has been canceled";
 
         public override string Body => $@"
             Hello, {_data.Borrower.Name.FullName},
 
-            This is a reminder that your loan for the book ""{_data.Book.Title}"" will expire soon.
-    
-            The return date is: {_data.EndDate:dd/MM/yyyy}.
+            We are informing you that your loan for the book ""{_data.Book.Title}"", which was due on {_data.EndDate:dd/MM/yyyy}, has been canceled because the book was not picked up within the expected timeframe.
 
-            Please return it on time to avoid late fees.
+            If this was a mistake or you have any questions, please contact our support team.
 
             Sincerely,  
             LibraryManager";
