@@ -4,6 +4,7 @@
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus;
+    using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,6 +31,9 @@
             services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
             services.AddScoped<ITokenProvider, TokenProvider>();
 
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailSender, SmtpEmailSender>();
+
             services.AddQuartz();
             services.AddQuartzHostedService(options =>
             {
@@ -37,6 +41,7 @@
             });
 
             services.ConfigureOptions<ProcessOverdueLoanStatusJobSetup>();
+            services.ConfigureOptions<ProcessNearOverdueLoanStatusJobSetup>();
             services.ConfigureOptions<ProcessCanceledLoanStatusJobSetup>();
 
             return services;

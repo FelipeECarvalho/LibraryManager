@@ -42,6 +42,7 @@
         {
             return await _context.Loans
                 .Include(x => x.Borrower)
+                .Include(x => x.Book)
                 .Where(x => x.Status == loanStatus)
                 .ToListAsync();
         }

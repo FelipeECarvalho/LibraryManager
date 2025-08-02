@@ -5,10 +5,9 @@
 	- Quando o empréstimo estiver atrasado
 	- etc.
 - Implementar retry e circuit breaker
+- Implementar melhorias no UnitOfWork
 - Testes unitários
 - Começar a implementar o front usando blazor
-- Multas ao usuário
-	- enquanto não pagar não empresta
 - Adicionar imagem para os livros
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
@@ -18,4 +17,3 @@
 		- Modelo gratuito - Até 20 livros. Model pago - Até 100. Seí lá, pensar melhor
 	- Mensalidade dos usuários para ter a carteirinha da biblioteca, compra e aluguel de livros.
 		- Uma parte pra biblioteca, uma parte pra gente.
-- Implementar melhorias no UnitOfWork

@@ -19,10 +19,10 @@
                 .NotEmpty().WithMessage(DomainErrors.Loan.BookIdRequired);
 
             RuleFor(x => x.StartDate)
-                .LessThanOrEqualTo(x => x.EndDate).WithMessage(DomainErrors.Loan.BookIdRequired);
+                .LessThanOrEqualTo(x => x.EndDate).WithMessage(DomainErrors.Loan.InvalidStartDate);
 
             RuleFor(x => x.StartDate)
-                .GreaterThanOrEqualTo(DateTimeOffset.UtcNow).WithMessage(DomainErrors.Loan.BookIdRequired);
+                .GreaterThanOrEqualTo(DateTimeOffset.UtcNow).WithMessage(DomainErrors.Loan.StartDateInPast);
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Queries.Book;
+    using System.Text.Json.Serialization;
 
     public sealed record CreateBookCommand(
         string Title,
@@ -11,6 +12,7 @@
         string Isbn,
         Guid AuthorId) : ICommand<BookResponse>
     {
+        [JsonIgnore]
         public Guid LibraryId { get; set; }
     }
 }

@@ -30,10 +30,12 @@ services:
 
   librarymanager.papercut:
      image: changemakerstudiosus/papercut-smtp:latest
-     container_name: librarymanager.Papercut
+     container_name: librarymanager.papercut
      ports:
        - 8080:80
        - 25:25 
+     networks:
+       - librarymanager.network
 
 networks:
   librarymanager.network:
