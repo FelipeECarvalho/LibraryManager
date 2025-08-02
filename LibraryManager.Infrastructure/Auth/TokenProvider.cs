@@ -3,7 +3,6 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Infrastructure;
     using Microsoft.Extensions.Options;
     using Microsoft.IdentityModel.JsonWebTokens;
     using Microsoft.IdentityModel.Tokens;

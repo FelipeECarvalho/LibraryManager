@@ -4,6 +4,7 @@
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
+- Ajustar o backgroundjob de email para não enviar email repetidamente
 - Implementar retry e circuit breaker
 - Implementar melhorias no UnitOfWork
 - Testes unitários

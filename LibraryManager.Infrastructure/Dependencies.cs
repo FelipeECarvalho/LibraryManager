@@ -3,6 +3,7 @@
     using LibraryManager.Core.Abstractions;
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus;
     using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
@@ -18,14 +19,8 @@
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.Configure<JwtInfoOptions>(
-                configuration.GetSection("JwtInfo"));
-
             services.AddAuth(configuration);
-
-            services
-                .AddFluentEmail(configuration["Email:SenderEmail"], configuration["Email:Sender"])
-                .AddSmtpSender(configuration["Email:Host"], configuration.GetValue<int>("Email:Port"));
+            services.AddEmail(configuration);
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
@@ -47,28 +42,45 @@
             return services;
         }
 
-        private static IServiceCollection AddAuth(this IServiceCollection services, IConfiguration configuration)
+        private static void AddEmail(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.Configure<EmailOptions>(
+                configuration.GetSection("Email"));
+
+            var emailOptions = configuration
+                .GetSection("Email").Get<EmailOptions>();
+
+            services
+                .AddFluentEmail(emailOptions.SenderEmail, emailOptions.Sender)
+                .AddSmtpSender(emailOptions.Host, emailOptions.Port);
+        }
+
+        private static void AddAuth(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAuthorization();
+
+            services.Configure<JwtInfoOptions>(
+                configuration.GetSection("JwtInfo"));
 
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>
                 {
+                    var JwtOptions = configuration
+                        .GetSection("JwtInfo").Get<JwtInfoOptions>();
+
                     o.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = configuration["JwtInfo:Issuer"],
-                        ValidAudience = configuration["JwtInfo:Audience"],
+                        ValidIssuer = JwtOptions.Issuer,
+                        ValidAudience = JwtOptions.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                            configuration["JwtInfo:Secret"]))
+                            JwtOptions.Secret))
                     };
                 });
-
-            return services;
         }
     }
 }
