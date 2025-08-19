@@ -1,9 +1,9 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
 {
+    using LibraryManager.Core.Abstractions;
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
-    using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using Quartz;

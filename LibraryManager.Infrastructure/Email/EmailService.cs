@@ -1,5 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
+    using LibraryManager.Core.Abstractions;
+
     internal sealed class EmailService : IEmailService
     {
         private readonly IEmailSender _emailSender;

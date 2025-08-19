@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
     using FluentEmail.Core;
+    using LibraryManager.Core.Abstractions;
     using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
