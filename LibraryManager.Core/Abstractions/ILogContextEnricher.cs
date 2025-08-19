@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.Logging
+﻿namespace LibraryManager.Core.Abstractions
 {
     public interface ILogContextEnricher
     {

@@ -3,7 +3,7 @@
     using FluentValidation;
     using LibraryManager.Application.Validators;
 
-    internal sealed class GetAuthorsQueryValidator 
+    internal sealed class GetAuthorsQueryValidator
         : AbstractValidator<GetAuthorsQuery>
     {
         public GetAuthorsQueryValidator()

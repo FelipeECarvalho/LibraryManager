@@ -4,8 +4,8 @@
 
     public interface IEmailService
     {
-        Task SendAsync(EmailBase email);
+        Task SendAsync(string to, string subject, string body, string cc = null, string bcc = null);
 
-        Task EnqueueAsync(EmailBase email);
+        Task EnqueueAsync(string to, string subject, string body, string cc = null, string bcc = null);
     }
 }

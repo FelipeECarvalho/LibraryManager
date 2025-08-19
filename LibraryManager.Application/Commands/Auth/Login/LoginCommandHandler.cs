@@ -5,7 +5,6 @@
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
-    using LibraryManager.Infrastructure.Auth;
     using System.Threading;
     using System.Threading.Tasks;
 

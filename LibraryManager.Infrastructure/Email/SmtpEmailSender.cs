@@ -1,7 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
     using FluentEmail.Core;
-    using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
@@ -12,31 +11,31 @@
 
         public SmtpEmailSender(
             IFluentEmail fluentEmail,
-            ILogger<SmtpEmailSender> logger) 
+            ILogger<SmtpEmailSender> logger)
         {
             _fluentEmail = fluentEmail;
             _logger = logger;
         }
 
-        public async Task SendAsync(EmailBase email)
+        public async Task SendAsync(string to, string subject, string body, string cc = null, string bcc = null)
         {
-            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", email.To, email.Subject);
+            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", to, subject);
 
             try
             {
                 var emailData = _fluentEmail
-                    .To(email.To)
-                    .Body(email.Body)
-                    .Subject(email.Subject);
+                    .To(to)
+                    .Body(body)
+                    .Subject(subject);
 
-                if (!string.IsNullOrEmpty(email.Cc))
+                if (!string.IsNullOrEmpty(cc))
                 {
-                    emailData.CC(email.Cc);
+                    emailData.CC(cc);
                 }
 
-                if (!string.IsNullOrEmpty(email.Bcc))
+                if (!string.IsNullOrEmpty(bcc))
                 {
-                    emailData.BCC(email.Bcc);
+                    emailData.BCC(bcc);
                 }
 
                 await emailData.SendAsync();

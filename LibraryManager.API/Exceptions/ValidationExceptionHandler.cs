@@ -8,14 +8,14 @@
     using System.Threading;
     using System.Threading.Tasks;
 
-    internal sealed class ValidationExceptionHandler (
+    internal sealed class ValidationExceptionHandler(
         IProblemDetailsService problemDetailsService,
         ILogger<ValidationExceptionHandler> logger)
         : IExceptionHandler
     {
         public async ValueTask<bool> TryHandleAsync(
             HttpContext httpContext,
-            Exception exception, 
+            Exception exception,
             CancellationToken cancellationToken)
         {
             if (exception is not ValidationException validationException)

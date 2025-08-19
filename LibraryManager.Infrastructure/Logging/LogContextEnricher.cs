@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Logging
 {
+    using LibraryManager.Core.Abstractions;
     using Serilog.Context;
 
     internal sealed class LogContextEnricher : ILogContextEnricher

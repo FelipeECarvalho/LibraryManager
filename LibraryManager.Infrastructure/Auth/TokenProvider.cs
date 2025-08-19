@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Auth
 {
+    using LibraryManager.Core.Abstractions;
     using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;

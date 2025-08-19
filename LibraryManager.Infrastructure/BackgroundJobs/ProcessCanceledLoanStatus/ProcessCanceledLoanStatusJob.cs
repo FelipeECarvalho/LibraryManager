@@ -53,16 +53,30 @@
 
         private async Task ProcessLoans(IList<Loan> loans)
         {
-            foreach (var loan in loans)
+            var canceledLoans = loans
+                .Where(x => x.CanBeCanceled());
+
+            var processingTasks = canceledLoans.Select(async loan => 
             {
-                if (loan.CanBeCanceled())
+                try
                 {
                     loan.UpdateStatus(LoanStatus.Cancelled);
 
-                    var email = new LoanCanceledEmail(loan);
-                    await _emailService.SendAsync(email);
+                    await SendNotificationAsync(loan);
                 }
-            }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error when processing the loan {LoanId}", loan.Id);
+                }
+            });
+
+            await Task.WhenAll(processingTasks);
+        }
+
+        private async Task SendNotificationAsync(Loan loan)
+        {
+            var email = new LoanCanceledEmail(loan);
+            await _emailService.SendAsync(email.To, email.Subject, email.Body);
         }
     }
 }

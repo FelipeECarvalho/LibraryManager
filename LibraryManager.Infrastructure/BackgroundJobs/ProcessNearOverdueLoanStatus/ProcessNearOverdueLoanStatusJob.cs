@@ -48,14 +48,29 @@
 
         private async Task ProcessLoans(IList<Loan> loans)
         {
-            foreach (var loan in loans)
+            var nearOverdueLoans = loans
+                .Where(x => x.IsNearOverdue());
+
+            var processingTasks = nearOverdueLoans.Select(async loan =>
             {
-                if (loan.IsNearOverdue())
+                try
                 {
-                    var email = new LoanNearOverdueEmail(loan);
-                    await _emailService.SendAsync(email);
+                    await SendNotificationAsync(loan);
                 }
-            }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error when processing the loan {LoanId}", loan.Id);
+                }
+
+            });
+
+            await Task.WhenAll(processingTasks);
+        }
+
+        private async Task SendNotificationAsync(Loan loan)
+        {
+            var email = new LoanNearOverdueEmail(loan);
+            await _emailService.SendAsync(email.To, email.Subject, email.Body);
         }
     }
 }

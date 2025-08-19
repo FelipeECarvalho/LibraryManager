@@ -4,7 +4,7 @@
     using LibraryManager.Application.Queries;
     using LibraryManager.Core.Errors;
 
-    internal sealed class PaginableValidator 
+    internal sealed class PaginableValidator
         : AbstractValidator<Paginable>
     {
         public PaginableValidator()

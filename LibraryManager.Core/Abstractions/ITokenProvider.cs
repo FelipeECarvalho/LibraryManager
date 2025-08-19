@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.Auth
+﻿namespace LibraryManager.Core.Abstractions
 {
     using LibraryManager.Core.Entities;
 

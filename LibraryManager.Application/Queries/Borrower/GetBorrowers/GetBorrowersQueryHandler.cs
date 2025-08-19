@@ -21,8 +21,8 @@
         {
             var borrowers = await _borrowerRepository.GetAllAsync(
                 request.LibraryId,
-                request.PageSize, 
-                request.PageNumber, 
+                request.PageSize,
+                request.PageNumber,
                 cancellationToken);
 
             var borrowersResponse = borrowers?

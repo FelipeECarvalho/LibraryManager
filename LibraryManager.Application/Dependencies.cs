@@ -2,7 +2,6 @@
 {
     using FluentValidation;
     using LibraryManager.Application.Behaviors;
-    using LibraryManager.Application.Validators;
     using MediatR;
     using Microsoft.Extensions.DependencyInjection;
 

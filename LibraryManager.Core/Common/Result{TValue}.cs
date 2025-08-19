@@ -1,6 +1,5 @@
 ﻿namespace LibraryManager.Core.Common
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Text.Json.Serialization;
 
     public class Result<TValue> : Result
