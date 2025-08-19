@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Constants
 {
     using LibraryManager.Core.Entities;
+    using LibraryManager.Infrastructure.Email.Emails;
 
     internal static class TableNames
     {
@@ -23,5 +24,7 @@
         internal const string UserRoles = nameof(UserRole);
 
         internal const string BookCategories = nameof(BookCategory);
+
+        internal const string QueuedEmails = nameof(QueuedEmail);
     }
 }

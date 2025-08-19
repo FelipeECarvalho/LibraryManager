@@ -22,9 +22,6 @@
             string bcc = null)
             : base(to, cc, bcc)
         {
-            To = to;
-            Cc = cc;
-            Bcc = bcc;
             Body = body;
             IsSent = false;
             RetryCount = 0;
