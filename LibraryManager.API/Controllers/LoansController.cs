@@ -21,7 +21,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        private readonly string _loanCacheTag = "loans";
+        private string LoanCacheTag => $"loans:{LibraryId}";
 
         /// <summary>
         /// Retrieves all loans.
@@ -40,7 +40,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_loanCacheTag],
+                tags: [LoanCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -71,7 +71,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_loanCacheTag],
+                tags: [LoanCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -105,7 +105,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(LoanCacheTag, cancellationToken);
 
             var loan = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = loan.Id }, loan);
@@ -136,7 +136,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(LoanCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -166,7 +166,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_loanCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(LoanCacheTag, cancellationToken);
 
             return NoContent();
         }

@@ -20,7 +20,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        private readonly string _categoriesCacheTag = "categories";
+        private string CategoriesCacheTag => $"categories:{LibraryId}";
 
         /// <summary>
         /// Retrieves all categories.
@@ -39,7 +39,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_categoriesCacheTag],
+                tags: [CategoriesCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -71,7 +71,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_categoriesCacheTag],
+                tags: [CategoriesCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -106,7 +106,7 @@
             }
 
 
-            await _hybridCache.RemoveByTagAsync(_categoriesCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(CategoriesCacheTag, cancellationToken);
 
             var category = response.Value;
             return Ok(category);
@@ -132,7 +132,7 @@
                 return HandleFailure(response);
             }
 
-            await _hybridCache.RemoveByTagAsync(_categoriesCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(CategoriesCacheTag, cancellationToken);
 
             return NoContent();
         }

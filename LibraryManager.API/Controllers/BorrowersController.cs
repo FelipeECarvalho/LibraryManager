@@ -22,7 +22,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        private readonly string _borrowersCacheTag = "borrowers";
+        private string BorrowersCacheTag => $"borrowers:{LibraryId}";
 
         /// <summary>
         /// Retrieves all borrowers.
@@ -41,7 +41,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_borrowersCacheTag],
+                tags: [BorrowersCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -72,7 +72,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_borrowersCacheTag],
+                tags: [BorrowersCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -106,7 +106,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BorrowersCacheTag, cancellationToken);
 
             var borrower = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = borrower.Id }, borrower);
@@ -132,7 +132,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BorrowersCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -162,7 +162,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_borrowersCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BorrowersCacheTag, cancellationToken);
 
             return NoContent();
         }

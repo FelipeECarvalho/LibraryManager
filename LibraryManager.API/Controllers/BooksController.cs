@@ -23,7 +23,7 @@
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
     {
-        private readonly string _booksCacheTag = "books";
+        private string BooksCacheTag => $"books:{LibraryId}";
 
         /// <summary>
         /// Retrieves all books.
@@ -42,7 +42,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_booksCacheTag],
+                tags: [BooksCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -73,7 +73,7 @@
             var result = await _hybridCache.GetOrCreateAsync(
                 cacheKey,
                 async _ => await _mediator.Send(query, cancellationToken),
-                tags: [_booksCacheTag],
+                tags: [BooksCacheTag],
                 cancellationToken: cancellationToken);
 
             if (result.IsFailure)
@@ -106,7 +106,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BooksCacheTag, cancellationToken);
 
             var book = result.Value;
             return CreatedAtAction(nameof(GetById), new { id = book.Id }, book);
@@ -132,7 +132,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BooksCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -163,7 +163,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BooksCacheTag, cancellationToken);
 
             return NoContent();
         }
@@ -192,7 +192,7 @@
                 return HandleFailure(result);
             }
 
-            await _hybridCache.RemoveByTagAsync(_booksCacheTag, cancellationToken);
+            await _hybridCache.RemoveByTagAsync(BooksCacheTag, cancellationToken);
 
             return NoContent();
         }
