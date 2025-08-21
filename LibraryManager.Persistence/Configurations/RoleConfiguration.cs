@@ -5,7 +5,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class RoleConfiguration : BaseEntityConfiguration<Role>
+    internal sealed class RoleConfiguration 
+        : BaseEntityConfiguration<Role>
     {
         public override void Configure(EntityTypeBuilder<Role> builder)
         {

@@ -1,8 +1,10 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Models;
 
-    internal sealed class QueuedEmailRepository : IQueuedEmailRepository
+    internal sealed class QueuedEmailRepository 
+        : IQueuedEmailRepository
     {
         private readonly LibraryDbContext _context;
 
@@ -11,9 +13,9 @@
             _context = context;
         }
 
-        public void AddAsync()
+        public void Add(QueuedEmail  queuedEmail)
         {
-            throw new NotImplementedException();
+            _context.QueuedEmails.Add(queuedEmail);
         }
     }
 }

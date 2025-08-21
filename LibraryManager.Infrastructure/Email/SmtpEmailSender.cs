@@ -2,10 +2,11 @@
 {
     using FluentEmail.Core;
     using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Notifications;
     using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
-    public sealed class SmtpEmailSender 
+    public sealed class SmtpEmailSender
         : IEmailSender
     {
         private readonly IFluentEmail _fluentEmail;
@@ -19,25 +20,25 @@
             _logger = logger;
         }
 
-        public async Task SendAsync(string to, string subject, string body, string cc = null, string bcc = null)
+        public async Task SendAsync(EmailBase email)
         {
-            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", to, subject);
+            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", email.To, email.Subject);
 
             try
             {
                 var emailData = _fluentEmail
-                    .To(to)
-                    .Body(body)
-                    .Subject(subject);
+                    .To(email.To)
+                    .Body(email.Body)
+                    .Subject(email.Subject);
 
-                if (!string.IsNullOrEmpty(cc))
+                if (!string.IsNullOrEmpty(email.Cc))
                 {
-                    emailData.CC(cc);
+                    emailData.CC(email.Cc);
                 }
 
-                if (!string.IsNullOrEmpty(bcc))
+                if (!string.IsNullOrEmpty(email.Bcc))
                 {
-                    emailData.BCC(bcc);
+                    emailData.BCC(email.Bcc);
                 }
 
                 await emailData.SendAsync();

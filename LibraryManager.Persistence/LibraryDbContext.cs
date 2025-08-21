@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.Persistence
 {
+    using LibraryManager.Application.Models;
     using LibraryManager.Core.Entities;
     using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@
         public DbSet<Library> Libraries { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<QueuedEmail> QueuedEmails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) =>
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(LibraryDbContext).Assembly);

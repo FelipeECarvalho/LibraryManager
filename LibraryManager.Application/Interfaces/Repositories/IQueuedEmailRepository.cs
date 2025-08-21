@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Application.Interfaces.Repositories
 {
+    using LibraryManager.Application.Models;
+
     public interface IQueuedEmailRepository
     {
-        void AddAsync();
+        void Add(QueuedEmail queuedEmail);
     }
 }

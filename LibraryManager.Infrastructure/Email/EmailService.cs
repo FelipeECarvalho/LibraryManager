@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
     using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Notifications;
 
     internal sealed class EmailService : IEmailService
     {
@@ -11,15 +12,15 @@
             _emailSender = emailSender;
         }
 
-        public async Task EnqueueAsync(string to, string subject, string body, string cc = null, string bcc = null)
+        public async Task EnqueueAsync(EmailBase email)
         {
             await Task.Delay(1);
             throw new NotImplementedException();
         }
 
-        public async Task SendAsync(string to, string subject, string body, string cc = null, string bcc = null)
+        public async Task SendAsync(EmailBase email)
         {
-            await _emailSender.SendAsync(to, subject, body, cc, bcc);
+            await _emailSender.SendAsync(email);
         }
     }
 }

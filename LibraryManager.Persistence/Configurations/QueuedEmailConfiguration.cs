@@ -1,19 +1,18 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
-    using LibraryManager.Infrastructure.Email.Emails;
+    using LibraryManager.Application.Models;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class QueuedEmailConfiguration : IEntityTypeConfiguration<QueuedEmail>
+    internal sealed class QueuedEmailConfiguration : BaseEntityConfiguration<QueuedEmail>
     {
-        public void Configure(EntityTypeBuilder<QueuedEmail> builder)
+        public override void Configure(EntityTypeBuilder<QueuedEmail> builder)
         {
+            base.Configure(builder);
+
             builder.ToTable(TableNames.QueuedEmails);
 
-            builder.HasKey(a => a.Id);
-
-            builder.Property(a => a.Id).IsRequired().ValueGeneratedNever();
             builder.Property(x => x.QueuedAt).IsRequired();
             builder.Property(x => x.RetryCount).HasDefaultValue(0);
             builder.Property(x => x.LastError).HasMaxLength(2048);

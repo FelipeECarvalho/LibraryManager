@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.Email.Emails
+﻿namespace LibraryManager.Application.Notifications
 {
     using LibraryManager.Core.Entities;
 

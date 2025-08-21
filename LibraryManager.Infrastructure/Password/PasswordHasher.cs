@@ -3,7 +3,7 @@
     using LibraryManager.Application.Interfaces;
     using System.Security.Cryptography;
 
-    public sealed class PasswordHasher 
+    public sealed class PasswordHasher
         : IPasswordHasher
     {
         private const int SaltSize = 16;

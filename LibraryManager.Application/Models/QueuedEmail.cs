@@ -1,12 +1,23 @@
-﻿namespace LibraryManager.Infrastructure.Email.Emails
+﻿namespace LibraryManager.Application.Models
 {
-    public class QueuedEmail : EmailBase
-    {
-        public Guid Id { get; private set; }
+    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Core.Entities;
 
+    public sealed class QueuedEmail : BaseEntity, IEmail
+    {
         public DateTimeOffset QueuedAt { get; private set; }
 
         public DateTimeOffset? SentAt { get; private set; }
+
+        public string To { get; }
+
+        public string Subject { get; }
+
+        public string Body { get; }
+
+        public string Cc { get; }
+
+        public string Bcc { get; }
 
         public bool IsSent { get; private set; }
 
@@ -20,13 +31,14 @@
             string body,
             string cc = null,
             string bcc = null)
-            : base(to, cc, bcc)
         {
+            To = to;
+            Cc = cc;
+            Bcc = bcc;
             Body = body;
             IsSent = false;
             RetryCount = 0;
             Subject = subject;
-            Id = Guid.NewGuid();
             QueuedAt = DateTimeOffset.UtcNow;
         }
 

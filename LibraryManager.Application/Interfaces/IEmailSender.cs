@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Application.Interfaces
 {
+    using LibraryManager.Application.Notifications;
+
     public interface IEmailSender
     {
-        Task SendAsync(string to, string subject, string body, string cc = null, string bcc = null);
+        Task SendAsync(EmailBase email);
     }
 }

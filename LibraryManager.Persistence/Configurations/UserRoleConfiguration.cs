@@ -5,7 +5,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
+    internal sealed class UserRoleConfiguration 
+        : IEntityTypeConfiguration<UserRole>
     {
         public void Configure(EntityTypeBuilder<UserRole> builder)
         {

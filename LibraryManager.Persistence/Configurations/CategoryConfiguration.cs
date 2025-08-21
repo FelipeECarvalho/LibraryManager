@@ -5,7 +5,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class CategoryConfiguration : BaseEntityConfiguration<Category>
+    internal sealed class CategoryConfiguration 
+        : BaseEntityConfiguration<Category>
     {
         public override void Configure(EntityTypeBuilder<Category> builder)
         {

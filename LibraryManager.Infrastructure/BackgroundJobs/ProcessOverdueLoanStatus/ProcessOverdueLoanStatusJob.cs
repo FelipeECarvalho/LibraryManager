@@ -2,9 +2,9 @@
 {
     using LibraryManager.Application.Interfaces;
     using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Notifications;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
-    using LibraryManager.Infrastructure.Email.Emails;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
@@ -76,7 +76,7 @@
         private async Task SendNotificationAsync(Loan loan)
         {
             var email = new LoanOverdueEmail(loan);
-            await _emailService.SendAsync(email.To, email.Subject, email.Body);
+            await _emailService.SendAsync(email);
         }
     }
 }

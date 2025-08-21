@@ -5,7 +5,8 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class BorrowerConfiguration : BaseEntityConfiguration<Borrower>
+    internal sealed class BorrowerConfiguration 
+        : BaseEntityConfiguration<Borrower>
     {
         public override void Configure(EntityTypeBuilder<Borrower> builder)
         {

@@ -3,7 +3,7 @@
     using LibraryManager.Application.Interfaces;
     using Serilog.Context;
 
-    internal sealed class LogContextEnricher 
+    internal sealed class LogContextEnricher
         : ILogContextEnricher
     {
         public IDisposable PushProperty(string propertyName, object value, bool destructureObjects = false)

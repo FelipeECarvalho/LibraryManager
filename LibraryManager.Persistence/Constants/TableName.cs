@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Constants
 {
+    using LibraryManager.Application.Models;
     using LibraryManager.Core.Entities;
-    using LibraryManager.Infrastructure.Email.Emails;
 
     internal static class TableNames
     {
