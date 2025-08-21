@@ -1,18 +1,18 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoans
 {
     using LibraryManager.Application.UseCases;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
 
-    internal sealed class ProcessOverdueLoanStatusJob : IJob
+    internal sealed class ProcessOverdueLoansJob : IJob
     {
         private readonly OverdueLoansUseCase _overdueLoansUseCase;
-        private readonly ILogger<ProcessOverdueLoanStatusJob> _logger;
+        private readonly ILogger<ProcessOverdueLoansJob> _logger;
 
-        public ProcessOverdueLoanStatusJob(
+        public ProcessOverdueLoansJob(
             OverdueLoansUseCase overdueLoansUseCase,
-            ILogger<ProcessOverdueLoanStatusJob> logger)
+            ILogger<ProcessOverdueLoansJob> logger)
         {
             _overdueLoansUseCase = overdueLoansUseCase;
             _logger = logger;
@@ -20,17 +20,17 @@
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Starting BackgroundJob: ProcessOverdueLoanStatusJob...");
+            _logger.LogInformation("Starting BackgroundJob: ProcessOverdueLoansJob...");
 
             try
             {
                 await _overdueLoansUseCase.ExecuteAsync();
 
-                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoanStatusJob.");
+                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoansJob.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "BackgroundJob ProcessOverdueLoanStatusJob failed.");
+                _logger.LogError(ex, "BackgroundJob ProcessOverdueLoansJob failed.");
             }
         }
     }

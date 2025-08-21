@@ -3,9 +3,9 @@
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Infrastructure.Auth;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessCancelLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoans;
     using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;
@@ -36,9 +36,9 @@
                 options.WaitForJobsToComplete = true;
             });
 
-            services.ConfigureOptions<ProcessOverdueLoanStatusJobSetup>();
-            services.ConfigureOptions<ProcessNearOverdueLoanStatusJobSetup>();
-            services.ConfigureOptions<ProcessCanceledLoanStatusJobSetup>();
+            services.ConfigureOptions<ProcessOverdueLoansJobSetup>();
+            services.ConfigureOptions<ProcessNearOverdueLoansJobSetup>();
+            services.ConfigureOptions<ProcessCancelLoansJobSetup>();
 
             return services;
         }

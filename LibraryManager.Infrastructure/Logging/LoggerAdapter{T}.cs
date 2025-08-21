@@ -5,7 +5,7 @@
     using Microsoft.Extensions.Logging;
     using System;
 
-    internal sealed class LoggerAdapter<T> 
+    internal sealed class LoggerAdapter<T>
         : IAppLogger<T>
     {
         private readonly ILogger<T> _logger;

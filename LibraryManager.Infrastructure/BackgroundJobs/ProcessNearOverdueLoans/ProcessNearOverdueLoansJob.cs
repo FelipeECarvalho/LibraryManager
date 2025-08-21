@@ -1,18 +1,18 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoans
 {
     using LibraryManager.Application.UseCases;
     using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
 
-    internal sealed class ProcessNearOverdueLoanStatusJob : IJob
+    internal sealed class ProcessNearOverdueLoansJob : IJob
     {
         private readonly NotifyNearOverdueLoansUseCase _notifyNearOverdueLoansUseCase;
-        private readonly ILogger<ProcessNearOverdueLoanStatusJob> _logger;
+        private readonly ILogger<ProcessNearOverdueLoansJob> _logger;
 
-        public ProcessNearOverdueLoanStatusJob(
+        public ProcessNearOverdueLoansJob(
             NotifyNearOverdueLoansUseCase notifyNearOverdueLoansUseCase,
-            ILogger<ProcessNearOverdueLoanStatusJob> logger)
+            ILogger<ProcessNearOverdueLoansJob> logger)
         {
             _notifyNearOverdueLoansUseCase = notifyNearOverdueLoansUseCase;
             _logger = logger;
@@ -20,17 +20,17 @@
 
         public async Task Execute(IJobExecutionContext context)
         {
-            _logger.LogInformation("Starting BackgroundJob: ProcessNearOverdueLoanStatusJob...");
+            _logger.LogInformation("Starting BackgroundJob: ProcessNearOverdueLoansJob...");
 
             try
             {
                 await _notifyNearOverdueLoansUseCase.ExecuteAsync();
 
-                _logger.LogInformation("Completed BackgroundJob: ProcessNearOverdueLoanStatusJob.");
+                _logger.LogInformation("Completed BackgroundJob: ProcessNearOverdueLoansJob.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "BackgroundJob ProcessNearOverdueLoanStatusJob failed.");
+                _logger.LogError(ex, "BackgroundJob ProcessNearOverdueLoansJob failed.");
             }
         }
     }

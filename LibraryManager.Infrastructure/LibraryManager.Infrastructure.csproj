@@ -17,4 +17,8 @@
     <ProjectReference Include="..\LibraryManager.Core\LibraryManager.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BackgroundJobs\ProcessOverdueLoansFee\" />
+  </ItemGroup>
+
 </Project>

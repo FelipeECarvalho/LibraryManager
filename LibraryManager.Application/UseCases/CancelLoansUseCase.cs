@@ -49,6 +49,8 @@
                 {
                     loan.UpdateStatus(LoanStatus.Cancelled);
 
+                    _logger.LogInformation("The loan {LoanId} was canceled", loan.Id);
+
                     await SendNotificationAsync(loan);
                 }
                 catch (Exception ex)

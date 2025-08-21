@@ -47,6 +47,8 @@
                 try
                 {
                     await SendNotificationAsync(loan);
+
+                    _logger.LogInformation("The loan {LoanId} was notified", loan.Id);
                 }
                 catch (Exception ex)
                 {
