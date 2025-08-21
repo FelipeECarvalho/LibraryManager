@@ -3,6 +3,7 @@
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Abstractions.Repositories;
+    using LibraryManager.Application.Models;
     using Quartz;
     using System.Threading.Tasks;
 
@@ -53,6 +54,7 @@
             try
             {
                 await _emailService.SendAsync(queuedEmail);
+
                 queuedEmail.MarkAsSent();
             }
             catch (Exception ex)
@@ -69,16 +71,7 @@
                 }
                 else
                 {
-                    var delayInSeconds = Math.Pow(2, retryCount) * 60;
-
-                    var newTrigger = TriggerBuilder.Create()
-                        .ForJob(context.JobDetail.Key)
-                        .StartAt(DateTimeOffset.UtcNow.AddSeconds(delayInSeconds))
-                        .Build();
-
-                    await context.Scheduler.ScheduleJob(newTrigger);
-
-                    _logger.LogWarning("E-mail {EmailId} will be resent in {Delay} seconds.", queuedEmail.Id, delayInSeconds);
+                    await RescheduleEmailJobAndLogAsync(queuedEmail, retryCount, context);
                 }
 
                 queuedEmail.MarkAsFailed(ex.Message);
@@ -87,6 +80,23 @@
             {
                 await _unitOfWork.SaveChangesAsync();
             }
+        }
+
+        private async Task RescheduleEmailJobAndLogAsync(
+            QueuedEmail queuedEmail,
+            int retryCount,
+            IJobExecutionContext context)
+        {
+            var delayInSeconds = Math.Pow(2, retryCount) * 60;
+
+            var newTrigger = TriggerBuilder.Create()
+                .ForJob(context.JobDetail.Key)
+                .StartAt(DateTimeOffset.UtcNow.AddSeconds(delayInSeconds))
+                .Build();
+
+            await context.Scheduler.ScheduleJob(newTrigger);
+
+            _logger.LogWarning("E-mail {EmailId} will be resent in {Delay} seconds.", queuedEmail.Id, delayInSeconds);
         }
     }
 }
