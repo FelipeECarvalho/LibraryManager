@@ -1,11 +1,11 @@
 ﻿namespace LibraryManager.Application.Notifications
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions.Email;
 
     public abstract class EmailBase(
         string to,
         string cc = null,
-        string bcc = null) 
+        string bcc = null)
         : IEmail
     {
         public string To { get; } = to;

@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class BookCategoryConfiguration 
+    internal sealed class BookCategoryConfiguration
         : IEntityTypeConfiguration<BookCategory>
     {
         public void Configure(EntityTypeBuilder<BookCategory> builder)

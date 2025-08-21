@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions;
+    using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus;

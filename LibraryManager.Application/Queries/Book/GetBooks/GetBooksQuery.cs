@@ -1,6 +1,7 @@
 ﻿namespace LibraryManager.Application.Queries.Book.GetBooks
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Application.Models;
     using LibraryManager.Application.Queries.Book;
     using System.Collections.Generic;
 

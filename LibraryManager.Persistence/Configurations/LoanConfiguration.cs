@@ -6,7 +6,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class LoanConfiguration 
+    internal sealed class LoanConfiguration
         : BaseEntityConfiguration<Loan>
     {
         public override void Configure(EntityTypeBuilder<Loan> builder)

@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Queries.Borrower.GetBorrowers
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using System.Collections.Generic;
     using System.Threading;

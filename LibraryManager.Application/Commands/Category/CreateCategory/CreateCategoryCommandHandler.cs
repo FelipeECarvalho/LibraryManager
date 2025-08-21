@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Commands.Category.CreateCategory
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Queries.Category;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;

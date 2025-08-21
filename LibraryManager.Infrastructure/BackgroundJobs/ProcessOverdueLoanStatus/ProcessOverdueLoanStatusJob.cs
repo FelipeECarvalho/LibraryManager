@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoanStatus
 {
-    using LibraryManager.Application.Interfaces;
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Email;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Notifications;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;

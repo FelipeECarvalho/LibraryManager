@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Logging
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Core.Common;
     using Microsoft.Extensions.Logging;
 

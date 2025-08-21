@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Validators
 {
     using FluentValidation;
-    using LibraryManager.Application.Queries;
+    using LibraryManager.Application.Models;
     using LibraryManager.Core.Errors;
 
     internal sealed class PaginableValidator

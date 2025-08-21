@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Logging
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions;
     using Serilog.Context;
 
     internal sealed class LogContextEnricher

@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Commands.Auth.Login
 {
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Application.Interfaces;
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;

@@ -1,9 +1,9 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Models;
 
-    internal sealed class QueuedEmailRepository 
+    internal sealed class QueuedEmailRepository
         : IQueuedEmailRepository
     {
         private readonly LibraryDbContext _context;
@@ -13,7 +13,7 @@
             _context = context;
         }
 
-        public void Add(QueuedEmail  queuedEmail)
+        public void Add(QueuedEmail queuedEmail)
         {
             _context.QueuedEmails.Add(queuedEmail);
         }

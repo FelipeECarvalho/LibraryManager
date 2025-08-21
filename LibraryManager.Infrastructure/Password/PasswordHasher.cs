@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Password
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions;
     using System.Security.Cryptography;
 
     public sealed class PasswordHasher

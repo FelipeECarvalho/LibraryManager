@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Commands.Loan.CreateLoan
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Application.Interfaces.Repositories;
+    using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Queries.Loan;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;

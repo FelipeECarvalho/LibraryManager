@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Queries
+﻿namespace LibraryManager.Application.Models
 {
     public abstract record Paginable
     {
@@ -10,7 +10,7 @@
         public int PageSize
         {
             get => _pageSize;
-            init => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
+            init => _pageSize = value > MaxPageSize ? MaxPageSize : value;
         }
     }
 }

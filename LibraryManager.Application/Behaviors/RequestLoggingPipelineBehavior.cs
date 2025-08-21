@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Application.Behaviors
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Core.Common;
     using MediatR;
     using System.Threading;

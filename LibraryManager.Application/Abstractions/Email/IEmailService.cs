@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Interfaces
+﻿namespace LibraryManager.Application.Abstractions.Email
 {
     using LibraryManager.Application.Notifications;
 

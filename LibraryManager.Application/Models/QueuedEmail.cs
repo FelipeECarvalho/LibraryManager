@@ -1,14 +1,10 @@
 ﻿namespace LibraryManager.Application.Models
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Core.Entities;
 
     public sealed class QueuedEmail : BaseEntity, IEmail
     {
-        public DateTimeOffset QueuedAt { get; private set; }
-
-        public DateTimeOffset? SentAt { get; private set; }
-
         public string To { get; }
 
         public string Subject { get; }
@@ -24,6 +20,10 @@
         public int RetryCount { get; private set; }
 
         public string LastError { get; private set; }
+
+        public DateTimeOffset QueuedAt { get; private set; }
+
+        public DateTimeOffset? SentAt { get; private set; }
 
         public QueuedEmail(
             string to,

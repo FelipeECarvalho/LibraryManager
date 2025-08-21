@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class LibraryConfiguration 
+    internal sealed class LibraryConfiguration
         : BaseEntityConfiguration<Library>
     {
         public override void Configure(EntityTypeBuilder<Library> builder)

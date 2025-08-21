@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Application.Interfaces
+﻿namespace LibraryManager.Application.Abstractions
 {
     using LibraryManager.Core.Common;
 

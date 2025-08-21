@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class BookConfiguration 
+    internal sealed class BookConfiguration
         : BaseEntityConfiguration<Book>
     {
         public override void Configure(EntityTypeBuilder<Book> builder)

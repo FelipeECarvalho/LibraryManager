@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
-    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Notifications;
 
     internal sealed class EmailService : IEmailService
