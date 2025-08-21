@@ -1,11 +1,12 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
     using FluentEmail.Core;
-    using LibraryManager.Core.Abstractions;
+    using LibraryManager.Application.Interfaces;
     using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
-    public sealed class SmtpEmailSender : IEmailSender
+    public sealed class SmtpEmailSender 
+        : IEmailSender
     {
         private readonly IFluentEmail _fluentEmail;
         private readonly ILogger<SmtpEmailSender> _logger;

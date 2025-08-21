@@ -1,9 +1,10 @@
 ﻿namespace LibraryManager.Infrastructure.Logging
 {
-    using LibraryManager.Core.Abstractions;
+    using LibraryManager.Application.Interfaces;
     using Serilog.Context;
 
-    internal sealed class LogContextEnricher : ILogContextEnricher
+    internal sealed class LogContextEnricher 
+        : ILogContextEnricher
     {
         public IDisposable PushProperty(string propertyName, object value, bool destructureObjects = false)
         {

@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure
 {
-    using LibraryManager.Core.Abstractions;
+    using LibraryManager.Application.Interfaces;
     using LibraryManager.Infrastructure.Auth;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus;
     using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoanStatus;

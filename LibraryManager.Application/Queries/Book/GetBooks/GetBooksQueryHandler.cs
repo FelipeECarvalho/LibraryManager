@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Queries.Book.GetBooks
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Common;
     using System.Collections.Generic;
     using System.Threading;

@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Commands.Book.CreateBook
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Application.Queries.Book;
-    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;

@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.API.Middleware
 {
-    using LibraryManager.Core.Abstractions;
+    using LibraryManager.Application.Interfaces;
 
     public class RequestLogContextMiddleware
     {

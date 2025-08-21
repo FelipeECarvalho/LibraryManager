@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Commands.Loan.UpdateLoanStatus
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;

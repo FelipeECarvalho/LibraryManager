@@ -1,9 +1,10 @@
 ﻿namespace LibraryManager.Infrastructure.Password
 {
-    using LibraryManager.Core.Abstractions;
+    using LibraryManager.Application.Interfaces;
     using System.Security.Cryptography;
 
-    public sealed class PasswordHasher : IPasswordHasher
+    public sealed class PasswordHasher 
+        : IPasswordHasher
     {
         private const int SaltSize = 16;
         private const int HashSize = 32;

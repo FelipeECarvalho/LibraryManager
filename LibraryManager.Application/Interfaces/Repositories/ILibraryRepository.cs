@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Core.Abstractions.Repositories
+﻿namespace LibraryManager.Application.Interfaces.Repositories
 {
     using LibraryManager.Core.Entities;
     using System;

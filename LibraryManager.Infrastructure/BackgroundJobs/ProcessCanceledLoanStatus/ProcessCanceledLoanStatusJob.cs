@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessCanceledLoanStatus
 {
-    using LibraryManager.Core.Abstractions;
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Core.Enums;
     using LibraryManager.Infrastructure.Email.Emails;
@@ -56,7 +56,7 @@
             var canceledLoans = loans
                 .Where(x => x.CanBeCanceled());
 
-            var processingTasks = canceledLoans.Select(async loan => 
+            var processingTasks = canceledLoans.Select(async loan =>
             {
                 try
                 {

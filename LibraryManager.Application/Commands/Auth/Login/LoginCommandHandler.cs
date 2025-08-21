@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Commands.Auth.Login
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Core.Abstractions;
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;
@@ -47,7 +47,7 @@
                 return Result.Failure<string>(DomainErrors.User.LoginFailedInvalidEmailOrPassword);
             }
 
-            if (!user.VerifyPassword(request.Password, _passwordHasher))
+            if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
             {
                 return Result.Failure<string>(DomainErrors.User.LoginFailedInvalidEmailOrPassword);
             }

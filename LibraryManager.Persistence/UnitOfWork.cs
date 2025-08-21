@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Persistence
 {
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
 
     public sealed class UnitOfWork : IUnitOfWork
     {

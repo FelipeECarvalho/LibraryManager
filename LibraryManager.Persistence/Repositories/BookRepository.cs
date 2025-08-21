@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Entities;
     using LibraryManager.Persistence;
     using Microsoft.EntityFrameworkCore;

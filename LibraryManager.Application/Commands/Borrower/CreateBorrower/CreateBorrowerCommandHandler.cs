@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Commands.Borrower.CreateBorrower
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Application.Queries.Borrower;
-    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;

@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
 
     internal sealed class QueuedEmailRepository : IQueuedEmailRepository
     {

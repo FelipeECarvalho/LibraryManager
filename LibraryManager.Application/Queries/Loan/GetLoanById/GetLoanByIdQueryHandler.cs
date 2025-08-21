@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Application.Queries.Loan.GetLoanById
 {
     using LibraryManager.Application.Abstractions.Messaging;
-    using LibraryManager.Core.Abstractions.Repositories;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;

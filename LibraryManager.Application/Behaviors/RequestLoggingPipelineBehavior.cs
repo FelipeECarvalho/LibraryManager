@@ -1,9 +1,8 @@
 ﻿namespace LibraryManager.Application.Behaviors
 {
+    using LibraryManager.Application.Interfaces;
     using LibraryManager.Core.Common;
-    using LibraryManager.Infrastructure.Logging;
     using MediatR;
-    using Microsoft.Extensions.Logging;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -12,10 +11,10 @@
         where TRequest : class
         where TResponse : Result
     {
-        private readonly ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> _logger;
+        private readonly IAppLogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> _logger;
 
         public RequestLoggingPipelineBehavior(
-            ILogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
+            IAppLogger<RequestLoggingPipelineBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }

@@ -1,8 +1,8 @@
 ﻿namespace LibraryManager.Application.Commands.Author.CreateAuthor
 {
     using LibraryManager.Application.Abstractions.Messaging;
+    using LibraryManager.Application.Interfaces.Repositories;
     using LibraryManager.Application.Queries.Author;
-    using LibraryManager.Core.Abstractions.Repositories;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
     using System.Threading.Tasks;
