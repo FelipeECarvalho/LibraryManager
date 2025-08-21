@@ -10,6 +10,11 @@
     {
         private readonly ILogger<T> _logger;
 
+        public LoggerAdapter(ILogger<T> logger)
+        {
+            _logger = logger;
+        }
+
         public void LogCritical(string message, params object[] args)
         {
             _logger.LogCritical(message, args);

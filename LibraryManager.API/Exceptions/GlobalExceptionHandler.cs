@@ -9,7 +9,7 @@
     using System.Threading.Tasks;
 
     internal sealed class GlobalExceptionHandler(
-        IAppLogger<GlobalExceptionHandler> logger,
+        IServiceScopeFactory serviceScopeFactory,
         IProblemDetailsService problemDetailsService)
         : IExceptionHandler
     {
@@ -18,7 +18,12 @@
             Exception exception,
             CancellationToken cancellationToken)
         {
-            logger.LogError(exception, "Unhandled exception occurred");
+            using var scope = serviceScopeFactory.CreateScope();
+
+            var logger = scope.ServiceProvider
+                .GetRequiredService<IAppLogger<GlobalExceptionHandler>>();
+
+            logger.LogError(exception, "An unexpected error occurred: {Message}", exception.Message);
 
             httpContext.Response.StatusCode = exception switch
             {

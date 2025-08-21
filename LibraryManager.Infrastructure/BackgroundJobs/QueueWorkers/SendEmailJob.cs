@@ -12,7 +12,6 @@
     internal sealed class SendEmailJob : IJob
     {
         private const int MaxRetries = 3;
-        private const string RetryCountKey = "RetryCount";
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<SendEmailJob> _logger;
@@ -34,13 +33,7 @@
         public async Task Execute(IJobExecutionContext context)
         {
             var jobDataMap = context.MergedJobDataMap;
-            var stringQueuedEmailId = jobDataMap.GetString("QueuedEmailId");
-
-            if (!Guid.TryParse(stringQueuedEmailId, out var queuedEmailId))
-            {
-                _logger.LogError("Error when processing SendEmailJob: failed to convert queued email id {id}", stringQueuedEmailId);
-                return;
-            }
+            var queuedEmailId = jobDataMap.GetGuid("QueuedEmailId");
 
             var queuedEmail = await _queuedEmailRepository
                 .GetByIdAsync(queuedEmailId);
@@ -54,27 +47,22 @@
             try
             {
                 await _emailService.SendAsync(queuedEmail);
-
                 queuedEmail.MarkAsSent();
             }
             catch (Exception ex)
             {
-                var retryCount = jobDataMap.GetIntValue(RetryCountKey);
+                queuedEmail.MarkAsFailed(ex.Message);
+                
+                _logger.LogError(ex, "Error when sending email {EmailId}. Retry {RetryCount} of {MaxRetries}", queuedEmail.Id, queuedEmail.RetryCount, MaxRetries);
 
-                _logger.LogError(ex, "Error when sending email {EmailId}. Retry {RetryCount} of {MaxRetries}", queuedEmail.Id, retryCount + 1, MaxRetries);
-
-                jobDataMap.Put(RetryCountKey, retryCount + 1);
-
-                if (retryCount + 1 >= MaxRetries)
+                if (queuedEmail.RetryCount >= MaxRetries)
                 {
                     _logger.LogCritical("E-mail {EmailId} has reach the max number of retries - marked as a permanent error.", queuedEmail.Id);
                 }
                 else
                 {
-                    await RescheduleEmailJobAndLogAsync(queuedEmail, retryCount, context);
+                    await RescheduleEmailJobAndLogAsync(queuedEmail, context);
                 }
-
-                queuedEmail.MarkAsFailed(ex.Message);
             }
             finally
             {
@@ -84,10 +72,9 @@
 
         private async Task RescheduleEmailJobAndLogAsync(
             QueuedEmail queuedEmail,
-            int retryCount,
             IJobExecutionContext context)
         {
-            var delayInSeconds = Math.Pow(2, retryCount) * 60;
+            var delayInSeconds = Math.Pow(2, queuedEmail.RetryCount) * 60;
 
             var newTrigger = TriggerBuilder.Create()
                 .ForJob(context.JobDetail.Key)

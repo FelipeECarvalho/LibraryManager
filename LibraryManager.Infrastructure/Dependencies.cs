@@ -6,6 +6,7 @@
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessCancelLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessNearOverdueLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoansFee;
     using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;
@@ -27,8 +28,8 @@
             services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
             services.AddScoped<ITokenProvider, TokenProvider>();
 
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IEmailSender, SmtpEmailSender>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IEmailSender, SmtpEmailSender>();
 
             services.AddQuartz();
             services.AddQuartzHostedService(options =>
@@ -39,6 +40,9 @@
             services.ConfigureOptions<ProcessOverdueLoansJobSetup>();
             services.ConfigureOptions<ProcessNearOverdueLoansJobSetup>();
             services.ConfigureOptions<ProcessCancelLoansJobSetup>();
+            services.ConfigureOptions<ProcessOverdueLoansFeeJobSetup>();
+
+            services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
             return services;
         }
