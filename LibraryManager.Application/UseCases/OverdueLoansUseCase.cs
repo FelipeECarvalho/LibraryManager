@@ -50,7 +50,7 @@
                     loan.UpdateStatus(LoanStatus.Overdue);
                     loan.UpdateOverdueFee();
 
-                    _logger.LogInformation("The loan {LoanId} is overdue", loan.Id);
+                    _logger.LogInformation("The loan {LoanId} is now overdue", loan.Id);
 
                     await SendNotificationAsync(loan);
                 }
