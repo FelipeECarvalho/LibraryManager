@@ -5,6 +5,25 @@
 
     public sealed class QueuedEmail : BaseEntity, IEmail
     {
+        [Obsolete("EntityFrameworkCore constructor")]
+        private QueuedEmail()
+            : base()
+        {
+
+        }
+
+        public QueuedEmail(IEmail emailBase)
+        {
+            To = emailBase.To;
+            Cc = emailBase.Cc;
+            Bcc = emailBase.Bcc;
+            Body = emailBase.Body;
+            IsSent = false;
+            RetryCount = 0;
+            Subject = emailBase.Subject;
+            QueuedAt = DateTimeOffset.UtcNow;
+        }
+
         public string To { get; }
 
         public string Subject { get; }
@@ -24,23 +43,6 @@
         public DateTimeOffset QueuedAt { get; private set; }
 
         public DateTimeOffset? SentAt { get; private set; }
-
-        public QueuedEmail(
-            string to,
-            string subject,
-            string body,
-            string cc = null,
-            string bcc = null)
-        {
-            To = to;
-            Cc = cc;
-            Bcc = bcc;
-            Body = body;
-            IsSent = false;
-            RetryCount = 0;
-            Subject = subject;
-            QueuedAt = DateTimeOffset.UtcNow;
-        }
 
         public void MarkAsSent()
         {

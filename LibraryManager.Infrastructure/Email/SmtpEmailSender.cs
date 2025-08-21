@@ -2,7 +2,6 @@
 {
     using FluentEmail.Core;
     using LibraryManager.Application.Abstractions.Email;
-    using LibraryManager.Application.Notifications;
     using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@
             _logger = logger;
         }
 
-        public async Task SendAsync(EmailBase email)
+        public async Task SendAsync(IEmail email)
         {
             _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", email.To, email.Subject);
 

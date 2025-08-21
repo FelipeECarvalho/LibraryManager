@@ -1,11 +1,9 @@
 ﻿namespace LibraryManager.Application.Abstractions.Email
 {
-    using LibraryManager.Application.Notifications;
-
     public interface IEmailService
     {
-        Task SendAsync(EmailBase email);
+        Task SendAsync(IEmail email);
 
-        Task EnqueueAsync(EmailBase email);
+        Task EnqueueAsync(IEmail email);
     }
 }
