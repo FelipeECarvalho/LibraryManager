@@ -3,9 +3,9 @@
     using Microsoft.Extensions.Logging;
     using Serilog.Context;
 
-    public static class LoggerExtensions
+    internal static class LoggerExtensions
     {
-        public static void LogErrorWithContext<T>(
+        internal static void LogErrorWithContext<T>(
             this ILogger<T> logger,
             Core.Common.Error error,
             string message,
@@ -17,7 +17,7 @@
             }
         }
 
-        public static void LogInformationWithContext<T>(
+        internal static void LogInformationWithContext<T>(
             this ILogger<T> logger,
             string propertyName,
             object value,

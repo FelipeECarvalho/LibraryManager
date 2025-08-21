@@ -26,5 +26,3 @@ VALUES (
 INSERT INTO [LibraryManagerDb].[dbo].[UserRole]
 (UserId, RoleId)
 VALUES (@UserId, @RoleId);
-
-select * from [LibraryManagerDb].[dbo].[Library]

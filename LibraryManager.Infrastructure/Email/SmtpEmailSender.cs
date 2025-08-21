@@ -1,19 +1,19 @@
 ﻿namespace LibraryManager.Infrastructure.Email
 {
     using FluentEmail.Core;
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
-    using Microsoft.Extensions.Logging;
     using System.Threading.Tasks;
 
     public sealed class SmtpEmailSender
         : IEmailSender
     {
         private readonly IFluentEmail _fluentEmail;
-        private readonly ILogger<SmtpEmailSender> _logger;
+        private readonly IAppLogger<SmtpEmailSender> _logger;
 
         public SmtpEmailSender(
             IFluentEmail fluentEmail,
-            ILogger<SmtpEmailSender> logger)
+            IAppLogger<SmtpEmailSender> logger)
         {
             _fluentEmail = fluentEmail;
             _logger = logger;
@@ -21,7 +21,7 @@
 
         public async Task SendAsync(IEmail email)
         {
-            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}", email.To, email.Subject);
+            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}. Date {DatetimeNow}", email.To, email.Subject, DateTimeOffset.Now);
 
             try
             {
@@ -41,6 +41,8 @@
                 }
 
                 await emailData.SendAsync();
+
+                _logger.LogInformation("Email sent successfully. Date: {DatetimeNow}", DateTimeOffset.Now);
             }
             catch (Exception ex)
             {

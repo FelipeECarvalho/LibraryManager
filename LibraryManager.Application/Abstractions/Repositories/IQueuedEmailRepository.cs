@@ -5,5 +5,7 @@
     public interface IQueuedEmailRepository
     {
         void Add(QueuedEmail queuedEmail);
+
+        Task<QueuedEmail> GetByIdAsync(Guid id);
     }
 }

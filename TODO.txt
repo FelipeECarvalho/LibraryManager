@@ -4,11 +4,16 @@
 	- Quando o usuário se cadastrar
 	- Quando o empréstimo estiver atrasado
 	- etc.
+- Implementar token refresh
 - Implementar retry e circuit breaker
+- Implementar limit de request por usuário
 - Implementar melhorias no UnitOfWork
-- Testes unitários
+- Implementar Testes unitários
+
+
 - Começar a implementar o front usando blazor
 - Adicionar imagem para os livros
+	- Adicionar integração com o azure para armazenar as imagens
 - Adicionar a carteirinha do usuário
 	- Talvez gerar uma impressão de uma carteirinha?
 	- Cadastrar a foto do usuário para a carteirinha

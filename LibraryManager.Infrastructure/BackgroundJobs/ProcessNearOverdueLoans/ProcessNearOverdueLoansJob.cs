@@ -1,18 +1,18 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoans
 {
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.UseCases;
-    using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
 
     internal sealed class ProcessNearOverdueLoansJob : IJob
     {
         private readonly NotifyNearOverdueLoansUseCase _notifyNearOverdueLoansUseCase;
-        private readonly ILogger<ProcessNearOverdueLoansJob> _logger;
+        private readonly IAppLogger<ProcessNearOverdueLoansJob> _logger;
 
         public ProcessNearOverdueLoansJob(
             NotifyNearOverdueLoansUseCase notifyNearOverdueLoansUseCase,
-            ILogger<ProcessNearOverdueLoansJob> logger)
+            IAppLogger<ProcessNearOverdueLoansJob> logger)
         {
             _notifyNearOverdueLoansUseCase = notifyNearOverdueLoansUseCase;
             _logger = logger;

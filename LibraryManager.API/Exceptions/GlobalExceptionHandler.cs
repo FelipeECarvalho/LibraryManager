@@ -1,5 +1,6 @@
 ﻿namespace LibraryManager.API.Exceptions
 {
+    using LibraryManager.Application.Abstractions;
     using Microsoft.AspNetCore.Diagnostics;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,7 @@
     using System.Threading.Tasks;
 
     internal sealed class GlobalExceptionHandler(
-        ILogger<GlobalExceptionHandler> logger,
+        IAppLogger<GlobalExceptionHandler> logger,
         IProblemDetailsService problemDetailsService)
         : IExceptionHandler
     {

@@ -1,18 +1,18 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoansFee
 {
+    using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.UseCases;
-    using Microsoft.Extensions.Logging;
     using Quartz;
     using System.Threading.Tasks;
 
     internal sealed class ProcessOverdueLoansFeeJob : IJob
     {
         private readonly OverdueLoansFeeUseCase _overdueLoansFeeUseCase;
-        private readonly ILogger<ProcessOverdueLoansFeeJob> _logger;
+        private readonly IAppLogger<ProcessOverdueLoansFeeJob> _logger;
 
         public ProcessOverdueLoansFeeJob(
             OverdueLoansFeeUseCase overdueLoansFeeUseCase,
-            ILogger<ProcessOverdueLoansFeeJob> logger)
+            IAppLogger<ProcessOverdueLoansFeeJob> logger)
         {
             _overdueLoansFeeUseCase = overdueLoansFeeUseCase;
             _logger = logger;
