@@ -7,8 +7,6 @@
     using Quartz;
     using System.Threading.Tasks;
 
-    [DisallowConcurrentExecution]
-    [PersistJobDataAfterExecution]
     internal sealed class SendEmailJob : IJob
     {
         private const int MaxRetries = 3;
@@ -32,8 +30,7 @@
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var jobDataMap = context.MergedJobDataMap;
-            var queuedEmailId = jobDataMap.GetGuid("QueuedEmailId");
+            var queuedEmailId = context.MergedJobDataMap.GetGuid("QueuedEmailId");
 
             var queuedEmail = await _queuedEmailRepository
                 .GetByIdAsync(queuedEmailId);
@@ -52,7 +49,7 @@
             catch (Exception ex)
             {
                 queuedEmail.MarkAsFailed(ex.Message);
-                
+
                 _logger.LogError(ex, "Error when sending email {EmailId}. Retry {RetryCount} of {MaxRetries}", queuedEmail.Id, queuedEmail.RetryCount, MaxRetries);
 
                 if (queuedEmail.RetryCount >= MaxRetries)

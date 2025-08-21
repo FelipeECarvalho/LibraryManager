@@ -10,7 +10,11 @@
         public void Configure(QuartzOptions options)
         {
             options
-                .AddJob<ProcessOverdueLoansFeeJob>(jobBuilder => jobBuilder.WithIdentity(JobKey))
+                .AddJob<ProcessOverdueLoansFeeJob>(jobBuilder =>
+                {
+                    jobBuilder.WithIdentity(JobKey);
+                    jobBuilder.UsingJobData("RetryCount", 0);
+                })
                 .AddTrigger(q =>
                 {
                     q.ForJob(JobKey);

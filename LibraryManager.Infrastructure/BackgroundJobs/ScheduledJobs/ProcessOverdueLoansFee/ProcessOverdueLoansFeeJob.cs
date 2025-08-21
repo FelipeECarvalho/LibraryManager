@@ -5,33 +5,10 @@
     using Quartz;
     using System.Threading.Tasks;
 
-    internal sealed class ProcessOverdueLoansFeeJob : IJob
+    internal sealed class ProcessOverdueLoansFeeJob(
+        OverdueLoansFeeUseCase overdueLoansFeeUseCase,
+        IAppLogger<ProcessOverdueLoansFeeJob> logger) : ResilientJob<ProcessOverdueLoansFeeJob>(logger)
     {
-        private readonly OverdueLoansFeeUseCase _overdueLoansFeeUseCase;
-        private readonly IAppLogger<ProcessOverdueLoansFeeJob> _logger;
-
-        public ProcessOverdueLoansFeeJob(
-            OverdueLoansFeeUseCase overdueLoansFeeUseCase,
-            IAppLogger<ProcessOverdueLoansFeeJob> logger)
-        {
-            _overdueLoansFeeUseCase = overdueLoansFeeUseCase;
-            _logger = logger;
-        }
-
-        public async Task Execute(IJobExecutionContext context)
-        {
-            _logger.LogInformation("Starting BackgroundJob: ProcessOverdueLoansFeeJob...");
-
-            try
-            {
-                await _overdueLoansFeeUseCase.ExecuteAsync();
-
-                _logger.LogInformation("Completed BackgroundJob: ProcessOverdueLoansFeeJob.");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "BackgroundJob ProcessOverdueLoansFeeJob failed.");
-            }
-        }
+        public override async Task ExecuteCore(IJobExecutionContext context) => await overdueLoansFeeUseCase.ExecuteAsync();
     }
 }
