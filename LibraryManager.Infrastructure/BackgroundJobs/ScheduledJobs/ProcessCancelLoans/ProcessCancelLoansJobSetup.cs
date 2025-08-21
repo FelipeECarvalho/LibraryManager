@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessCancelLoans
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessCancelLoans
 {
     using Microsoft.Extensions.Options;
     using Quartz;

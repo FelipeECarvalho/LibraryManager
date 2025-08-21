@@ -3,9 +3,9 @@
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Infrastructure.Auth;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessCancelLoans;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoans;
-    using LibraryManager.Infrastructure.BackgroundJobs.ProcessOverdueLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessCancelLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessNearOverdueLoans;
+    using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoans;
     using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;

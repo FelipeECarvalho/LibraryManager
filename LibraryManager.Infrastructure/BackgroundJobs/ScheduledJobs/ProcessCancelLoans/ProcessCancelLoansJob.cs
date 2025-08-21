@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessCancelLoans
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessCancelLoans
 {
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.UseCases;

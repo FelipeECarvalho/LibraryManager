@@ -3,7 +3,7 @@
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Models;
-    using LibraryManager.Infrastructure.BackgroundJobs;
+    using LibraryManager.Infrastructure.BackgroundJobs.QueueWorkers;
     using Quartz;
 
     internal sealed class EmailService
@@ -37,7 +37,7 @@
             await _emailSender.SendAsync(email);
         }
 
-        private async Task ScheduleEmailJobAsync(QueuedEmail queuedEmail) 
+        private async Task ScheduleEmailJobAsync(QueuedEmail queuedEmail)
         {
             var scheduler = await _schedulerFactory.GetScheduler();
 

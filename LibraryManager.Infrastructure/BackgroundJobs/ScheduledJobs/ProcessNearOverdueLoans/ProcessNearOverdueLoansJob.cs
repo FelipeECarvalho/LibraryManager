@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ProcessNearOverdueLoans
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessNearOverdueLoans
 {
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.UseCases;

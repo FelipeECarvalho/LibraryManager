@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Infrastructure.BackgroundJobs
+﻿namespace LibraryManager.Infrastructure.BackgroundJobs.QueueWorkers
 {
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
