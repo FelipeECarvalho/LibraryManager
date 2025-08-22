@@ -19,7 +19,6 @@
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    [EnableRateLimiting("per-user")]
     public class BorrowersController(
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase

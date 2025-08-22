@@ -17,7 +17,6 @@
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    [EnableRateLimiting("per-user")]
     public class CategoriesController(
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase

@@ -5,10 +5,12 @@
     using LibraryManager.Core.Enums;
     using LibraryManager.Core.Exceptions;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.RateLimiting;
 
     [ApiVersion("1.0")]
     [Route("v{version:apiVersion}/[controller]")]
     [ApiController]
+    [EnableRateLimiting("per-user")]
     public abstract class ApiControllerBase : ControllerBase
     {
         protected Guid LibraryId => GetLibraryIdFromClaims();

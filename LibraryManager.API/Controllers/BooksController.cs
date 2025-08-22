@@ -20,7 +20,6 @@
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
-    [EnableRateLimiting("per-user")]
     public class BooksController(
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase
