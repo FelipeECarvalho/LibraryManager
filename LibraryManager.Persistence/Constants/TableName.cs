@@ -26,5 +26,7 @@
         internal const string BookCategories = nameof(BookCategory);
 
         internal const string QueuedEmails = nameof(QueuedEmail);
+
+        internal const string RefreshTokens = nameof(RefreshToken);
     }
 }

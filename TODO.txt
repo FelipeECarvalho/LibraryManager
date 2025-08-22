@@ -1,7 +1,6 @@
 **TODO**
 
 - Implementar refresh token
-- Substituir strings magicas por constants
 - Implementar retry e circuit breaker
 - Implementar melhorias no UnitOfWork
 - Implementar Testes unitários

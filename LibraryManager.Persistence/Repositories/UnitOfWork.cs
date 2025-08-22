@@ -1,4 +1,4 @@
-﻿namespace LibraryManager.Persistence
+﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Application.Abstractions.Repositories;
 

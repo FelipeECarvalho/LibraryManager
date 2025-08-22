@@ -8,6 +8,7 @@
     using Microsoft.IdentityModel.JsonWebTokens;
     using Microsoft.IdentityModel.Tokens;
     using System.Security.Claims;
+    using System.Security.Cryptography;
     using System.Text;
 
     public sealed class TokenProvider
@@ -59,6 +60,11 @@
             var handler = new JsonWebTokenHandler();
 
             return handler.CreateToken(tokenDescriptor);
+        }
+
+        public string GenerateRefreshToken()
+        {
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
         }
     }
 }

@@ -4,6 +4,8 @@
 
     public interface ITokenProvider
     {
+        string GenerateRefreshToken();
+
         Task<string> GenerateTokenAsync(User user);
     }
 }
