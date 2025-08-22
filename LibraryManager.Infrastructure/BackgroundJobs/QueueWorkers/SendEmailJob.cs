@@ -4,33 +4,36 @@
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Models;
+    using LibraryManager.Infrastructure.Constants;
+    using Microsoft.Extensions.Options;
     using Quartz;
     using System.Threading.Tasks;
 
     internal sealed class SendEmailJob : IJob
     {
-        private const int MaxRetries = 3;
-
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAppLogger<SendEmailJob> _logger;
         private readonly IEmailService _emailService;
+        private readonly BackgroundJobOptions _jobSettings;
         private readonly IQueuedEmailRepository _queuedEmailRepository;
 
         public SendEmailJob(
             IUnitOfWork unitOfWork,
             IAppLogger<SendEmailJob> logger,
             IEmailService emailService,
-            IQueuedEmailRepository queuedEmailRepository)
+            IQueuedEmailRepository queuedEmailRepository,
+            IOptions<BackgroundJobOptions> jobSettings)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _emailService = emailService;
             _queuedEmailRepository = queuedEmailRepository;
+            _jobSettings = jobSettings.Value;
         }
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var queuedEmailId = context.MergedJobDataMap.GetGuid("QueuedEmailId");
+            var queuedEmailId = context.MergedJobDataMap.GetGuid(BackgroundJob.Email.QueuedEmailIdKey);
 
             var queuedEmail = await _queuedEmailRepository
                 .GetByIdAsync(queuedEmailId);
@@ -50,11 +53,12 @@
             {
                 queuedEmail.MarkAsFailed(ex.Message);
 
-                _logger.LogError(ex, "Error when sending email {EmailId}. Retry {RetryCount} of {MaxRetries}", queuedEmail.Id, queuedEmail.RetryCount, MaxRetries);
+                _logger.LogError(ex, "Error when sending email {EmailId}. Retry {RetryCount} of {MaxRetries}", queuedEmail.Id, queuedEmail.RetryCount, _jobSettings.DefaultMaxRetries);
 
-                if (queuedEmail.RetryCount >= MaxRetries)
+                if (queuedEmail.RetryCount >= _jobSettings.DefaultMaxRetries)
                 {
                     _logger.LogCritical("E-mail {EmailId} has reach the max number of retries - marked as a permanent error.", queuedEmail.Id);
+                    return;
                 }
                 else
                 {

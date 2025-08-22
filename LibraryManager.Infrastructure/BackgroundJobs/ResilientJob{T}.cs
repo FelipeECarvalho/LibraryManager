@@ -1,6 +1,8 @@
 ﻿namespace LibraryManager.Infrastructure.BackgroundJobs
 {
     using LibraryManager.Application.Abstractions;
+    using LibraryManager.Infrastructure.Constants;
+    using Microsoft.Extensions.Options;
     using Quartz;
     using System;
     using System.Threading.Tasks;
@@ -9,14 +11,15 @@
     [PersistJobDataAfterExecution]
     internal abstract class ResilientJob<T> : IJob
     {
-        private const int MaxRetries = 3;
-        private const string RetryCountKey = "RetryCount";
-
         protected readonly IAppLogger<T> _logger;
+        protected readonly BackgroundJobOptions _jobSettings;
 
-        protected ResilientJob(IAppLogger<T> logger)
+        protected ResilientJob(
+            IAppLogger<T> logger, 
+            IOptions<BackgroundJobOptions> jobSettings)
         {
             _logger = logger;
+            _jobSettings = jobSettings.Value;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -35,15 +38,15 @@
             {
                 _logger.LogError(ex, "Error when processing job {JobName}", jobName);
 
-                var retryCount = context.MergedJobDataMap.GetIntValue(RetryCountKey);
+                context.MergedJobDataMap.TryGetIntValue(BackgroundJob.Default.RetryCountKey, out var retryCount);
 
-                if (retryCount >= MaxRetries)
+                if (retryCount >= _jobSettings.DefaultMaxRetries)
                 {
-                    _logger.LogCritical("Job {JobName} reached the limit of {MaxRetries} tries.", jobName, MaxRetries);
+                    _logger.LogCritical("Job {JobName} reached the limit of {MaxRetries} tries.", jobName, _jobSettings.DefaultMaxRetries);
                     return;
                 }
 
-                context.MergedJobDataMap.Put(RetryCountKey, retryCount + 1);
+                context.MergedJobDataMap.Put(BackgroundJob.Default.RetryCountKey, retryCount + 1);
 
                 var jobException = new JobExecutionException(ex)
                 {

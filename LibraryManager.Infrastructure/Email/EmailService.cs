@@ -4,6 +4,7 @@
     using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Models;
     using LibraryManager.Infrastructure.BackgroundJobs.QueueWorkers;
+    using LibraryManager.Infrastructure.Constants;
     using Quartz;
 
     internal sealed class EmailService
@@ -42,8 +43,8 @@
             var scheduler = await _schedulerFactory.GetScheduler();
 
             var job = JobBuilder.Create<SendEmailJob>()
-                .WithIdentity($"SendEmail-{queuedEmail.Id}")
-                .UsingJobData("QueuedEmailId", queuedEmail.Id)
+                .WithIdentity(string.Format(BackgroundJob.Email.QueuedEmailIdentity, queuedEmail.Id))
+                .UsingJobData(BackgroundJob.Email.QueuedEmailIdKey, queuedEmail.Id)
                 .Build();
 
             var trigger = TriggerBuilder.Create()

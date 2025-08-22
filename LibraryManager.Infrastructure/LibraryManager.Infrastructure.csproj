@@ -17,8 +17,4 @@
     <ProjectReference Include="..\LibraryManager.Core\LibraryManager.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Constants\" />
-  </ItemGroup>
-
 </Project>

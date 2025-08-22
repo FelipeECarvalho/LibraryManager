@@ -3,6 +3,8 @@
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Infrastructure.Auth;
+    using LibraryManager.Infrastructure.BackgroundJobs;
+    using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessCancelLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessNearOverdueLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoans;
@@ -43,6 +45,14 @@
             services.ConfigureOptions<ProcessOverdueLoansFeeJobSetup>();
 
             services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
+
+            services.Configure<JobSchedulesOptions>(
+                configuration.GetSection(JobSchedulesOptions.SectionName)
+            );
+
+            services.Configure<BackgroundJobOptions>(
+                configuration.GetSection(BackgroundJobOptions.SectionName)
+            );
 
             return services;
         }
