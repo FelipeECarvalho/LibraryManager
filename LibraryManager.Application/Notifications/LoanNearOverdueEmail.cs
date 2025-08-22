@@ -28,6 +28,6 @@
             Please return it on time to avoid late fees.
 
             Sincerely,  
-            LibraryManager";
+            The LibraryManager Team";
     }
 }

@@ -2,11 +2,11 @@
 {
     using LibraryManager.Core.Entities;
 
-    public sealed class LoanOverdueEmail : EmailBase
+    public sealed class LoanConfirmationEmail : EmailBase
     {
         private readonly Loan _data;
 
-        public LoanOverdueEmail(Loan data)
+        public LoanConfirmationEmail(Loan data)
             : base(data?.Borrower?.Email)
         {
             ArgumentNullException.ThrowIfNull(data);
@@ -17,18 +17,20 @@
         }
 
         public override string Subject =>
-            $"Overdue Notice: Your loan for the book '{_data.Book.Title}' is overdue!";
+            $"Loan Confirmation: '{_data.Book.Title}'";
 
         public override string Body => $@"
             Hello, {_data.Borrower.Name.FullName},
 
-            This is a reminder that your loan for the book ""{_data.Book.Title}"" is overdue.
+            Thank you for borrowing with us! This email confirms your new loan for the book ""{_data.Book.Title}"".
 
-            The return date was: {_data.EndDate:dd/MM/yyyy}.
+            Here are the details for your reference:
+            - Loan Date: {_data.StartDate:dd/MM/yyyy}
+            - Return Date: {_data.EndDate:dd/MM/yyyy}
 
-            Please return it as soon as possible to avoid additional late fees or restrictions on future loans.
+            We hope you enjoy your reading! Please be mindful of the return date to avoid any late fees.
 
-            Sincerely,  
+            Best regards,
             The LibraryManager Team";
     }
 }

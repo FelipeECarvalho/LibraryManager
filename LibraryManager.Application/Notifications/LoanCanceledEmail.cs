@@ -26,6 +26,6 @@
             If this was a mistake or you have any questions, please contact our support team.
 
             Sincerely,  
-            LibraryManager";
+            The LibraryManager Team";
     }
 }

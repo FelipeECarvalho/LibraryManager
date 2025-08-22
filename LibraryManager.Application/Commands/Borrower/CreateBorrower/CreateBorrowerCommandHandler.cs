@@ -1,9 +1,12 @@
 ﻿namespace LibraryManager.Application.Commands.Borrower.CreateBorrower
 {
+    using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Abstractions.Repositories;
+    using LibraryManager.Application.Notifications;
     using LibraryManager.Application.Queries.Borrower;
     using LibraryManager.Core.Common;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Core.Errors;
     using System.Threading;
     using System.Threading.Tasks;
@@ -11,18 +14,21 @@
     internal sealed class CreateBorrowerCommandHandler
         : ICommandHandler<CreateBorrowerCommand, BorrowerResponse>
     {
-        private readonly IBorrowerRepository _borrowerRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
+        private readonly IBorrowerRepository _borrowerRepository;
         private readonly ILibraryRepository _libraryRepository;
 
         public CreateBorrowerCommandHandler(
             IUnitOfWork unitOfWork,
             IBorrowerRepository borrowerRepository,
-            ILibraryRepository libraryRepository)
+            ILibraryRepository libraryRepository,
+            IEmailService emailService)
         {
             _unitOfWork = unitOfWork;
             _borrowerRepository = borrowerRepository;
             _libraryRepository = libraryRepository;
+            _emailService = emailService;
         }
 
         public async Task<Result<BorrowerResponse>> Handle(CreateBorrowerCommand request, CancellationToken cancellationToken)
@@ -41,7 +47,7 @@
                 return Result.Failure<BorrowerResponse>(DomainErrors.Library.IdNotFound(request.LibraryId));
             }
 
-            var borrower = new Core.Entities.Borrower(
+            var borrower = new Borrower(
                 request.Name,
                 request.Email,
                 request.Document,
@@ -52,6 +58,8 @@
             _borrowerRepository.Add(borrower);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            await NotifyBorrowerAsync(borrower);
 
             return BorrowerResponse.FromEntity(borrower);
         }
@@ -73,6 +81,12 @@
             }
 
             return Result.Success();
+        }
+
+        private async Task NotifyBorrowerAsync(Borrower borrower)
+        {
+            var email = new NewBorrowerWelcomeEmail(borrower);
+            await _emailService.EnqueueAsync(email);
         }
     }
 }

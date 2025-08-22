@@ -9,7 +9,6 @@
         private QueuedEmail()
             : base()
         {
-
         }
 
         public QueuedEmail(IEmail emailBase)

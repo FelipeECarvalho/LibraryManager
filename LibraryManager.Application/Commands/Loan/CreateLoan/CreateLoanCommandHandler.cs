@@ -1,7 +1,9 @@
 ﻿namespace LibraryManager.Application.Commands.Loan.CreateLoan
 {
+    using LibraryManager.Application.Abstractions.Email;
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Abstractions.Repositories;
+    using LibraryManager.Application.Notifications;
     using LibraryManager.Application.Queries.Loan;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Entities;
@@ -16,14 +18,17 @@
         private readonly ILoanRepository _loanRepository;
         private readonly IBookRepository _bookRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IEmailService _emailService;
 
         public CreateLoanCommandHandler(
             IUnitOfWork unitOfWork,
             IBorrowerRepository borrowerRepository,
             ILoanRepository loanRepository,
+            IEmailService emailService,
             IBookRepository bookRepository)
         {
             _unitOfWork = unitOfWork;
+            _emailService = emailService;
             _borrowerRepository = borrowerRepository;
             _loanRepository = loanRepository;
             _bookRepository = bookRepository;
@@ -66,7 +71,15 @@
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
+            await NotifyBorrowerAsync(loan);
+
             return LoanResponse.FromEntity(loan);
+        }
+
+        private async Task NotifyBorrowerAsync(Loan loan)
+        {
+            var email = new LoanConfirmationEmail(loan);
+            await _emailService.EnqueueAsync(email);
         }
     }
 }

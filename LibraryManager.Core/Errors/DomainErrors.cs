@@ -73,7 +73,7 @@
 
             public static Error DocumentAlreadyExists => new(
                 "Borrower.DocumentAlreadyExists",
-                "The email or password you entered is incorrect. Please try again.",
+                "A borrower with the same document already exists",
                 ErrorType.Validation);
         }
 
