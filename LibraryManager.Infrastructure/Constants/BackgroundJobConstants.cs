@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Infrastructure.Constants
 {
-    public static class BackgroundJob
+    public static class BackgroundJobConstants
     {
         public static class Default
         {

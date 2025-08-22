@@ -33,7 +33,7 @@
 
         public async Task Execute(IJobExecutionContext context)
         {
-            var queuedEmailId = context.MergedJobDataMap.GetGuid(BackgroundJob.Email.QueuedEmailIdKey);
+            var queuedEmailId = context.MergedJobDataMap.GetGuid(BackgroundJobConstants.Email.QueuedEmailIdKey);
 
             var queuedEmail = await _queuedEmailRepository
                 .GetByIdAsync(queuedEmailId);

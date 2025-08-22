@@ -43,8 +43,8 @@
             var scheduler = await _schedulerFactory.GetScheduler();
 
             var job = JobBuilder.Create<SendEmailJob>()
-                .WithIdentity(string.Format(BackgroundJob.Email.QueuedEmailIdentity, queuedEmail.Id))
-                .UsingJobData(BackgroundJob.Email.QueuedEmailIdKey, queuedEmail.Id)
+                .WithIdentity(string.Format(BackgroundJobConstants.Email.QueuedEmailIdentity, queuedEmail.Id))
+                .UsingJobData(BackgroundJobConstants.Email.QueuedEmailIdKey, queuedEmail.Id)
                 .Build();
 
             var trigger = TriggerBuilder.Create()

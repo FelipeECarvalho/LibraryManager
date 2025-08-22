@@ -38,7 +38,7 @@
             {
                 _logger.LogError(ex, "Error when processing job {JobName}", jobName);
 
-                context.MergedJobDataMap.TryGetIntValue(BackgroundJob.Default.RetryCountKey, out var retryCount);
+                context.MergedJobDataMap.TryGetIntValue(BackgroundJobConstants.Default.RetryCountKey, out var retryCount);
 
                 if (retryCount >= _jobSettings.DefaultMaxRetries)
                 {
@@ -46,7 +46,7 @@
                     return;
                 }
 
-                context.MergedJobDataMap.Put(BackgroundJob.Default.RetryCountKey, retryCount + 1);
+                context.MergedJobDataMap.Put(BackgroundJobConstants.Default.RetryCountKey, retryCount + 1);
 
                 var jobException = new JobExecutionException(ex)
                 {
