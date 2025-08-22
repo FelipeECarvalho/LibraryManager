@@ -10,6 +10,7 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.RateLimiting;
     using Microsoft.Extensions.Caching.Hybrid;
     using System.Text.Json;
 
@@ -18,6 +19,7 @@
     /// </summary>
     [ApiController]
     [Authorize(Roles = "Operator,Admin")]
+    [EnableRateLimiting("per-user")]
     public class BorrowersController(
         IMediator _mediator,
         HybridCache _hybridCache) : ApiControllerBase

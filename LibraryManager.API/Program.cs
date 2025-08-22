@@ -35,6 +35,7 @@ namespace LibraryManager.API
                 .AddInfrastructure(builder.Configuration)
                 .AddVersioning()
                 .AddSwaggerGenWithAuthentication()
+                .AddRateLimiter()
                 .AddApplication();
 
             builder.Services.AddControllers();
@@ -70,6 +71,8 @@ namespace LibraryManager.API
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseRateLimiter();
 
             app.MapControllers();
 

@@ -4,9 +4,11 @@
     using MediatR;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.RateLimiting;
 
     [ApiController]
     [AllowAnonymous]
+    [EnableRateLimiting("per-user")]
     public class AuthController(IMediator _mediator) : ApiControllerBase
     {
         [HttpPut("login")]

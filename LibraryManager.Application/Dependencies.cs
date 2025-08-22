@@ -2,6 +2,7 @@
 {
     using FluentValidation;
     using LibraryManager.Application.Behaviors;
+    using LibraryManager.Application.UseCases;
     using MediatR;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,11 @@
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>));
+
+            services.AddScoped(typeof(CancelLoansUseCase));
+            services.AddScoped(typeof(NotifyNearOverdueLoansUseCase));
+            services.AddScoped(typeof(OverdueLoansFeeUseCase));
+            services.AddScoped(typeof(OverdueLoansUseCase));
 
             services.AddMediatR(configuration =>
             {

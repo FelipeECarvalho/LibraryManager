@@ -2,8 +2,11 @@
 {
     using Asp.Versioning;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.OpenApi.Models;
     using System.Reflection;
+    using System.Security.Claims;
+    using System.Threading.RateLimiting;
 
     public static class Dependencies
     {
@@ -65,6 +68,60 @@
                 };
 
                 c.AddSecurityRequirement(securityRequirement);
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddRateLimiter(this IServiceCollection services)
+        {
+            services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.OnRejected = async (context, token) =>
+                {
+                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out TimeSpan retryAfter))
+                    {
+                        context.HttpContext.Response.Headers.RetryAfter = $"{retryAfter.TotalSeconds}";
+
+                        var problemDetailsFactory = context.HttpContext.RequestServices
+                            .GetRequiredService<ProblemDetailsFactory>();
+
+                        var problemDetails = problemDetailsFactory.CreateProblemDetails(
+                            context.HttpContext,
+                            StatusCodes.Status429TooManyRequests,
+                            "Too Many Requests",
+                            detail: $"Too many requests. Please try again after {retryAfter.TotalSeconds} seconds");
+
+                        await context.HttpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken: token);
+                    }
+                };
+
+                options.AddPolicy("per-user", httpContext =>
+                {
+                    var email = httpContext.User.FindFirstValue(ClaimTypes.Email);
+
+                    if (!string.IsNullOrWhiteSpace(email))
+                    {
+                        return RateLimitPartition.GetTokenBucketLimiter(
+                            email,
+                            _ => new TokenBucketRateLimiterOptions
+                            {
+                                TokenLimit = 10,
+                                TokensPerPeriod = 3,
+                                ReplenishmentPeriod = TimeSpan.FromMinutes(1)
+                            });
+                    }
+
+                    return RateLimitPartition.GetFixedWindowLimiter(
+                        "anonymous",
+                        _ => new FixedWindowRateLimiterOptions
+                        {
+                            PermitLimit = 5,
+                            Window = TimeSpan.FromMinutes(1)
+                        });
+                });
             });
 
             return services;

@@ -1,15 +1,10 @@
 **TODO**
 
-- Envio de e-mails
-	- Quando o usuário se cadastrar
-	- Quando o empréstimo estiver atrasado
-	- etc.
-- Implementar token refresh
+- Implementar refresh token
+- Substituir strings magicas por constants
 - Implementar retry e circuit breaker
-- Implementar limit de request por usuário
 - Implementar melhorias no UnitOfWork
 - Implementar Testes unitários
-
 
 - Começar a implementar o front usando blazor
 - Adicionar imagem para os livros
