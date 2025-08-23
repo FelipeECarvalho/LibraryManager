@@ -3,7 +3,6 @@
     using LibraryManager.Application.Abstractions.Repositories;
     using LibraryManager.Application.Models;
     using Microsoft.EntityFrameworkCore;
-    using System;
 
     internal sealed class RefreshTokenRepository
         : IRefreshTokenRepository
@@ -20,10 +19,11 @@
             _context.RefreshTokens.Add(refreshToken);
         }
 
-        public async Task<RefreshToken> GetByIdAsync(Guid id)
+        public async Task<RefreshToken> GetByTokenAsync(string token)
         {
             return await _context.RefreshTokens
-                .SingleOrDefaultAsync(x => x.Id == id);
+                .Include(x => x.User)
+                .SingleOrDefaultAsync(x => x.Token == token);
         }
     }
 }

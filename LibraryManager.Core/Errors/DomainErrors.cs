@@ -336,14 +336,24 @@
 
         public static class General
         {
-            public static Error PageNumberInvalid => new(
-                "General.PageNumberInvalid",
+            public static Error InvalidPageNumber => new(
+                "General.InvalidPageNumber",
                 "The page number value must be greater than zero",
                 ErrorType.Validation);
 
-            public static Error PageSizeInvalid => new(
-                "General.PageSizeInvalid",
+            public static Error InvalidPageSize => new(
+                "General.InvalidPageSize",
                 "The page size value must be greater than zero",
+                ErrorType.Validation);
+
+            public static Error InvalidRefreshToken => new(
+                "General.InvalidRefreshToken",
+                "The given refresh token is invalid.",
+                ErrorType.Validation);
+
+            public static Error ExpiredRefreshToken => new(
+                "General.ExpiredRefreshToken",
+                "The refresh token has expired",
                 ErrorType.Validation);
         }
     }

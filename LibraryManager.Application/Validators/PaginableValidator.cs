@@ -11,11 +11,11 @@
         {
             RuleFor(x => x.PageNumber)
                 .GreaterThan(0)
-                .WithMessage(DomainErrors.General.PageNumberInvalid);
+                .WithMessage(DomainErrors.General.InvalidPageNumber);
 
             RuleFor(x => x.PageSize)
                 .GreaterThan(0)
-                .WithMessage(DomainErrors.General.PageSizeInvalid);
+                .WithMessage(DomainErrors.General.InvalidPageSize);
         }
     }
 }
