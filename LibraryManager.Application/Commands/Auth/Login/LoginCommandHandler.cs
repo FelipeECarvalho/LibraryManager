@@ -3,7 +3,6 @@
     using LibraryManager.Application.Abstractions;
     using LibraryManager.Application.Abstractions.Messaging;
     using LibraryManager.Application.Abstractions.Repositories;
-    using LibraryManager.Application.Models;
     using LibraryManager.Core.Common;
     using LibraryManager.Core.Errors;
     using System.Threading;
@@ -60,12 +59,9 @@
 
             var token = await _tokenProvider.GenerateTokenAsync(user);
 
-            var refreshToken = new RefreshToken
-            {
-                UserId = user.Id,
-                ExpiresOn = DateTimeOffset.UtcNow.AddDays(7),
-                Token = _tokenProvider.GenerateRefreshToken()
-            };
+            var refreshToken = new Core.Entities.RefreshToken(
+                user,
+                _tokenProvider.GenerateRefreshToken());
 
             _refreshTokenRepository.Add(refreshToken);
 

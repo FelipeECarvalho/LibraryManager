@@ -5,8 +5,8 @@
         protected BaseEntity()
         {
             Id = Guid.NewGuid();
-            CreateDate = DateTimeOffset.Now;
-            UpdateDate = DateTimeOffset.Now;
+            CreateDate = DateTimeOffset.UtcNow;
+            UpdateDate = DateTimeOffset.UtcNow;
         }
 
         public Guid Id { get; private set; }

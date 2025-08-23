@@ -54,7 +54,7 @@
         {
             Name = name;
             Address = address;
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
         }
     }
 }

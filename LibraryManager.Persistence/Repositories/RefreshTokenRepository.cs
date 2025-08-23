@@ -1,7 +1,7 @@
 ﻿namespace LibraryManager.Persistence.Repositories
 {
     using LibraryManager.Application.Abstractions.Repositories;
-    using LibraryManager.Application.Models;
+    using LibraryManager.Core.Entities;
     using Microsoft.EntityFrameworkCore;
 
     internal sealed class RefreshTokenRepository

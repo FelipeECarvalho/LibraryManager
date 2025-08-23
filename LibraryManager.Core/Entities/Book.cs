@@ -58,7 +58,7 @@
             Title = title;
             Description = description;
             PublicationDate = publicationDate;
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
         }
 
         public bool IsAvailable()
@@ -82,7 +82,7 @@
             }
 
             StockNumber = stockNumber;
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
 
             return Result.Success();
         }

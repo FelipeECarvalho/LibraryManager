@@ -107,7 +107,7 @@
 
         public int CalculateOverdueDays()
         {
-            return Math.Max(0, (DateTimeOffset.Now.Date - EndDate.Date).Days);
+            return Math.Max(0, (DateTimeOffset.UtcNow.Date - EndDate.Date).Days);
         }
 
         /// <summary>

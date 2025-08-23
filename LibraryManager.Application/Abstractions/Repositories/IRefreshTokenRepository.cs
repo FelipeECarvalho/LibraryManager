@@ -1,6 +1,6 @@
 ﻿namespace LibraryManager.Application.Abstractions.Repositories
 {
-    using LibraryManager.Application.Models;
+    using LibraryManager.Core.Entities;
     using System.Threading.Tasks;
 
     public interface IRefreshTokenRepository

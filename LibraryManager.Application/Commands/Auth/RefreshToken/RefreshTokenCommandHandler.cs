@@ -30,15 +30,13 @@
             var refreshToken = await _refreshTokenRepository
                 .GetByTokenAsync(request.RefreshToken);
 
-            if (refreshToken is null || DateTimeOffset.Now > refreshToken.ExpiresOn)
+            if (refreshToken is null || refreshToken.IsExpired())
             {
                 return Result.Failure<AuthResponse>(DomainErrors.General.ExpiredRefreshToken);
             }
 
             var token = await _tokenProvider.GenerateTokenAsync(refreshToken.User);
-
-            refreshToken.ExpiresOn = DateTimeOffset.Now.AddDays(7);
-            refreshToken.Token = _tokenProvider.GenerateRefreshToken();
+            refreshToken.Update(_tokenProvider.GenerateRefreshToken());
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

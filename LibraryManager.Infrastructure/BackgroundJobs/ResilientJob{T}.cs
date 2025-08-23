@@ -15,7 +15,7 @@
         protected readonly BackgroundJobOptions _jobSettings;
 
         protected ResilientJob(
-            IAppLogger<T> logger, 
+            IAppLogger<T> logger,
             IOptions<BackgroundJobOptions> jobSettings)
         {
             _logger = logger;

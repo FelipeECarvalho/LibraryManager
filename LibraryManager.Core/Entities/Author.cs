@@ -27,7 +27,7 @@
         {
             Name = name;
             Description = description;
-            UpdateDate = DateTimeOffset.Now;
+            UpdateDate = DateTimeOffset.UtcNow;
         }
     }
 }

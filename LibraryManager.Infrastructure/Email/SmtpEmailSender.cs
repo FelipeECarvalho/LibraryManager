@@ -21,7 +21,7 @@
 
         public async Task SendAsync(IEmail email)
         {
-            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}. Date {DatetimeNow}", email.To, email.Subject, DateTimeOffset.Now);
+            _logger.LogInformation("Sending an email to {@To} with the subject: {@Subject}. Date {DatetimeNow}", email.To, email.Subject, DateTimeOffset.UtcNow);
 
             try
             {
@@ -42,7 +42,7 @@
 
                 await emailData.SendAsync();
 
-                _logger.LogInformation("Email sent successfully. Date: {DatetimeNow}", DateTimeOffset.Now);
+                _logger.LogInformation("Email sent successfully. Date: {DatetimeNow}", DateTimeOffset.UtcNow);
             }
             catch (Exception ex)
             {

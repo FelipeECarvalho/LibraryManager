@@ -1,11 +1,11 @@
 ﻿namespace LibraryManager.Persistence.Configurations
 {
-    using LibraryManager.Application.Models;
+    using LibraryManager.Core.Entities;
     using LibraryManager.Persistence.Constants;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class RefreshTokenConfiguration 
+    internal sealed class RefreshTokenConfiguration
         : BaseEntityConfiguration<RefreshToken>
     {
         public override void Configure(EntityTypeBuilder<RefreshToken> builder)

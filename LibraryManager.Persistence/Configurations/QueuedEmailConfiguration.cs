@@ -5,7 +5,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-    internal sealed class QueuedEmailConfiguration 
+    internal sealed class QueuedEmailConfiguration
         : BaseEntityConfiguration<QueuedEmail>
     {
         public override void Configure(EntityTypeBuilder<QueuedEmail> builder)
