@@ -9,13 +9,18 @@
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessNearOverdueLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoans;
     using LibraryManager.Infrastructure.BackgroundJobs.ScheduledJobs.ProcessOverdueLoansFee;
+    using LibraryManager.Infrastructure.Constants;
     using LibraryManager.Infrastructure.Email;
     using LibraryManager.Infrastructure.Logging;
     using LibraryManager.Infrastructure.Password;
+    using LibraryManager.Infrastructure.Resilience;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
     using Microsoft.IdentityModel.Tokens;
+    using Polly;
+    using Polly.Retry;
     using Quartz;
     using System.Text;
 
@@ -25,6 +30,7 @@
         {
             services.AddAuth(configuration);
             services.AddEmail(configuration);
+            services.AddResilience();
 
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ILogContextEnricher, LogContextEnricher>();
@@ -96,6 +102,39 @@
                             JwtOptions.Secret))
                     };
                 });
+        }
+
+        private static void AddResilience(this IServiceCollection services)
+        {
+            services.AddResiliencePipeline(ResiliencePipelineConstants.DelayedRetry, (builder, context) =>
+            {
+                var loggerFactory = context.ServiceProvider.GetRequiredService<ILoggerFactory>();
+                var logger = loggerFactory.CreateLogger("PollyPipelines");
+
+                builder.AddRetry(new RetryStrategyOptions
+                {
+                    MaxRetryAttempts = 3,
+                    BackoffType = DelayBackoffType.Exponential,
+                    Delay = TimeSpan.FromSeconds(2),
+                    ShouldHandle = new PredicateBuilder()
+                        .Handle<HttpRequestException>()
+                        .Handle<TimeoutException>()
+                        .Handle<ApplicationException>(),
+                    OnRetry = retryArguments =>
+                    {
+                        logger.LogWarning(
+                            "Failed attempt {AttemptNumber}. Waiting {Delay} before retrying. Exception: {ExceptionType} - {ExceptionMessage}",
+                            retryArguments.AttemptNumber,
+                            retryArguments.RetryDelay,
+                            retryArguments.Outcome.Exception?.GetType().Name,
+                            retryArguments.Outcome.Exception?.Message);
+
+                        return ValueTask.CompletedTask;
+                    }
+                });
+            });
+
+            services.AddScoped<ITransaction, ResilientTransaction>();
         }
     }
 }

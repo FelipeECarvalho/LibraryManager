@@ -31,6 +31,7 @@
         [HttpGet("refresh-token")]
         [ProducesResponseType(typeof(AuthResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RefreshToken(
             RefreshTokenCommand command,
             CancellationToken cancellationToken)

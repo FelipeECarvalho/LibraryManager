@@ -1,8 +1,6 @@
 **TODO**
 
-- Implementar refresh token
 - Implementar retry e circuit breaker
-- Implementar melhorias no UnitOfWork
 - Implementar Testes unitários
 
 - Começar a implementar o front usando blazor
