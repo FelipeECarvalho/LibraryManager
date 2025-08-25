@@ -17,11 +17,11 @@
         {
             _logger = logger;
             _resiliencePipeline = pipelineProvider
-                .GetPipeline(ResiliencePipelineConstants.DelayedRetry);
+                .GetPipeline(ResiliencePipelineConstants.ImmediatelyRetry);
         }
 
         public async Task ExecuteWithRetryAsync(
-            Func<CancellationToken?, Task> operation,
+            Func<CancellationToken, Task> operation,
             CancellationToken cancellationToken = default)
         {
             try

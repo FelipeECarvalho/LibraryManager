@@ -2,6 +2,6 @@
 {
     public static class ResiliencePipelineConstants
     {
-        public const string DelayedRetry = "delayed-retry";
+        public const string ImmediatelyRetry = "immediately-retry";
     }
 }

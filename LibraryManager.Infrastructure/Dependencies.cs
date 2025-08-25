@@ -106,7 +106,7 @@
 
         private static void AddResilience(this IServiceCollection services)
         {
-            services.AddResiliencePipeline(ResiliencePipelineConstants.DelayedRetry, (builder, context) =>
+            services.AddResiliencePipeline(ResiliencePipelineConstants.ImmediatelyRetry, (builder, context) =>
             {
                 var loggerFactory = context.ServiceProvider.GetRequiredService<ILoggerFactory>();
                 var logger = loggerFactory.CreateLogger("PollyPipelines");
@@ -114,8 +114,8 @@
                 builder.AddRetry(new RetryStrategyOptions
                 {
                     MaxRetryAttempts = 3,
-                    BackoffType = DelayBackoffType.Exponential,
-                    Delay = TimeSpan.FromSeconds(2),
+                    BackoffType = DelayBackoffType.Constant,
+                    Delay = TimeSpan.Zero,
                     ShouldHandle = new PredicateBuilder()
                         .Handle<HttpRequestException>()
                         .Handle<TimeoutException>()
@@ -123,9 +123,8 @@
                     OnRetry = retryArguments =>
                     {
                         logger.LogWarning(
-                            "Failed attempt {AttemptNumber}. Waiting {Delay} before retrying. Exception: {ExceptionType} - {ExceptionMessage}",
+                            "Failed attempt {AttemptNumber} Exception: {ExceptionType} - {ExceptionMessage}",
                             retryArguments.AttemptNumber,
-                            retryArguments.RetryDelay,
                             retryArguments.Outcome.Exception?.GetType().Name,
                             retryArguments.Outcome.Exception?.Message);
 
