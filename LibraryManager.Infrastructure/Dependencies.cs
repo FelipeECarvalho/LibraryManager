@@ -22,6 +22,7 @@
     using Polly;
     using Polly.Retry;
     using Quartz;
+    using System.Data.Common;
     using System.Text;
 
     public static class Dependencies
@@ -119,6 +120,8 @@
                     ShouldHandle = new PredicateBuilder()
                         .Handle<HttpRequestException>()
                         .Handle<TimeoutException>()
+                        .Handle<InsufficientMemoryException>()
+                        .Handle<DbException>()
                         .Handle<ApplicationException>(),
                     OnRetry = retryArguments =>
                     {

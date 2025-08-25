@@ -24,15 +24,9 @@
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            TResponse response = default;
-
-            await _transaction.ExecuteWithRetryAsync(async (cancellationToken) =>
-            {
-                response = await next(cancellationToken);
-            }, 
-            cancellationToken);
-
-            return response;
+            return await _transaction.ExecuteWithRetryAsync(
+                (token) => next(token),
+                cancellationToken);
         }
     }
 }

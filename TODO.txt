@@ -1,6 +1,5 @@
 **TODO**
 
-- Implementar retry e circuit breaker
 - Implementar Testes unitários
 
 - Começar a implementar o front usando blazor

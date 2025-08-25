@@ -38,5 +38,22 @@
                 throw;
             }
         }
+
+        public async Task<T> ExecuteWithRetryAsync<T>(Func<CancellationToken, Task<T>> operation, CancellationToken cancellationToken)
+        {
+            try
+            {
+                return await _resiliencePipeline.ExecuteAsync(
+                    async token => await operation(token),
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(
+                "[FATAL] Operation failed after all attempts. Final error: {@Message}",
+                ex.Message);
+                throw;
+            }
+        }
     }
 }

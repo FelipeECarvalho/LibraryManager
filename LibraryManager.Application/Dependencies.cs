@@ -12,6 +12,7 @@
         {
             services.AddValidatorsFromAssembly(typeof(Dependencies).Assembly, includeInternalTypes: true);
 
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionResiliencePipelineBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestLoggingPipelineBehavior<,>));
 

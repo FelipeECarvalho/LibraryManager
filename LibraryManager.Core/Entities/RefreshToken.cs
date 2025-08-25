@@ -2,6 +2,14 @@
 {
     public sealed class RefreshToken : BaseEntity
     {
+
+        [Obsolete("EntityFrameworkCore constructor")]
+        private RefreshToken()
+            : base()
+        {
+            
+        }
+
         public RefreshToken(User user, string token)
         {
             Token = token;
