@@ -1,83 +1,83 @@
 # LibraryManager
 
-Esta é uma aplicação moderna, robusta e escalável construída com **.NET 8**, utilizando as mais avançadas práticas de arquitetura de software para garantir um código de alta qualidade, manutenível e performático.
+This is a modern, robust, and scalable application built with **.NET 8**, using the most advanced software architecture practices to ensure high-quality, maintainable, and performant code.
 
-## 🏛️ Arquitetura e Design
+## 🏛️ Architecture and Design
 
-A fundação do projeto foi meticulosamente planejada para garantir uma estrutura limpa e um design que reflete as melhores práticas do mercado.
+The project's foundation was meticulously planned to ensure a clean structure and a design that reflects the best market practices.
 
 ### **Clean Architecture**
-A aplicação segue rigorosamente os princípios da **Clean Architecture**, garantindo uma separação clara de responsabilidades entre as camadas (Core, Application, Infrastructure, Persistence, Presentation). A comunicação entre as camadas é feita através de interfaces, promovendo baixo acoplamento e facilitando a testabilidade e a manutenção.
+The application strictly follows the principles of **Clean Architecture**, ensuring a clear separation of responsibilities among the layers (Core, Application, Infrastructure, Persistence, Presentation). Communication between layers is done through interfaces, promoting low coupling and facilitating testability and maintenance.
 
 ### **Domain-Driven Design (DDD)**
-O coração da aplicação é o seu domínio, modelado com as melhores práticas do DDD:
-- **Value Objects**: Para representar conceitos imutáveis e com validações intrínsecas.
-- **Padrões de Organização**: O código do domínio é altamente organizado, refletindo fielmente as regras de negócio.
-- **Domain Errors**: Centralização e padronização das mensagens de erro do domínio para garantir consistência e clareza.
+The heart of the application is its domain, modeled with the best DDD practices:
+- **Value Objects**: To represent immutable concepts with intrinsic validations.
+- **Organizational Patterns**: The domain code is highly organized, faithfully reflecting the business rules.
+- **Domain Errors**: Centralization and standardization of domain error messages to ensure consistency and clarity.
 
 ---
-## ✨ Features Principais
+## ✨ Main Features
 
-### **API RESTful e Bem Documentada**
-A API foi construída seguindo o padrão REST e está completamente documentada com **Swagger (OpenAPI)**.
-- **Paginação**: Para otimizar a performance em consultas que retornam grandes volumes de dados.
-- **Padronização de Retornos**: Uso de `ProblemDetails` e um `Result Pattern` bem definido para padronizar as respostas de sucesso e erro, tornando a API previsível e fácil de ser consumida.
+### **Well-Documented RESTful API**
+The API was built following the REST pattern and is fully documented with **Swagger (OpenAPI)**.
+- **Pagination**: To optimize performance in queries that return large volumes of data.
+- **Standardized Returns**: Use of `ProblemDetails` and a well-defined `Result Pattern` to standardize success and error responses, making the API predictable and easy to consume.
 
-### **Autenticação e Autorização com JWT**
-Sistema de segurança robusto utilizando **JSON Web Tokens (JWT)**.
-- **Refresh Tokens**: Implementação de refresh tokens para manter sessões ativas de forma segura.
-- **Senhas Seguras**: Geração e verificação de senhas utilizando algoritmos de hash modernos para garantir a segurança das credenciais.
+### **Authentication and Authorization with JWT**
+A robust security system using **JSON Web Tokens (JWT)**.
+- **Refresh Tokens**: Implementation of refresh tokens to keep sessions active securely.
+- **Secure Passwords**: Generation and verification of passwords using modern hashing algorithms to ensure the security of credentials.
 
-### **CQRS com Mediator**
-O padrão **CQRS (Command Query Responsibility Segregation)** foi implementado com a biblioteca **MediatR**, separando operações de escrita (Commands) das de leitura (Queries).
-- **Behaviors Avançados**: O pipeline do MediatR foi enriquecido com behaviors para:
-    - **Logging**: Rastreabilidade completa da execução.
-    - **Validação**: Integração com **FluentValidator** para validações automáticas.
-    - **Resiliência de Transações**: Uso de políticas do Polly para garantir a consistência.
+### **CQRS with Mediator**
+The **CQRS (Command Query Responsibility Segregation)** pattern was implemented with the **MediatR** library, separating write operations (Commands) from read operations (Queries).
+- **Advanced Behaviors**: The MediatR pipeline has been enriched with behaviors for:
+    - **Logging**: Complete traceability of execution.
+    - **Validation**: Integration with **FluentValidator** for automatic validations.
+    - **Transactional Resilience**: Use of Polly policies to ensure consistency.
 
-### **Background Jobs Resilientes**
-Um dos pontos mais fortes da aplicação é seu sistema de tarefas em segundo plano.
-- **Filas e Agendamentos**: Suporte para jobs em fila (queues) e agendados (scheduled jobs).
-- **Alta Resiliência**: Os jobs foram construídos para serem extremamente resilientes, com **reagendamentos automáticos em caso de falhas**, garantindo a execução de tarefas críticas.
+### **Resilient Background Jobs**
+One of the application's strongest points is its background task system.
+- **Queues and Schedules**: Support for queued jobs and scheduled jobs.
+- **High Resilience**: The jobs were built to be extremely resilient, with **automatic rescheduling in case of failures**, ensuring that critical tasks are executed.
 
-### **Envio de E-mails em Segundo Plano**
-- **FluentEmail**: Utilização para uma construção de e-mails fluente e limpa via SMTP.
-- **Filas de E-mail**: O envio é desacoplado da requisição principal. Os e-mails são enfileirados no banco de dados e processados por um background job, garantindo que a experiência do usuário não seja impactada.
-
----
-## 🔧 Qualidade de Código e Padrões
-
-### **Injeção de Dependência (IoC)**
-A aplicação faz uso exemplar do contêiner de Injeção de Dependência nativo do .NET. **Todos os serviços, repositórios e outras abstrações são registrados e resolvidos via IoC**, resultando em um código desacoplado e altamente testável. A configuração dos serviços da camada de infraestrutura é um excelente exemplo da aplicação madura deste padrão.
-
-### **Result Pattern para um Código Mais Limpo**
-Um grande diferencial do projeto é a adoção do **Result Pattern**. Este padrão é utilizado para o retorno de métodos de serviço, **evitando o lançamento de exceções para controle de fluxo**. Isso resulta em um código mais claro, previsível e com uma distinção explícita entre sucesso e falha, melhorando drasticamente a legibilidade.
-
-### **Resiliência com Polly**
-A resiliência é um pilar desta aplicação. A biblioteca **Polly** é amplamente utilizada para criar políticas de `Retry`, com destaque para:
-- **Transações de Banco de Dados Resilientes**: Garantindo que operações críticas sejam concluídas mesmo sob condições adversas.
-- **Comunicação com Serviços Externos**.
-
-### **Tratamento de Exceções Centralizado**
-- **Global Exception Handlers**: Middlewares para tratamento de exceções de forma centralizada, convertendo erros inesperados e de validação em respostas `ProblemDetails` padronizadas.
-
-### **Logging Estruturado com Serilog**
-Toda a aplicação é instrumentada com logging estruturado utilizando **Serilog**, gerando logs detalhados para requisições, execução de casos de uso, erros e background jobs.
-
-### **Acesso a Dados com EF Core**
-- **Repository Pattern & Unit of Work**: Abstração da camada de dados para encapsular a lógica de consulta e garantir a atomicidade das transações com o Unit of Work.
-- **Melhores Práticas**: As entidades do EF Core foram configuradas seguindo as melhores práticas para performance e manutenibilidade.
-
-### **Configurações com Options Pattern**
-As configurações da aplicação são fortemente tipadas utilizando o **Options Pattern**, tornando o acesso a elas seguro e organizado.
+### **Background Email Sending**
+- **FluentEmail**: Used for a fluent and clean construction of emails via SMTP.
+- **Email Queues**: The sending process is decoupled from the main request. Emails are queued in the database and processed by a background job, ensuring the user experience is not impacted.
 
 ---
-## 🚀 Tecnologias Utilizadas
+## 🔧 Code Quality and Patterns
+
+### **Dependency Injection (IoC)**
+The application makes exemplary use of the native .NET Dependency Injection container. **All services, repositories, and other abstractions are registered and resolved via IoC**, resulting in decoupled and highly testable code. The configuration of the infrastructure layer services is an excellent example of the mature application of this pattern.
+
+### **Result Pattern for Cleaner Code**
+A major differentiator of this project is the adoption of the **Result Pattern**. This pattern is used for the return of service methods, **avoiding the throwing of exceptions for flow control**. This results in clearer, more predictable code with an explicit distinction between success and failure, drastically improving readability.
+
+### **Resilience with Polly**
+Resilience is a pillar of this application. The **Polly** library is widely used to create `Retry` policies, with an emphasis on:
+- **Resilient Database Transactions**: Ensuring that critical operations are completed even under adverse conditions.
+- **Communication with External Services**.
+
+### **Centralized Exception Handling**
+- **Global Exception Handlers**: Middlewares for centralized exception handling, converting unexpected and validation errors into standardized `ProblemDetails` responses.
+
+### **Structured Logging with Serilog**
+The entire application is instrumented with structured logging using **Serilog**, generating detailed logs for requests, use case execution, errors, and background jobs.
+
+### **Data Access with EF Core**
+- **Repository Pattern & Unit of Work**: Abstraction of the data layer to encapsulate query logic and ensure the atomicity of transactions with the Unit of Work.
+- **Best Practices**: The EF Core entities were configured following best practices for performance and maintainability.
+
+### **Configuration with Options Pattern**
+The application's settings are strongly typed using the **Options Pattern**, making access to them safe and organized.
+
+---
+## 🚀 Technologies Used
 
 - **Framework**: .NET 8
-- **Banco de Dados**: Microsoft SQL Server
-- **Containerização**: Docker e Docker Compose
-- **Bibliotecas Principais**:
+- **Database**: Microsoft SQL Server
+- **Containerization**: Docker and Docker Compose
+- **Main Libraries**:
   - MediatR
   - FluentValidation
   - Serilog
@@ -89,31 +89,31 @@ As configurações da aplicação são fortemente tipadas utilizando o **Options
   - HybridCache
 
 ---
-## 🏁 Como Executar o Projeto
+## 🏁 How to Run the Project
 
-1. **Pré-requisitos**:
+1. **Prerequisites**:
    - .NET 8 SDK
    - Docker Desktop
 
-2. **Configuração**:
-   - Clone o repositório.
-   - Navegue até a pasta do projeto.
-   - Configure suas variáveis de ambiente ou o arquivo `appsettings.Development.json` com as credenciais necessárias.
+2. **Configuration**:
+   - Clone the repository.
+   - Navigate to the project folder.
+   - Configure your environment variables or the `appsettings.Development.json` file with the necessary credentials.
 
-3. **Executando com Docker Compose** (Recomendado):
-   - Na raiz do projeto, execute o comando abaixo para iniciar a API e o banco de dados:
+3. **Running with Docker Compose** (Recommended):
+   - In the project root, run the command below to start the API and the database:
      ```bash
      docker-compose up -d
      ```
 
-4. **Executando Localmente**:
-   - Execute as migrations do Entity Framework:
+4. **Running Locally**:
+   - Run the Entity Framework migrations:
      ```bash
      dotnet ef database update
      ```
-   - Inicie a aplicação:
+   - Start the application:
      ```bash
      dotnet run --project LibraryManager.API
      ```
 
-A API estará disponível em `http://localhost:5001` e a documentação do Swagger em `http://localhost:5001/swagger`.
+The API will be available at `http://localhost:5001` and the Swagger documentation at `http://localhost:5001/swagger`.
