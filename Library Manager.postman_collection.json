@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "c0a5e018-7234-472b-9848-da14a7414ec9",
+		"name": "Library Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19682784"
+	},
+	"item": [
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Books",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"NewBookTest\",\r\n  \"description\": \"this is a new book\",\r\n  \"stockNumber\": 0,\r\n  \"publicationDate\": \"2025-07-07T23:57:53.006Z\",\r\n  \"isbn\": \"newisbn1\",\r\n  \"authorId\": \"13aa7926-dde8-4838-aa47-d43100a16842\",\r\n  \"libraryId\": \"3268FEA1-9733-44F1-AAC2-AD7B57051CA0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/books/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"books",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "BookById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/v1/books/b20c22a6-7130-4e45-b723-440748c94f52",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"books",
+								"b20c22a6-7130-4e45-b723-440748c94f52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Books",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/v1/books?pageNumber=1&pageSize=10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"books"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Authors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/v1/authors?pageNumber=-1&pageSize=10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"authors"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "-1"
+								},
+								{
+									"key": "pageSize",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AuthorById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/v1/authors/e4c03912-25bd-460f-a2e3-c1165024a764",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"authors",
+								"e4c03912-25bd-460f-a2e3-c1165024a764"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": {\r\n    \"firstName\": \"newAuthor3\",\r\n    \"lastName\": \"Author3\"\r\n  },\r\n  \"description\": \"IDK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/authors/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"authors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Author",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": {\r\n    \"firstName\": \"newAuthor1\",\r\n    \"lastName\": \"Author1\"\r\n  },\r\n  \"description\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/authors/e4c03912-25bd-460f-a2e3-c1165024a765",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"authors",
+								"e4c03912-25bd-460f-a2e3-c1165024a765"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan",
+			"item": [
+				{
+					"name": "Loans",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/v1/loans?pageNumber=1&pageSize=20",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"loans"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loans",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"borrowerId\": \"19e1b9f3-6f64-48b9-a771-d33f75569071\",\r\n  \"bookId\": \"f0fe5e88-865e-4d5b-9f85-f9192a1aa416\",\r\n  \"startDate\": \"2025-08-22T15:39:05.491Z\",\r\n  \"endDate\": \"2025-08-23T15:39:05.491Z\",\r\n  \"observation\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/loans",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loan",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": 2\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/loans",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"loans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Loan Copy",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"endDate\": \"2025-08-22T15:39:05.491Z\",\r\n  \"id\": \"f54a614f-4785-4a2d-88c1-5032e055ea72\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/loans/f54a614f-4785-4a2d-88c1-5032e055ea72",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"loans",
+								"f54a614f-4785-4a2d-88c1-5032e055ea72"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Borrower",
+			"item": [
+				{
+					"name": "Borrower",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": {\r\n    \"firstName\": \"Felipe\",\r\n    \"lastName\": \"Carvalho\"\r\n  },\r\n  \"document\": \"123122312323123\",\r\n  \"email\": \"felipeemanuelc11@gmail.com\",\r\n  \"birthDate\": \"2025-08-02T15:41:03.332Z\",\r\n  \"address\": {\r\n    \"street\": \"street\",\r\n    \"number\": \"12\",\r\n    \"district\": \"district\",\r\n    \"city\": \"city\",\r\n    \"zipCode\": \"123123\",\r\n    \"state\": \"são paulo\",\r\n    \"countryCode\": \"br\",\r\n    \"observation\": \"none\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/borrowers",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"borrowers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "secret",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJmZWxpcGVAZW1haWwuY29tIiwibGlicmFyeV9pZCI6IjBjYTUzMDI3LTUzZjYtNDNlMy1hMTlhLTUyMDQ2NTFlMzdkNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiYXVkIjoiTGlicmFyeU1hbmFnZXIiLCJpc3MiOiJMaWJyYXJ5TWFuYWdlci5BUEkiLCJleHAiOjE3NTE3NDIwMDMsImlhdCI6MTc1MTc0MTQwNCwibmJmIjoxNzUxNzQxNDA0fQ.KK8d2nV5IWN4Vbmw_IsvqeBjKErK1U3kXbTZ9nby5sc",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"john.doe@email.com\",\r\n  \"password\": \"123123123\",\r\n  \"libraryId\": \"3268FEA1-9733-44F1-AAC2-AD7B57051CA0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/auth/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RefreshToken",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "secret",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJmZWxpcGVAZW1haWwuY29tIiwibGlicmFyeV9pZCI6IjBjYTUzMDI3LTUzZjYtNDNlMy1hMTlhLTUyMDQ2NTFlMzdkNiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiYXVkIjoiTGlicmFyeU1hbmFnZXIiLCJpc3MiOiJMaWJyYXJ5TWFuYWdlci5BUEkiLCJleHAiOjE3NTE3NDIwMDMsImlhdCI6MTc1MTc0MTQwNCwibmJmIjoxNzUxNzQxNDA0fQ.KK8d2nV5IWN4Vbmw_IsvqeBjKErK1U3kXbTZ9nby5sc",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "payload",
+									"value": "{}",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"refreshToken\": \"hAZ7z/pkh3sqAq3B7CX76ZzPSX24FPUuMV0yeP6aZWY=\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/v1/auth/refresh-token",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJqb2huLmRvZUBlbWFpbC5jb20iLCJsaWJyYXJ5X2lkIjoiMzI2OGZlYTEtOTczMy00NGYxLWFhYzItYWQ3YjU3MDUxY2EwIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJhdWQiOiJMaWJyYXJ5TWFuYWdlciIsImlzcyI6IkxpYnJhcnlNYW5hZ2VyLkFQSSIsImV4cCI6MTc1NjE3NzQyNiwiaWF0IjoxNzU2MDkxMDI2LCJuYmYiOjE3NTYwOTEwMjZ9.uP3RAouGPUGy4pqPoAaxojjPiE5ZVPycka0XAa5hPr8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "https://localhost:5001"
+		}
+	]
+}
